@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CoopSathi AI - Ministry of Cooperation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-fixed-dim": "#ffb77a",
+            "on-secondary-container": "#683700",
+            "error-container": "#ffdad6",
+            "tertiary-container": "#012b00",
+            "on-tertiary-fixed-variant": "#035300",
+            "tertiary-fixed": "#8dfc75",
+            "surface-container-low": "#eff4ff",
+            "primary-fixed": "#d2e4ff",
+            "inverse-on-surface": "#eaf1ff",
+            "primary-container": "#0a2540",
+            "outline-variant": "#c4c6ce",
+            "surface-variant": "#d3e4fe",
+            "on-primary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "surface-container": "#e5eeff",
+            "on-primary-container": "#768dad",
+            "on-primary-fixed-variant": "#314865",
+            "outline": "#74777e",
+            "surface-container-highest": "#d3e4fe",
+            "surface-bright": "#f8f9ff",
+            "surface": "#f8f9ff",
+            "surface-container-lowest": "#ffffff",
+            "on-background": "#0b1c30",
+            "background": "#f8f9ff",
+            "secondary-fixed": "#ffdcc2",
+            "tertiary-fixed-dim": "#72de5c",
+            "secondary-container": "#fe9832",
+            "inverse-primary": "#b0c8eb",
+            "surface-tint": "#49607e",
+            "surface-container-high": "#dce9ff",
+            "on-surface-variant": "#43474d",
+            "secondary": "#8f4e00",
+            "tertiary": "#001200",
+            "inverse-surface": "#213145",
+            "error": "#ba1a1a",
+            "on-secondary-fixed-variant": "#6d3a00",
+            "primary-fixed-dim": "#b0c8eb",
+            "on-tertiary-fixed": "#012200",
+            "on-error": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-dim": "#cbdbf5",
+            "on-surface": "#0b1c30",
+            "on-secondary-fixed": "#2e1500",
+            "on-primary-fixed": "#001c37",
+            "primary": "#000f22",
+            "on-tertiary-container": "#339f24"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "24px",
+            "unit": "8px",
+            "stack-md": "16px",
+            "stack-sm": "8px",
+            "container-max": "1280px",
+            "margin-mobile": "16px",
+            "stack-lg": "32px",
+            "margin-desktop": "40px"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-sm": ["Inter"],
+            "display-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "headline-lg": ["30px", {"lineHeight": "38px", "fontWeight": "600"}],
+            "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+            "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.08);
+    }
+    .text-gradient {
+      background: linear-gradient(90deg, #0a2540, #fe9832);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tricolor-border {
+      background: linear-gradient(90deg, #FF9933 33%, #FFFFFF 33%, #FFFFFF 66%, #138808 66%);
+      height: 4px;
+      width: 100%;
+    }
+    .shadow-glow {
+      box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col pt-16 lg:pt-0 lg:pl-64">
+<!-- Tricolor Header & Accessibility (Desktop) -->
+<div class="hidden lg:flex fixed top-0 w-full z-50 h-10 bg-primary-container text-on-primary text-label-sm items-center justify-end px-6 space-x-6 pl-72">
+<div class="flex items-center space-x-4 mr-auto">
+<span class="material-symbols-outlined text-[16px]">account_balance</span>
+<span>Government of India</span>
+</div>
+<div class="flex space-x-3 items-center">
+<span>A-</span>
+<span class="font-bold">A</span>
+<span>A+</span>
+</div>
+<button class="flex items-center space-x-1 hover:text-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-[16px]">contrast</span>
+<span>High Contrast</span>
+</button>
+<div class="relative group cursor-pointer flex items-center space-x-1 hover:text-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-[16px]">language</span>
+<span>English</span>
+<span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</div>
+</div>
+<!-- TopNavBar (Mobile only per instructions, but since layout needs topnav on web, we adapt the JSON) -->
+<nav class="fixed top-0 w-full z-40 flex flex-col bg-surface-container-lowest/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm lg:hidden h-16">
+<div class="flex items-center justify-between px-4 h-full">
+<div class="flex items-center space-x-2">
+<span class="text-headline-md font-headline-md font-bold text-primary">CoopSathi AI</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+</div>
+<div class="tricolor-border absolute bottom-0"></div>
+</nav>
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-full border-r border-outline-variant/20 bg-surface-container-low/90 backdrop-blur-md shadow-lg docked fixed left-0 w-64 z-50 pt-10">
+<div class="tricolor-border absolute top-0 w-full left-0 z-50"></div>
+<div class="p-6 flex flex-col items-center border-b border-outline-variant/20">
+<!-- National Emblem Placeholder -->
+<img class="w-16 h-20 mb-3 object-contain" data-alt="A highly detailed vector illustration of the National Emblem of India (Lion Capital of Ashoka) in deep navy blue on a transparent background, rendered in a clean, official government seal style, suitable for a modern web interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgCyBxmqK4ob8bFW4eR5dDqavVpCrJPQ1VA5TvgUarDWg5xoA9Jaz-wGza8tufHbNdjGLwM5ueJRO8UEkGULxDykd12sJ3ZACnjsGMpi8cu8_sPD7ZmWG5q55JILcqz79x6pwdIgyR7mksMnMFnWu05-h3iNZY8ReZJSc-70ClUTCE1sRrGCN7A1Ty-RxAjHtAoszQK2ZOaWWzuFeYQV7HPcoCmj5HKi89oSiQEQD_zCpSYH6O_e5ey-Nr3a4d2C34FUzljokDHDl_"/>
+<h2 class="text-label-md font-label-md font-bold text-on-surface text-center">Ministry of Cooperation</h2>
+<p class="text-label-sm font-label-sm text-on-surface-variant text-center">Government of India</p>
+</div>
+<div class="flex-1 overflow-y-auto py-6 space-y-2">
+<!-- Active Tab -->
+<a class="flex items-center px-4 py-3 bg-secondary-container text-on-secondary-container rounded-xl mx-2 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 1;">sync</span>
+<span class="text-label-md font-label-md font-bold">MoC Sync</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl mx-2 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3">account_balance</span>
+<span class="text-label-md font-label-md">CRCS Data</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl mx-2 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3">agriculture</span>
+<span class="text-label-md font-label-md">PMFBY Live</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl mx-2 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3">payments</span>
+<span class="text-label-md font-label-md">NABARD Feed</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl mx-2 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3">monitoring</span>
+<span class="text-label-md font-label-md">Analytics</span>
+</a>
+</div>
+<div class="p-6 border-t border-outline-variant/20">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg text-label-md font-label-md font-bold hover:bg-primary-container transition-colors shadow-sm flex items-center justify-center space-x-2">
+<span class="material-symbols-outlined">smart_toy</span>
+<span>AI Assistant</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col w-full max-w-[1280px] mx-auto px-4 md:px-gutter lg:mt-10 pb-20">
+<!-- National Telemetry Ribbon -->
+<div class="w-full flex items-center bg-surface-container-low border border-outline-variant/30 rounded-xl p-2 mt-6 shadow-sm overflow-x-auto whitespace-nowrap scrollbar-hide">
+<div class="flex items-center px-3 py-1 bg-tertiary-container/10 rounded-full mr-4 border border-tertiary/10">
+<div class="w-2 h-2 rounded-full bg-[#138808] animate-pulse mr-2"></div>
+<span class="text-label-sm font-label-sm font-bold text-on-tertiary-fixed-variant tracking-wider uppercase">Live Sync</span>
+</div>
+<div class="flex space-x-6 text-label-sm font-label-sm text-on-surface-variant items-center">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1 text-primary-container">domain</span>
+<span>Ministry of Cooperation:</span>
+<span class="font-bold text-primary ml-1">100% Digital</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1 text-primary-container">dns</span>
+<span>CRCS Data:</span>
+<span class="font-bold text-[#138808] ml-1">Active</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1 text-primary-container">grass</span>
+<span>PMFBY Live:</span>
+<span class="font-bold text-primary ml-1">2.4Cr Farmers</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1 text-primary-container">account_balance_wallet</span>
+<span>NABARD Feed:</span>
+<span class="font-bold text-secondary-container ml-1">4% KCC Sync</span>
+</div>
+</div>
+</div>
+<!-- Hero Section -->
+<section class="mt-8 mb-12 flex flex-col items-center justify-center text-center">
+<div class="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary-container/10 border border-secondary-container/20 text-secondary-container text-label-sm font-label-sm font-bold mb-6">
+<span class="material-symbols-outlined text-[16px] mr-2">graphic_eq</span>
+        Powered by NCCT &amp; Bhashini
+      </div>
+<h1 class="text-display-lg-mobile md:text-display-lg font-display-lg-mobile md:font-display-lg text-primary max-w-3xl mb-4">
+        CoopSathi AI: Your Cooperative <span class="text-gradient">Knowledge Assistant</span>
+</h1>
+<p class="text-body-md md:text-body-lg font-body-md md:font-body-lg text-on-surface-variant max-w-2xl mb-10">
+        Speak or type to access instant information on cooperative laws, schemes, crop insurance, and financial literacy in your regional language.
+      </p>
+<!-- Voice AI Interface Container -->
+<div class="w-full max-w-2xl glass-panel rounded-2xl p-2 relative overflow-hidden flex flex-col items-center">
+<!-- Background Animation -->
+<div class="absolute inset-0 w-full h-full opacity-20 pointer-events-none">
+<!-- STITCH_SHADER_START:ANIMATION_2 class="absolute inset-0 w-full h-full" -->
+<div class="absolute inset-0 w-full h-full" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_2" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_2');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+varying vec2 v_texCoord;
+
+void main() {
+    vec2 uv = v_texCoord;
+    
+    // Create multiple sine waves for the equalizer effect
+    float wave1 = sin(uv.x * 20.0 + u_time * 5.0) * 0.1 * sin(u_time * 2.0);
+    float wave2 = sin(uv.x * 35.0 - u_time * 7.0) * 0.05 * cos(u_time * 1.5);
+    float wave3 = sin(uv.x * 50.0 + u_time * 10.0) * 0.02 * sin(u_time * 3.0);
+    
+    float combinedWave = wave1 + wave2 + wave3;
+    
+    // Vertical bars or lines centered vertically
+    float linePos = 0.5 + combinedWave;
+    float dist = abs(uv.y - linePos);
+    
+    // Colors inspired by India's tricolor and the Deep Navy theme
+    vec3 colorSaffron = vec3(1.0, 0.6, 0.2); // #FF9933
+    vec3 colorEmerald = vec3(0.07, 0.53, 0.03); // #138808
+    vec3 colorWhite = vec3(1.0, 1.0, 1.0);
+    
+    vec3 finalColor = mix(colorSaffron, colorEmerald, uv.x);
+    finalColor = mix(finalColor, colorWhite, 0.5 + 0.5 * sin(u_time));
+    
+    // Glow effect
+    float glow = smoothstep(0.1, 0.0, dist);
+    vec3 outColor = finalColor * glow;
+    
+    gl_FragColor = vec4(outColor, glow);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_2 -->
+</div>
+<div class="w-full bg-surface-container-lowest rounded-xl p-6 shadow-sm relative z-10 border border-outline-variant/10">
+<div class="flex flex-col items-center space-y-6">
+<!-- Rotating Prompts -->
+<div class="h-8 flex items-center justify-center text-primary font-label-md text-label-md italic opacity-70">
+              "Ask about MSCS Act 2023..."
+            </div>
+<!-- Mic Button -->
+<button class="w-20 h-20 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-glow hover:scale-105 active:scale-95 transition-all duration-300 relative group">
+<div class="absolute inset-0 rounded-full bg-secondary-container opacity-0 group-hover:opacity-20 animate-ping transition-opacity"></div>
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+<!-- Persona Chips -->
+<div class="flex flex-wrap justify-center gap-2 pt-4 w-full border-t border-outline-variant/20 mt-4">
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 text-label-sm font-label-sm text-on-surface-variant hover:bg-surface-variant/50 hover:text-primary transition-colors flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1">agriculture</span> Small Farmer
+              </button>
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 text-label-sm font-label-sm text-on-surface-variant hover:bg-surface-variant/50 hover:text-primary transition-colors flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1">assignment</span> PACS Secretary
+              </button>
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 text-label-sm font-label-sm text-on-surface-variant hover:bg-surface-variant/50 hover:text-primary transition-colors flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1">group</span> Women Dairy SHG
+              </button>
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 text-label-sm font-label-sm text-on-surface-variant hover:bg-surface-variant/50 hover:text-primary transition-colors flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1">credit_card</span> KCC Borrower
+              </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Grid -->
+<section class="mb-16">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-headline-md font-headline-md text-primary">Quick Services</h2>
+<button class="text-label-md font-label-md text-secondary-container hover:underline font-bold flex items-center">
+          View All <span class="material-symbols-outlined text-[16px] ml-1">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="glass-panel rounded-xl p-6 hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mb-4 relative overflow-hidden">
+<span class="material-symbols-outlined text-3xl text-primary relative z-10">gavel</span>
+<div class="absolute inset-0 bg-[#FF9933]/10 scale-0 group-hover:scale-100 transition-transform rounded-full"></div>
+</div>
+<h3 class="text-body-md font-bold text-primary mb-1">Cooperative Laws</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">MSCS Act 2023 &amp; Guidelines</p>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel rounded-xl p-6 hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mb-4 relative overflow-hidden">
+<span class="material-symbols-outlined text-3xl text-primary relative z-10">description</span>
+<div class="absolute inset-0 bg-[#138808]/10 scale-0 group-hover:scale-100 transition-transform rounded-full"></div>
+</div>
+<h3 class="text-body-md font-bold text-primary mb-1">Government Schemes</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">PM-KISAN, AIF &amp; Subsidies</p>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel rounded-xl p-6 hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mb-4 relative overflow-hidden">
+<span class="material-symbols-outlined text-3xl text-primary relative z-10">health_and_safety</span>
+<div class="absolute inset-0 bg-[#FF9933]/10 scale-0 group-hover:scale-100 transition-transform rounded-full"></div>
+</div>
+<h3 class="text-body-md font-bold text-primary mb-1">PMFBY Crop Insurance</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">72-hr Intimation &amp; Status</p>
+</div>
+<!-- Card 4 -->
+<div class="glass-panel rounded-xl p-6 hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mb-4 relative overflow-hidden">
+<span class="material-symbols-outlined text-3xl text-primary relative z-10">storefront</span>
+<div class="absolute inset-0 bg-[#138808]/10 scale-0 group-hover:scale-100 transition-transform rounded-full"></div>
+</div>
+<h3 class="text-body-md font-bold text-primary mb-1">PACS Services</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">79,630 e-PACS ERP Network</p>
+</div>
+<!-- Card 5 -->
+<div class="glass-panel rounded-xl p-6 hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mb-4 relative overflow-hidden">
+<span class="material-symbols-outlined text-3xl text-primary relative z-10">account_balance</span>
+<div class="absolute inset-0 bg-[#FF9933]/10 scale-0 group-hover:scale-100 transition-transform rounded-full"></div>
+</div>
+<h3 class="text-body-md font-bold text-primary mb-1">Financial Literacy</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">4% KCC Loans &amp; Savings</p>
+</div>
+<!-- Card 6 -->
+<div class="glass-panel rounded-xl p-6 hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mb-4 relative overflow-hidden">
+<span class="material-symbols-outlined text-3xl text-primary relative z-10">support_agent</span>
+<div class="absolute inset-0 bg-[#138808]/10 scale-0 group-hover:scale-100 transition-transform rounded-full"></div>
+</div>
+<h3 class="text-body-md font-bold text-primary mb-1">Ombudsman Grievance</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Register &amp; Track Complaints</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 px-4 md:px-gutter flex flex-col md:flex-row justify-between items-center bg-primary dark:bg-surface-container-lowest text-on-primary dark:text-primary border-t-4 border-secondary mt-auto lg:pl-64">
+<div class="mb-4 md:mb-0 text-center md:text-left">
+<h4 class="text-headline-sm font-headline-sm mb-2">CoopSathi AI</h4>
+<p class="text-label-sm font-label-sm text-primary-fixed-dim">© 2024 Ministry of Cooperation, Government of India. Developed by NCCT.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-4 text-label-sm font-label-sm text-primary-fixed-dim">
+<a class="hover:underline decoration-secondary hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:underline decoration-secondary hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:underline decoration-secondary hover:text-on-primary transition-colors" href="#">Hyperlinking Policy</a>
+<a class="hover:underline decoration-secondary hover:text-on-primary transition-colors" href="#">Sitemap</a>
+<a class="hover:underline decoration-secondary hover:text-on-primary transition-colors" href="#">Contact Us</a>
+</div>
+</footer>
+</body></html>

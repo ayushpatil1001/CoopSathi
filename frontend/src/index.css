@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --text-scale: 1;
+  }
+  
+  html {
+    font-size: calc(16px * var(--text-scale, 1));
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#FBF9F5] text-slate-800 antialiased font-sans;
+    overflow-x: hidden;
+  }
+}
+
+/* Accessibility font scaler classes */
+html[data-font-size="small"] {
+  --text-scale: 0.9;
+}
+html[data-font-size="normal"] {
+  --text-scale: 1;
+}
+html[data-font-size="large"] {
+  --text-scale: 1.15;
+}
+html[data-font-size="xlarge"] {
+  --text-scale: 1.3;
+}
+
+/* High contrast mode */
+html[data-contrast="high"] {
+  filter: contrast(125%);
+}
+html[data-contrast="high"] body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Subtle animation pulses */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+/* Stitch Design System Utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.08);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #0a2540, #fe9832);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tricolor-border {
+  background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
+  height: 4px;
+  width: 100%;
+}
+
+.shadow-glow {
+  box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.12);
+}

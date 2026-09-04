@@ -1,0 +1,23 @@
+{
+  "name": "coopsathi-platform",
+  "version": "1.0.0",
+  "description": "CoopSathi AI – Multilingual Cooperative Governance & Legal Assistance Platform for Ministry of Cooperation & NCCT",
+  "private": true,
+  "scripts": {
+    "dev": "node -e \"console.log('\\n=== CoopSathi AI Platform ===\\nRun backend:\\n  cd backend && npm run dev\\nRun frontend:\\n  cd frontend && npm run dev\\n')\"",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "build:frontend": "npm run build --prefix frontend",
+    "build:backend": "npm run build --prefix backend",
+    "build": "npm run build --prefix frontend"
+  },
+  "keywords": [
+    "cooperative",
+    "agriculture",
+    "ai",
+    "pacs",
+    "pmfby",
+    "government-of-india",
+    "ncct"
+  ]
+}

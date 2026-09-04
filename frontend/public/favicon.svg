@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <circle cx="24" cy="24" r="22" fill="#0A2540" />
+  <circle cx="24" cy="24" r="20" fill="none" stroke="#FF9933" stroke-width="2" />
+  <!-- Wheat / Rice stalk in gold/saffron -->
+  <path d="M24 38 L24 10" stroke="#FF9933" stroke-width="2" stroke-linecap="round" />
+  <!-- Leaves / Hands of cooperation -->
+  <path d="M24 28 C18 26 14 20 18 16 C21 19 24 23 24 28 Z" fill="#138808" />
+  <path d="M24 28 C30 26 34 20 30 16 C27 19 24 23 24 28 Z" fill="#138808" />
+  <path d="M24 20 C19 18 16 13 20 10 C22 13 24 16 24 20 Z" fill="#FF9933" />
+  <path d="M24 20 C29 18 32 13 28 10 C26 13 24 16 24 20 Z" fill="#FF9933" />
+  <!-- AI sparkle -->
+  <circle cx="24" cy="10" r="3" fill="#FFFFFF" />
+</svg>
