@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bot, User, Volume2, Square, Copy, Check, ThumbsUp, ThumbsDown, ShieldCheck, ChevronDown, ChevronUp, ExternalLink, Sparkles } from 'lucide-react';
+import { Bot, User, Volume2, Square, Copy, Check, ThumbsUp, ThumbsDown, ShieldCheck, ChevronDown, ChevronUp, ExternalLink, Sparkles, Trash2 } from 'lucide-react';
 import { ChatMessage, LanguageCode, VerifiedSource } from '../../types';
 import { speechService } from '../../services/speechService';
 
@@ -8,6 +8,7 @@ interface ChatMessageItemProps {
   currentLang: LanguageCode;
   onViewSource: (source: VerifiedSource) => void;
   onSelectAction?: (actionText: string) => void;
+  onDeleteMessage?: (messageId: string) => void;
 }
 
 export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
@@ -15,6 +16,7 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
   currentLang,
   onViewSource,
   onSelectAction,
+  onDeleteMessage,
 }) => {
   const isAssistant = message.sender === 'assistant';
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
@@ -110,12 +112,22 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   CoopSathi AI
                 </span>
-                {message.isVerified && (
+                {message.isOfficialGovLLM ? (
+                  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-emerald-900 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-400 shadow-2xs">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>🏛️ Official Government RAG ({message.modelUsed || 'Bhashini-Aligned'})</span>
+                  </span>
+                ) : message.isRealTimeLLM ? (
+                  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-blue-900 bg-blue-100 px-2 py-0.5 rounded-full border border-blue-300 shadow-2xs">
+                    <Sparkles className="w-3 h-3 text-blue-600" />
+                    <span>{message.modelUsed || 'Live AI'}</span>
+                  </span>
+                ) : message.isVerified ? (
                   <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
                     ✓ Verified Government Source
                   </span>
-                )}
+                ) : null}
               </div>
 
               <span className="text-[10px] text-slate-400 font-medium">
@@ -128,7 +140,19 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
           {!isAssistant && (
             <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/20 text-xs text-slate-200">
               <span className="font-semibold text-amber-300">You (Farmer / Member)</span>
-              <span className="text-[10px] text-slate-300">{message.timestamp}</span>
+              <div className="flex items-center space-x-2">
+                <span className="text-[10px] text-slate-300">{message.timestamp}</span>
+                {onDeleteMessage && (
+                  <button
+                    onClick={() => onDeleteMessage(message.id)}
+                    className="text-slate-300 hover:text-rose-300 p-0.5 rounded transition opacity-80 hover:opacity-100"
+                    title="Delete this message"
+                    aria-label="Delete this message"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
             </div>
           )}
 
@@ -249,6 +273,18 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
                     </>
                   )}
                 </button>
+
+                {onDeleteMessage && (
+                  <button
+                    onClick={() => onDeleteMessage(message.id)}
+                    className="flex items-center space-x-1 px-2 py-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
+                    title="Delete this message"
+                    aria-label="Delete this message"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline text-[11px]">Delete</span>
+                  </button>
+                )}
               </div>
 
               {/* Right actions: Helpful / Not helpful */}

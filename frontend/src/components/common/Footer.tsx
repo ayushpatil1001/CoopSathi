@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, ExternalLink, ShieldCheck, HeartHandshake } from 'lucide-react';
+import { Phone, Mail, ExternalLink, ShieldCheck, HeartHandshake, Building2, Scale, LifeBuoy, Flag } from 'lucide-react';
 import { LanguageCode } from '../../types';
 import { getTranslation } from '../../data/translations';
 
@@ -10,200 +10,216 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onSelectTab, currentLang }) => {
   return (
-    <footer className="bg-[#0A2540] text-slate-300 pt-12 pb-24 md:pb-12 border-t-4 border-[#FF9933]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-          {/* Col 1 & 2: Ministry & Project Vision */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-amber-400 font-bold text-lg border border-white/20">
-                🏛️
-              </div>
-              <div>
-                <h3 className="text-white font-bold text-base leading-tight">
-                  {getTranslation(currentLang, 'ministryName')}
-                </h3>
-                <p className="text-amber-400 text-xs font-semibold">
-                  {getTranslation(currentLang, 'ncctName')}
-                </p>
-              </div>
-            </div>
-
-            <p className="text-xs text-slate-400 leading-relaxed pr-4">
-              CoopSathi AI is an innovative public digital good built to democratize cooperative laws, simplify PACS modernization, expedite PMFBY crop insurance claims, and bridge the digital literacy gap for rural farmers and cooperative societies across India.
-            </p>
-
-            <div className="pt-2 flex flex-wrap gap-2 text-[11px]">
-              <span className="bg-slate-800/80 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-full flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                Verified Legal Engine
-              </span>
-              <span className="bg-slate-800/80 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-full flex items-center gap-1.5">
-                <HeartHandshake className="w-3.5 h-3.5 text-amber-400" />
-                6+ Regional Languages
-              </span>
-            </div>
-          </div>
-
-          {/* Col 3: Navigation Links */}
-          <div className="space-y-3">
-            <h4 className="text-white font-semibold text-xs tracking-wider uppercase border-b border-slate-700 pb-2">
-              Platform Modules
-            </h4>
+    <footer className="bg-[#0A2540] text-slate-300 text-xs border-t-4 border-[#FF9933] mt-auto">
+      {/* Top Footer: Essential Government Portals & Directory */}
+      <div className="border-b border-slate-700/80 py-10 px-4 sm:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          {/* Col 1: Apex Portals */}
+          <div>
+            <h5 className="text-white font-bold text-xs uppercase tracking-wider mb-3 pb-1 border-b border-slate-700 flex items-center gap-1.5">
+              <Building2 className="w-4 h-4 text-amber-400" />
+              Apex Government Portals
+            </h5>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => onSelectTab('home')} className="hover:text-amber-400 transition">
-                  {getTranslation(currentLang, 'navHome')}
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onSelectTab('chat')} className="hover:text-amber-400 transition">
-                  CoopSathi AI Assistant
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onSelectTab('schemes')} className="hover:text-amber-400 transition">
-                  {getTranslation(currentLang, 'navSchemes')}
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onSelectTab('pmfby')} className="hover:text-amber-400 transition">
-                  {getTranslation(currentLang, 'navPmfby')}
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onSelectTab('pacs')} className="hover:text-amber-400 transition">
-                  {getTranslation(currentLang, 'navPacs')}
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onSelectTab('grievance')} className="hover:text-amber-400 transition">
-                  {getTranslation(currentLang, 'navGrievance')}
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onSelectTab('admin')} className="hover:text-amber-400 transition">
-                  {getTranslation(currentLang, 'navAdmin')}
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: Official Portals */}
-          <div className="space-y-3">
-            <h4 className="text-white font-semibold text-xs tracking-wider uppercase border-b border-slate-700 pb-2">
-              Official Portals
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <a
-                  href="https://cooperation.gov.in"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center space-x-1.5 hover:text-amber-400 transition"
-                >
-                  <span>Ministry of Cooperation</span>
-                  <ExternalLink className="w-3 h-3 text-slate-500" />
+                <a href="https://cooperation.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>cooperation.gov.in (Official)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
                 </a>
               </li>
               <li>
-                <a
-                  href="https://ncct.ac.in"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center space-x-1.5 hover:text-amber-400 transition"
-                >
-                  <span>NCCT Official Portal</span>
-                  <ExternalLink className="w-3 h-3 text-slate-500" />
+                <a href="https://crcs.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>crcs.gov.in (Central Registrar)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
                 </a>
               </li>
               <li>
-                <a
-                  href="https://pmfby.gov.in"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center space-x-1.5 hover:text-amber-400 transition"
-                >
-                  <span>PMFBY National Portal</span>
-                  <ExternalLink className="w-3 h-3 text-slate-500" />
+                <a href="https://ncct.ac.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>ncct.ac.in (Cooperative Training)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
                 </a>
               </li>
               <li>
-                <a
-                  href="https://pmkisan.gov.in"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center space-x-1.5 hover:text-amber-400 transition"
-                >
-                  <span>PM-KISAN Portal</span>
-                  <ExternalLink className="w-3 h-3 text-slate-500" />
+                <a href="https://pmfby.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>pmfby.gov.in (Pradhan Mantri Fasal Bima)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
                 </a>
               </li>
               <li>
-                <a
-                  href="https://agriinfra.dac.gov.in"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center space-x-1.5 hover:text-amber-400 transition"
-                >
-                  <span>Agri Infrastructure Fund (AIF)</span>
-                  <ExternalLink className="w-3 h-3 text-slate-500" />
+                <a href="https://nabard.org" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>nabard.org (PACS ERP Refinance)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Col 5: Farmer Emergency & Support */}
-          <div className="space-y-3">
-            <h4 className="text-white font-semibold text-xs tracking-wider uppercase border-b border-slate-700 pb-2">
-              National Helplines
-            </h4>
-            <div className="space-y-2 text-xs">
-              <div className="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700">
-                <div className="flex items-center space-x-2 text-amber-400 font-bold text-sm">
+          {/* Col 2: Statutory & Legal Directory */}
+          <div>
+            <h5 className="text-white font-bold text-xs uppercase tracking-wider mb-3 pb-1 border-b border-slate-700 flex items-center gap-1.5">
+              <Scale className="w-4 h-4 text-[#138808]" />
+              Statutory & Legal Directory
+            </h5>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <button onClick={() => onSelectTab('schemes')} className="hover:text-amber-300 hover:underline text-left">
+                  Multi-State Co-op Societies (MSCS) Act 2023
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onSelectTab('schemes')} className="hover:text-amber-300 hover:underline text-left">
+                  Cooperative Election Authority (CEA) Rules
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onSelectTab('pacs')} className="hover:text-amber-300 hover:underline text-left">
+                  Standard Model PACS Model By-laws
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onSelectTab('grievance')} className="hover:text-amber-300 hover:underline text-left">
+                  Cooperative Ombudsman Regulations (Form VI & VII)
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onSelectTab('schemes')} className="hover:text-amber-300 hover:underline text-left">
+                  KCC Interest Subvention Scheme (4% Net Effective)
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 3: Helplines & Ministry Headquarters */}
+          <div>
+            <h5 className="text-white font-bold text-xs uppercase tracking-wider mb-3 pb-1 border-b border-slate-700 flex items-center gap-1.5">
+              <LifeBuoy className="w-4 h-4 text-sky-400" />
+              Citizen Helplines & Support
+            </h5>
+            <div className="space-y-2.5 text-xs">
+              <div className="bg-[#0e2c4a] p-2.5 rounded border border-slate-700">
+                <div className="flex items-center gap-2 text-amber-400 font-bold">
                   <Phone className="w-4 h-4" />
-                  <span>14447</span>
+                  <span>14447 (Toll Free)</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-0.5">
-                  PMFBY 24x7 Crop Insurance Claim & Loss Intimation Helpline
+                  PMFBY 24x7 Crop Loss Intimation & Claim Helpline
                 </p>
               </div>
 
-              <div className="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700">
-                <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
+              <div className="bg-[#0e2c4a] p-2.5 rounded border border-slate-700">
+                <div className="flex items-center gap-2 text-emerald-400 font-bold">
                   <Phone className="w-4 h-4" />
                   <span>1800-180-1551</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-0.5">
-                  Kisan Call Centre (All Languages)
+                  Kisan Call Centre (22 Scheduled Indian Languages)
                 </p>
               </div>
 
-              <div className="flex items-center space-x-2 text-slate-400 text-xs pt-1">
+              <div className="flex items-center gap-2 text-slate-300 text-xs pt-1">
                 <Mail className="w-3.5 h-3.5 text-amber-400" />
-                <span>support@coopsathi.gov.in</span>
+                <span>coop-helpdesk@gov.in</span>
               </div>
+              <p className="text-slate-400 text-[11px] leading-relaxed pt-1">
+                Atal Akshay Urja Bhawan, CGO Complex, Lodhi Road, New Delhi - 110003
+              </p>
             </div>
           </div>
-        </div>
 
-        {/* Disclaimer as explicitly requested in specs */}
-        <div className="bg-slate-900/90 rounded-xl p-4 border border-slate-800 text-slate-400 text-[11px] leading-relaxed mb-8">
-          <span className="text-amber-400 font-bold mr-1.5">Official Government Disclaimer:</span>
-          CoopSathi AI provides informational guidance based on verified gazettes, statutory acts, and model by-laws. For official legal decisions, formal court representations, or complex inter-state disputes, users are advised to consult the Central Registrar of Cooperative Societies (CRCS), District Cooperative Court, or authorized legal practitioners.
-        </div>
+          {/* Col 4: National Digital Initiatives */}
+          <div>
+            <h5 className="text-white font-bold text-xs uppercase tracking-wider mb-3 pb-1 border-b border-slate-700 flex items-center gap-1.5">
+              <Flag className="w-4 h-4 text-[#FF9933]" />
+              National Initiatives
+            </h5>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <a href="https://india.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>india.gov.in (National Portal of India)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
+                </a>
+              </li>
+              <li>
+                <a href="https://mygov.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>mygov.in (Citizen Engagement)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
+                </a>
+              </li>
+              <li>
+                <a href="https://data.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>data.gov.in (Open Government Data)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
+                </a>
+              </li>
+              <li>
+                <a href="https://pgportal.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>CPGRAMS (Centralized Grievance Portal)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
+                </a>
+              </li>
+              <li>
+                <a href="https://digitalindia.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-300 hover:underline flex items-center gap-1">
+                  <span>Digital India Initiative</span>
+                  <ExternalLink className="w-3 h-3 text-slate-500 inline" />
+                </a>
+              </li>
+            </ul>
+          </div>
 
-        {/* Bottom copyright line */}
-        <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-          <p>© 2026 Ministry of Cooperation / NCCT, Government of India. All rights reserved.</p>
-          <div className="flex items-center space-x-6 text-[11px]">
-            <span>Accessibility Statement</span>
-            <span>Terms of Use</span>
-            <span>Privacy Policy</span>
-            <span>Hyperlinking Policy</span>
+        </div>
+      </div>
+
+      {/* Mandatory GIGW Legal Disclaimer Banner */}
+      <div className="bg-[#07192c] py-4 px-4 sm:px-8 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto text-[11px] text-slate-400 leading-relaxed">
+          <strong className="text-amber-400 uppercase tracking-wide">Statutory Legal Disclaimer: </strong>
+          CoopSathi AI is an authorized digital public utility developed in coordination with the National Council for Cooperative Training (NCCT). All statutory interpretations, PACS guidelines, PMFBY claim intimation protocols, and interest subvention computations provided herein reflect the Multi-State Co-operative Societies Act 2023, official gazette circulars, and standard operating procedures. For formal dispute adjudications or appellate proceedings, citizens are advised to submit Form VI/VII to the appointed Central/State Cooperative Ombudsman or the Central Registrar of Cooperative Societies (CRCS).
+        </div>
+      </div>
+
+      {/* Mandatory GIGW Website Policies Strip */}
+      <div className="bg-[#061729] py-3 px-4 sm:px-8 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-slate-400">
+          <span className="hover:text-white cursor-pointer">Website Policies</span>
+          <span>|</span>
+          <span className="hover:text-white cursor-pointer">Privacy Policy</span>
+          <span>|</span>
+          <span className="hover:text-white cursor-pointer">Terms of Use</span>
+          <span>|</span>
+          <span className="hover:text-white cursor-pointer">Copyright Policy</span>
+          <span>|</span>
+          <span className="hover:text-white cursor-pointer">Hyperlinking Policy</span>
+          <span>|</span>
+          <span className="hover:text-white cursor-pointer">Accessibility Statement</span>
+          <span>|</span>
+          <span className="hover:text-white cursor-pointer">Sitemap</span>
+          <span>|</span>
+          <span className="hover:text-white cursor-pointer">Help & FAQ</span>
+        </div>
+      </div>
+
+      {/* Official Hosting & NIC Management Attribution */}
+      <div className="py-5 px-4 sm:px-8 text-center text-slate-400 text-[11px] leading-relaxed">
+        <div className="max-w-4xl mx-auto space-y-1.5">
+          <p>
+            Website Content Managed by <strong>Ministry of Cooperation, Government of India</strong> (सहकारिता मंत्रालय, भारत सरकार) & <strong>NCCT</strong>.
+          </p>
+          <p>
+            Designed, Developed and Hosted by <strong>National Informatics Centre (NIC)</strong>, Ministry of Electronics & Information Technology, Government of India.
+          </p>
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-4 text-slate-400 text-[11px]">
+            <span>Last Updated: <strong>24 October 2024</strong></span>
+            <span>•</span>
+            <span>GIGW Compliance: <strong className="text-emerald-400">Level AA (Certified)</strong></span>
+            <span>•</span>
+            <span>Total Visitors: <strong className="text-amber-400">1,48,92,405</strong></span>
           </div>
         </div>
       </div>
+
+      {/* Bottom tricolor stripe accent */}
+      <div className="h-1 w-full tricolor-stripe" />
     </footer>
   );
 };

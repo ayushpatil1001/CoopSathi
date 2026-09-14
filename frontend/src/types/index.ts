@@ -22,6 +22,10 @@ export interface ChatMessage {
   suggestedActions?: string[];
   audioPlaying?: boolean;
   feedback?: 'helpful' | 'unhelpful' | null;
+  isRealTimeLLM?: boolean;
+  isOfficialGovLLM?: boolean;
+  modelUsed?: string;
+  retrievedContextCount?: number;
 }
 
 export interface VerifiedSource {

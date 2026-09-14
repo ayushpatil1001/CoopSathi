@@ -57,45 +57,86 @@ html[data-contrast="high"] body {
   background: #94a3b8;
 }
 
-/* Subtle animation pulses */
+/* Smooth, lightweight animation pulses */
 @keyframes pulseGlow {
   0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
+    opacity: 0.75;
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
   }
 }
 
 .pulse-glow {
-  animation: pulseGlow 3s infinite ease-in-out;
+  animation: pulseGlow 4s infinite ease-in-out;
+  will-change: opacity;
 }
 
-/* Stitch Design System Utilities */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(14px);
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  border-left: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.08);
-}
-
-.text-gradient {
-  background: linear-gradient(90deg, #0a2540, #fe9832);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Official Government of India Tricolor Ribbon */
+.tricolor-stripe {
+  background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
+  height: 6px;
+  width: 100%;
 }
 
 .tricolor-border {
   background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
-  height: 4px;
+  height: 3px;
   width: 100%;
 }
 
-.shadow-glow {
-  box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.12);
+/* Official Circulars Announcement Ticker */
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
+
+.animate-ticker {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Institutional Government Card & Container Styling */
+.gov-card {
+  background: #FFFFFF;
+  border: 1px solid #D8E2EC;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(10, 37, 64, 0.05);
+}
+
+.gov-card:hover {
+  border-color: #B8C9DC;
+  box-shadow: 0 4px 12px -2px rgba(10, 37, 64, 0.08);
+}
+
+/* Respect reduced-motion and optimize rendering */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 350, "GRAD" 0, "opsz" 20;
+}
+.material-symbols-outlined.filled {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 20;
+}
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 25s linear infinite;
+}
+

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>सहकारिता मंत्रालय | Ministry of Cooperation | Government of India</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            saffron: '#FF9933',
+            emerald: '#138808',
+            ashoka: '#000080',
+            govNavy: '#0A2540',
+            govNavyDark: '#061729',
+            govBlueLight: '#EEF4FA',
+            govGold: '#C59B27',
+            govCream: '#FBFBFB',
+            govBorder: '#D8E2EC'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans Devanagari"', 'sans-serif'],
+            devanagari: ['"Noto Sans Devanagari"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .animate-ticker {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 32s linear infinite;
+    }
+    .animate-ticker:hover {
+      animation-play-state: paused;
+    }
+    .tricolor-stripe {
+      background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- 1. NATIONAL TRICOLOR TOP RIBBON -->
+  <div class="h-1.5 w-full tricolor-stripe"></div>
+
+  <!-- GIGW ACCESSIBILITY & UTILITY BAR -->
+  <header class="bg-[#0f1f33] text-slate-200 text-xs border-b border-slate-700/60 py-1 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <!-- Left: Gov Attribution & Screen reader -->
+      <div class="flex items-center space-x-3 divide-x divide-slate-600">
+        <div class="flex items-center space-x-2">
+          <!-- Ashoka Wheel Symbol Small -->
+          <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+            <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" stroke="currentColor" stroke-width="1"/>
+          </svg>
+          <span class="font-medium tracking-wide">भारत सरकार | Government of India</span>
+        </div>
+        <div class="pl-3 hidden md:flex items-center space-x-3">
+          <a href="#main-content" class="hover:text-amber-300 transition-colors">Skip to main content</a>
+          <span class="text-slate-500">•</span>
+          <a href="#screen-reader" class="hover:text-amber-300 transition-colors flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">record_voice_over</span>
+            Screen Reader Access
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Accessibility Controls & Language -->
+      <div class="flex items-center space-x-3 text-xs">
+        <!-- Font resizer -->
+        <div class="flex items-center bg-slate-800/80 rounded border border-slate-700 px-1.5 py-0.5 space-x-1.5">
+          <button title="Decrease text size" class="hover:text-white px-1 font-bold">A-</button>
+          <span class="text-slate-600">|</span>
+          <button title="Standard text size" class="hover:text-white px-1 font-bold text-amber-400">A</button>
+          <span class="text-slate-600">|</span>
+          <button title="Increase text size" class="hover:text-white px-1 font-bold">A+</button>
+        </div>
+
+        <!-- High contrast -->
+        <button title="High Contrast Mode" class="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 px-2 py-0.5 rounded border border-slate-700 transition-colors">
+          <span class="material-symbols-outlined text-xs">contrast</span>
+          <span class="hidden sm:inline">High Contrast</span>
+        </button>
+
+        <!-- Language switch -->
+        <div class="flex items-center gap-1 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
+          <span class="material-symbols-outlined text-xs text-amber-400">translate</span>
+          <select class="bg-transparent text-slate-200 text-xs focus:outline-none cursor-pointer">
+            <option value="hi" class="bg-slate-900">हिन्दी (Hindi)</option>
+            <option value="en" selected class="bg-slate-900">English</option>
+            <option value="mr" class="bg-slate-900">मराठी (Marathi)</option>
+            <option value="gu" class="bg-slate-900">ગુજરાતી (Gujarati)</option>
+            <option value="ta" class="bg-slate-900">தமிழ் (Tamil)</option>
+            <option value="te" class="bg-slate-900">తెలుగు (Telugu)</option>
+            <option value="bn" class="bg-slate-900">বাংলা (Bengali)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. OFFICIAL GOVERNMENT MASTHEAD / HEADER -->
+  <section class="bg-white border-b border-slate-200 py-3.5 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+      
+      <!-- Ministry & NCCT Identity with State Emblem -->
+      <div class="flex items-center gap-4">
+        <!-- Lion Capital Emblem of India -->
+        <div class="flex-shrink-0 flex flex-col items-center justify-center p-1 border-r border-slate-200 pr-4">
+          <svg class="w-14 h-16 text-slate-800" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Stylized Lion Capital of Ashoka representation -->
+            <path d="M50 8C35 8 32 20 32 30C32 40 40 44 40 54C40 64 34 68 34 78C34 88 45 92 50 92C55 92 66 88 66 78C66 68 60 64 60 54C60 44 68 40 68 30C68 20 65 8 50 8Z" fill="#8C6D1F" opacity="0.15"/>
+            <!-- Lions representation -->
+            <path d="M50 12C42 12 36 18 36 26C36 32 40 36 44 40C42 46 38 52 38 60C38 72 45 78 50 78C55 78 62 72 62 60C62 52 58 46 56 40C60 36 64 32 64 26C64 18 58 12 50 12Z" stroke="#7A5B15" stroke-width="2.5" fill="#FAF5E8"/>
+            <path d="M26 26C26 34 32 42 36 46C34 54 32 62 34 70" stroke="#7A5B15" stroke-width="2" stroke-linecap="round"/>
+            <path d="M74 26C74 34 68 42 64 46C66 54 68 62 66 70" stroke="#7A5B15" stroke-width="2" stroke-linecap="round"/>
+            <!-- Abacus with Ashoka Chakra -->
+            <rect x="22" y="78" width="56" height="8" rx="2" fill="#7A5B15"/>
+            <circle cx="50" cy="82" r="3.5" stroke="#FFFFFF" stroke-width="1.2" fill="#000080"/>
+            <!-- Base Plinth -->
+            <path d="M28 86L32 96H68L72 86H28Z" fill="#A8822A"/>
+            <!-- Satyameva Jayate (Devanagari text representation) -->
+            <text x="50" y="108" font-family="'Noto Sans Devanagari', serif" font-size="8.5" font-weight="700" fill="#604710" text-anchor="middle">सत्यमेव जयते</text>
+          </svg>
+        </div>
+
+        <!-- Official Bilingual Titles -->
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-saffron bg-orange-50 px-2 py-0.5 rounded border border-orange-200">भारत सरकार</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Govt. of India</span>
+          </div>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-govNavy font-devanagari tracking-tight leading-snug">
+            सहकारिता मंत्रालय
+          </h1>
+          <h2 class="text-sm sm:text-base font-bold text-slate-800 tracking-tight">
+            Ministry of Cooperation
+          </h2>
+          <p class="text-xs text-slate-600 flex items-center gap-1.5 mt-0.5">
+            <span class="font-medium text-emerald">राष्ट्रीय सहकारी प्रशिक्षण परिषद</span>
+            <span class="text-slate-400">|</span>
+            <span>National Council for Cooperative Training (NCCT)</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Search and Official National Initiative Logos -->
+      <div class="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+        <!-- Citizen Search Bar -->
+        <div class="relative w-full sm:w-72 lg:w-80">
+          <input 
+            type="search" 
+            placeholder="Search Acts, Circulars, PACS, PMFBY..." 
+            class="w-full pl-9 pr-20 py-2 text-xs bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-govNavy focus:bg-white text-slate-800 placeholder-slate-400"
+          >
+          <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-slate-400 text-base">search</span>
+          <button class="absolute right-1 top-1 bottom-1 px-2.5 bg-govNavy hover:bg-slate-900 text-white text-xs font-semibold rounded transition-colors flex items-center gap-1">
+            <span>खोजें</span>
+          </button>
+        </div>
+
+        <!-- Official Badges / Logos -->
+        <div class="flex items-center gap-3 self-end sm:self-auto">
+          <!-- Sahakar Se Samriddhi Logo Seal -->
+          <div class="h-11 px-2.5 py-1 bg-amber-50/80 border border-amber-200 rounded flex items-center gap-2" title="सहकार से समृद्धि - Prosperity Through Cooperation">
+            <div class="w-7 h-7 rounded-full bg-saffron/20 border border-saffron flex items-center justify-center text-saffron font-bold text-xs">
+              <span class="material-symbols-outlined text-sm text-saffron">handshake</span>
+            </div>
+            <div class="text-left leading-none">
+              <span class="text-[10px] font-bold text-amber-900 block">सहकार से समृद्धि</span>
+              <span class="text-[9px] text-amber-700 uppercase font-medium">Sahakar Samriddhi</span>
+            </div>
+          </div>
+
+          <!-- Digital India Badge -->
+          <div class="h-11 px-2 py-1 bg-blue-50/70 border border-blue-200 rounded flex items-center gap-1.5" title="Digital India Portal">
+            <span class="material-symbols-outlined text-blue-700 text-lg">language</span>
+            <div class="text-left leading-none pr-1">
+              <span class="text-[10px] font-bold text-blue-900 block">Digital India</span>
+              <span class="text-[8.5px] text-blue-600 font-medium">Power To Empower</span>
+            </div>
+          </div>
+
+          <!-- Azadi Ka Amrit Mahotsav Badge -->
+          <div class="h-11 px-2 py-1 bg-emerald-50/70 border border-emerald-200 rounded flex items-center gap-1" title="Azadi Ka Amrit Mahotsav">
+            <span class="text-xs font-extrabold text-emerald">75+</span>
+            <div class="leading-none text-[8.5px]">
+              <span class="text-emerald font-bold block">आज़ादी का</span>
+              <span class="text-slate-600">अमृत महोत्सव</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. FORMAL GOVERNMENT MAIN NAVIGATION (Solid Deep Navy #0A2540) -->
+  <nav class="bg-govNavy text-white shadow-md border-b-2 border-amber-500 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between overflow-x-auto no-scrollbar">
+      <ul class="flex items-center text-xs font-semibold whitespace-nowrap">
+        <li>
+          <a href="#" class="inline-flex items-center gap-1.5 py-3 px-3.5 bg-slate-900 text-amber-400 border-b-2 border-amber-400">
+            <span class="material-symbols-outlined text-base">home</span>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="#about" class="inline-flex items-center gap-1 py-3 px-3.5 hover:bg-slate-800 hover:text-amber-300 transition-colors">
+            <span>About Ministry</span>
+            <span class="material-symbols-outlined text-xs">expand_more</span>
+          </a>
+        </li>
+        <li>
+          <a href="#laws" class="inline-flex items-center gap-1 py-3 px-3.5 hover:bg-slate-800 hover:text-amber-300 transition-colors">
+            <span>Acts & Rules (MSCS Act 2023)</span>
+            <span class="material-symbols-outlined text-xs">expand_more</span>
+          </a>
+        </li>
+        <li>
+          <a href="#schemes" class="inline-flex items-center gap-1 py-3 px-3.5 hover:bg-slate-800 hover:text-amber-300 transition-colors">
+            <span>Schemes & Subsidies</span>
+            <span class="material-symbols-outlined text-xs">expand_more</span>
+          </a>
+        </li>
+        <li>
+          <a href="#pacs" class="inline-flex items-center gap-1 py-3 px-3.5 hover:bg-slate-800 hover:text-amber-300 transition-colors">
+            <span>PACS Services</span>
+            <span class="bg-emerald text-white text-[9px] px-1.5 py-0.2 rounded font-bold ml-1">79,630 LIVE</span>
+          </a>
+        </li>
+        <li>
+          <a href="#pmfby" class="inline-flex items-center gap-1 py-3 px-3.5 hover:bg-slate-800 hover:text-amber-300 transition-colors">
+            <span>PMFBY Crop Insurance</span>
+          </a>
+        </li>
+        <li>
+          <a href="#ombudsman" class="inline-flex items-center gap-1 py-3 px-3.5 hover:bg-slate-800 hover:text-amber-300 transition-colors">
+            <span>Ombudsman & Grievances</span>
+          </a>
+        </li>
+        <li>
+          <a href="#ncct" class="inline-flex items-center gap-1 py-3 px-3.5 hover:bg-slate-800 hover:text-amber-300 transition-colors">
+            <span>NCCT Training</span>
+          </a>
+        </li>
+        <li>
+          <a href="#telemetry" class="inline-flex items-center gap-1 py-3 px-3.5 hover:bg-slate-800 hover:text-amber-300 transition-colors">
+            <span>Database & Analytics</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Urgent Helpdesk Link -->
+      <a href="#coopsathi" class="hidden xl:flex items-center gap-1.5 bg-saffron hover:bg-amber-600 text-slate-950 font-bold px-3 py-1.5 rounded text-xs ml-4 transition-colors">
+        <span class="material-symbols-outlined text-sm">support_agent</span>
+        <span>CoopSathi AI Helpdesk</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- 4. OFFICIAL GAZETTE & CIRCULARS ANNOUNCEMENT TICKER -->
+  <section class="bg-amber-50 border-b border-amber-200 text-xs py-2 px-4 sm:px-8 overflow-hidden">
+    <div class="max-w-7xl mx-auto flex items-center">
+      <div class="flex-shrink-0 flex items-center gap-1.5 bg-saffron text-slate-950 font-bold px-2.5 py-1 rounded shadow-sm text-xs mr-3 z-10">
+        <span class="material-symbols-outlined text-sm">campaign</span>
+        <span>नवीन परिपत्रक / Circulars</span>
+      </div>
+      
+      <div class="overflow-hidden relative w-full flex items-center">
+        <div class="animate-ticker text-slate-800 font-medium space-x-8">
+          <span class="inline-flex items-center gap-1.5 text-slate-900">
+            <span class="w-2 h-2 rounded-full bg-red-600 inline-block animate-ping"></span>
+            <strong>Model By-laws:</strong> Adopted across 79,630 PACS to transform into multipurpose rural service centers.
+          </span>
+          <span class="text-slate-400">|</span>
+          <span class="inline-flex items-center gap-1">
+            <strong>PMFBY Calamity Alert:</strong> 72-Hour Crop Loss Intimation active through Toll-Free 14447 & NCIP Portal.
+          </span>
+          <span class="text-slate-400">|</span>
+          <span class="inline-flex items-center gap-1">
+            <strong>National Cooperative Database:</strong> Complete census of 8.5+ Lakh registered cooperatives published online.
+          </span>
+          <span class="text-slate-400">|</span>
+          <span class="inline-flex items-center gap-1">
+            <strong>Kisan Credit Card (MISS):</strong> 4% effective interest subvention for timely repayment by cooperative members.
+          </span>
+          <span class="text-slate-400">|</span>
+          <span class="inline-flex items-center gap-1">
+            <strong>NCCT Admissions 2024-25:</strong> Higher Diploma in Cooperative Management (HDCM) registration now open.
+          </span>
+        </div>
+      </div>
+
+      <div class="hidden md:flex flex-shrink-0 ml-3 pl-3 border-l border-amber-300">
+        <a href="#circulars" class="text-blue-800 hover:underline font-bold text-xs flex items-center gap-0.5">
+          <span>View All</span>
+          <span class="material-symbols-outlined text-xs">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT AREA -->
+  <main id="main-content" class="flex-grow">
+
+    <!-- 5. HERO & INSTITUTIONAL LEADERSHIP SECTION -->
+    <section class="bg-gradient-to-b from-white via-govBlueLight/40 to-white py-8 px-4 sm:px-8 border-b border-slate-200">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Top Institutional Header Banner -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-amber-100/70 border border-amber-300 rounded-full text-amber-900 text-xs font-bold mb-3">
+            <span class="material-symbols-outlined text-sm text-saffron">workspace_premium</span>
+            <span>सहकार से समृद्धि | Prosperity Through Cooperation</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-govNavy tracking-tight leading-tight">
+            Empowering India's Rural Economy through Transparent, Modern Cooperatives
+          </h2>
+          <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+            Strengthening Primary Agricultural Credit Societies (PACS), integrating multi-state cooperatives under the MSCS Act 2023, and delivering guaranteed welfare to 30+ crore cooperative members.
+          </p>
+        </div>
+
+        <!-- Leadership Showcase & CoopSathi AI Service Desk Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          
+          <!-- Official Leadership Dignified Showcase (5 Columns) -->
+          <div class="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+                <span class="text-xs font-extrabold uppercase tracking-wider text-govNavy flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-base text-govGold">account_balance</span>
+                  Institutional Leadership
+                </span>
+                <span class="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded font-medium">Ministry of Cooperation</span>
+              </div>
+
+              <!-- Minister Cards -->
+              <div class="space-y-3.5">
+                
+                <!-- Cabinet Minister Shri Amit Shah -->
+                <div class="flex items-center gap-3.5 p-3 rounded-lg bg-gradient-to-r from-amber-50/60 to-white border border-amber-200/80 hover:border-amber-400 transition-all">
+                  <div class="w-14 h-16 rounded-md bg-slate-200 border-2 border-govGold overflow-hidden flex-shrink-0 flex items-center justify-center relative shadow-sm">
+                    <!-- Formal portrait placeholder -->
+                    <div class="w-full h-full bg-slate-300 flex flex-col items-center justify-center text-slate-600">
+                      <span class="material-symbols-outlined text-2xl text-slate-500">person</span>
+                      <span class="text-[8px] font-bold mt-0.5">Union Minister</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-[10px] uppercase font-bold text-saffron tracking-wider">Hon'ble Union Minister</span>
+                    <h4 class="text-sm font-bold text-slate-900 leading-snug">Shri Amit Shah</h4>
+                    <p class="text-xs text-slate-600">Minister for Cooperation & Minister of Home Affairs, Government of India</p>
+                  </div>
+                </div>
+
+                <!-- Minister of State Shri Murlidhar Mohol -->
+                <div class="flex items-center gap-3.5 p-3 rounded-lg bg-slate-50/80 border border-slate-200 hover:border-slate-300 transition-all">
+                  <div class="w-13 h-15 rounded-md bg-slate-200 border border-slate-300 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                    <div class="w-12 h-14 bg-slate-300 flex flex-col items-center justify-center text-slate-600">
+                      <span class="material-symbols-outlined text-xl text-slate-500">person</span>
+                      <span class="text-[8px] font-medium">MoS</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-[10px] uppercase font-bold text-blue-700 tracking-wider">Hon'ble Minister of State</span>
+                    <h4 class="text-sm font-bold text-slate-900 leading-snug">Shri Murlidhar Mohol</h4>
+                    <p class="text-xs text-slate-600">Minister of State for Cooperation & Civil Aviation, Government of India</p>
+                  </div>
+                </div>
+
+                <!-- Secretary Dr. Ashish Kumar Bhutani -->
+                <div class="flex items-center gap-3.5 p-3 rounded-lg bg-slate-50/80 border border-slate-200 hover:border-slate-300 transition-all">
+                  <div class="w-13 h-15 rounded-md bg-slate-200 border border-slate-300 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                    <div class="w-12 h-14 bg-slate-300 flex flex-col items-center justify-center text-slate-600">
+                      <span class="material-symbols-outlined text-xl text-slate-500">person</span>
+                      <span class="text-[8px] font-medium">Secretary</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-[10px] uppercase font-bold text-emerald tracking-wider">Secretary (Cooperation)</span>
+                    <h4 class="text-sm font-bold text-slate-900 leading-snug">Dr. Ashish Kumar Bhutani, IAS</h4>
+                    <p class="text-xs text-slate-600">Secretary, Ministry of Cooperation, Government of India</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Vision Statement Quote -->
+            <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-600 italic bg-slate-50 p-2.5 rounded border border-slate-200">
+              "Cooperation is the foundational pillar of rural prosperity and farmer self-reliance. Through transparent digital PACS and national seed & organic cooperatives, we are building a vibrant grassroots economy."
+            </div>
+          </div>
+
+          <!-- CoopSathi AI - Official Citizen Service Terminal (7 Columns) -->
+          <div id="coopsathi" class="lg:col-span-7 bg-white border-2 border-slate-300 rounded-xl p-6 shadow-md flex flex-col justify-between relative overflow-hidden">
+            
+            <!-- Gov Seal Background Watermark -->
+            <div class="absolute right-4 -bottom-6 opacity-5 pointer-events-none">
+              <span class="material-symbols-outlined text-[180px] text-govNavy">account_balance</span>
+            </div>
+
+            <div>
+              <!-- Module Header -->
+              <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-lg bg-govNavy text-white flex items-center justify-center">
+                    <span class="material-symbols-outlined text-xl text-amber-400">smart_toy</span>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-base font-bold text-govNavy">CoopSathi AI • सहकार सारथी</h3>
+                      <span class="px-2 py-0.5 bg-emerald text-white text-[10px] font-bold rounded-full">GIGW ACCESSIBLE</span>
+                    </div>
+                    <p class="text-xs text-slate-600">Official Multilingual Citizen Knowledge & Grievance Assistance Terminal</p>
+                  </div>
+                </div>
+                <span class="text-[11px] text-slate-500 font-medium hidden sm:inline-block">Powered by NCCT & Bhashini</span>
+              </div>
+
+              <!-- Service Desk Description -->
+              <p class="text-xs text-slate-700 mt-3.5 leading-relaxed">
+                Speak or type in any of the <strong>22 Official Indian Languages</strong> to check Multi-State Cooperative Society rules, PACS election guidelines, PMFBY claim intimation, and NCCT training calendar.
+              </p>
+
+              <!-- Central Query Input Box -->
+              <div class="mt-4 bg-slate-50 border border-slate-300 rounded-lg p-3 shadow-inner">
+                <div class="flex items-start gap-2">
+                  <span class="material-symbols-outlined text-slate-400 text-lg mt-1">chat_bubble</span>
+                  <div class="flex-grow">
+                    <textarea 
+                      rows="2" 
+                      placeholder="उदाहरण: 'पैक्स (PACS) को सीएससी (CSC) से कैसे जोड़ें?' or 'How to file a complaint before Cooperative Ombudsman?'"
+                      class="w-full bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none resize-none"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <!-- Mic and Quick Query Action Buttons -->
+                <div class="flex items-center justify-between pt-2 border-t border-slate-200 mt-2">
+                  <div class="flex items-center gap-2">
+                    <button class="inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded text-xs font-semibold text-slate-700 shadow-sm transition-all">
+                      <span class="material-symbols-outlined text-base text-red-600 animate-pulse">mic</span>
+                      <span>Speak (बोलें)</span>
+                    </button>
+                    <span class="text-[11px] text-slate-500">Supports Hindi, Marathi, Gujarati, Telugu, Bengali...</span>
+                  </div>
+
+                  <button class="inline-flex items-center gap-1 bg-govNavy hover:bg-slate-900 text-white px-4 py-1.5 rounded text-xs font-bold transition-all shadow-sm">
+                    <span>Ask CoopSathi</span>
+                    <span class="material-symbols-outlined text-xs">send</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Pre-indexed Quick Citizen Questions -->
+              <div class="mt-3.5">
+                <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wide block mb-1.5">Commonly Asked by Farmers & Cooperatives:</span>
+                <div class="flex flex-wrap gap-2">
+                  <button class="text-[11px] bg-slate-100 hover:bg-amber-100 hover:text-amber-900 text-slate-700 px-2.5 py-1 rounded border border-slate-200 transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs text-amber-600">article</span>
+                    MSCS Act 2023 Electoral Reform Rules
+                  </button>
+                  <button class="text-[11px] bg-slate-100 hover:bg-emerald-100 hover:text-emerald-900 text-slate-700 px-2.5 py-1 rounded border border-slate-200 transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs text-emerald">support</span>
+                    72-Hour PMFBY Claim Toll-Free Process
+                  </button>
+                  <button class="text-[11px] bg-slate-100 hover:bg-blue-100 hover:text-blue-900 text-slate-700 px-2.5 py-1 rounded border border-slate-200 transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs text-blue-600">devices</span>
+                    PACS Model By-laws 25+ Citizen Services
+                  </button>
+                  <button class="text-[11px] bg-slate-100 hover:bg-purple-100 hover:text-purple-900 text-slate-700 px-2.5 py-1 rounded border border-slate-200 transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs text-purple-600">school</span>
+                    NCCT Certificate Verification Portal
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terminal Footer Status -->
+            <div class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between text-[11px] text-slate-500">
+              <span class="flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald"></span>
+                Official Knowledge Base Version: <strong>2024.3 (CRCS & NCCT Verified)</strong>
+              </span>
+              <a href="#ombudsman-portal" class="text-govNavy font-semibold hover:underline flex items-center gap-0.5">
+                Official Ombudsman Grievance Lodging
+                <span class="material-symbols-outlined text-xs">arrow_forward</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. CITIZEN SERVICES GRID (GIGW STANDARD CARDS) -->
+    <section id="services" class="py-10 px-4 sm:px-8 bg-[#F1F5F9] border-b border-slate-200">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 pb-2 border-b border-slate-300">
+          <div>
+            <div class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-saffron">
+              <span class="material-symbols-outlined text-sm">grid_view</span>
+              Direct Citizen Access
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-govNavy">
+              Priority Cooperative Services & Citizen Portals
+            </h3>
+            <p class="text-xs text-slate-600 mt-0.5">Statutory portals, regulatory filings, crop insurance, and computerized PACS services.</p>
+          </div>
+          <div class="mt-3 md:mt-0">
+            <span class="text-xs font-medium text-slate-500 bg-white border border-slate-300 px-3 py-1.5 rounded shadow-sm">
+              All services compliant with GIGW 3.0 Standards
+            </span>
+          </div>
+        </div>
+
+        <!-- 6 GIGW Formal Sized Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <!-- Card 1: Cooperative Society Laws & By-Laws -->
+          <div class="bg-white rounded-lg border border-slate-300 hover:border-govNavy shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between">
+                <div class="w-11 h-11 rounded-lg bg-blue-50 text-blue-900 border border-blue-200 flex items-center justify-center group-hover:bg-govNavy group-hover:text-amber-400 transition-colors">
+                  <span class="material-symbols-outlined text-2xl">gavel</span>
+                </div>
+                <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded uppercase">Statutory Act</span>
+              </div>
+              <h4 class="text-base font-bold text-govNavy mt-3 group-hover:text-blue-900 transition-colors">
+                Cooperative Laws & MSCS Act 2023
+              </h4>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                Access statutory Multi-State Co-operative Societies (MSCS) Act 2023, Sections 29, 45 & 85 rules, model election codes, and CRCS gazette notifications.
+              </p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-700 font-medium">
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Model By-laws for PACS & Dairy Societies
+                </li>
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Cooperative Election Authority (CEA) Guidelines
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <a href="#laws" class="font-bold text-govNavy group-hover:text-blue-700 flex items-center gap-1">
+                <span>View Acts & Notifications</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+              </a>
+              <span class="text-[10px] text-slate-400">PDF / 4.2 MB</span>
+            </div>
+          </div>
+
+          <!-- Card 2: PMFBY Crop Insurance -->
+          <div class="bg-white rounded-lg border border-slate-300 hover:border-emerald shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between">
+                <div class="w-11 h-11 rounded-lg bg-emerald-50 text-emerald border border-emerald-200 flex items-center justify-center group-hover:bg-emerald group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-2xl">shield</span>
+                </div>
+                <span class="text-[10px] font-bold bg-emerald-100 text-emerald px-2 py-0.5 rounded uppercase">72-Hr Intimation</span>
+              </div>
+              <h4 class="text-base font-bold text-govNavy mt-3 group-hover:text-emerald transition-colors">
+                PMFBY Crop Insurance & Claims
+              </h4>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                Pradhan Mantri Fasal Bima Yojana integration for cooperative farmers. Report localized crop loss within 72 hours of unseasonal rain, hailstorm, or flood.
+              </p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-700 font-medium">
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Direct NCIP Portal Claim Tracking
+                </li>
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  National Crop Insurance Toll-Free: <strong>14447</strong>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <a href="https://pmfby.gov.in" target="_blank" class="font-bold text-emerald flex items-center gap-1">
+                <span>Access PMFBY Portal</span>
+                <span class="material-symbols-outlined text-sm">open_in_new</span>
+              </a>
+              <span class="text-[10px] text-slate-400">Direct GOI Link</span>
+            </div>
+          </div>
+
+          <!-- Card 3: PACS Digital Modernization -->
+          <div class="bg-white rounded-lg border border-slate-300 hover:border-saffron shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between">
+                <div class="w-11 h-11 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 flex items-center justify-center group-hover:bg-saffron group-hover:text-slate-950 transition-colors">
+                  <span class="material-symbols-outlined text-2xl">storefront</span>
+                </div>
+                <span class="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded uppercase">79,630 PACS</span>
+              </div>
+              <h4 class="text-base font-bold text-govNavy mt-3 group-hover:text-amber-800 transition-colors">
+                PACS Digital Modernization (ERP)
+              </h4>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                Centralized ERP onboarding for Primary Agricultural Credit Societies, enabling delivery of 25+ Common Service Center (CSC) citizen services in villages.
+              </p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-700 font-medium">
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  E-Services: Aadhaar, Banking, Fertilizer, Seeds
+                </li>
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Standardized Financial Accounting System
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <a href="#pacs" class="font-bold text-amber-900 flex items-center gap-1">
+                <span>PACS ERP Status & Login</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <span class="text-[10px] text-slate-400">NABARD Assisted</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Kisan Credit Card 4% Subvention -->
+          <div class="bg-white rounded-lg border border-slate-300 hover:border-govNavy shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between">
+                <div class="w-11 h-11 rounded-lg bg-indigo-50 text-indigo-900 border border-indigo-200 flex items-center justify-center group-hover:bg-govNavy group-hover:text-amber-400 transition-colors">
+                  <span class="material-symbols-outlined text-2xl">credit_card</span>
+                </div>
+                <span class="text-[10px] font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded uppercase">MISS Scheme</span>
+              </div>
+              <h4 class="text-base font-bold text-govNavy mt-3 group-hover:text-indigo-900 transition-colors">
+                Kisan Credit Card (KCC) 4% Subvention
+              </h4>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                Modified Interest Subvention Scheme (MISS) providing short-term crop loans up to ₹3,00,000 at an effective interest rate of only 4% per annum for prompt repayment.
+              </p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-700 font-medium">
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Dairy & Fishery KCC Extension
+                </li>
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Simplified 1-Page PACS Application Form
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <a href="#kcc" class="font-bold text-govNavy flex items-center gap-1">
+                <span>Download Form & Guidelines</span>
+                <span class="material-symbols-outlined text-sm">download</span>
+              </a>
+              <span class="text-[10px] text-slate-400">NABARD Norms</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Cooperative Ombudsman -->
+          <div class="bg-white rounded-lg border border-slate-300 hover:border-red-600 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between">
+                <div class="w-11 h-11 rounded-lg bg-red-50 text-red-700 border border-red-200 flex items-center justify-center group-hover:bg-red-700 group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-2xl">balance</span>
+                </div>
+                <span class="text-[10px] font-bold bg-red-100 text-red-800 px-2 py-0.5 rounded uppercase">Grievance Redressal</span>
+              </div>
+              <h4 class="text-base font-bold text-govNavy mt-3 group-hover:text-red-700 transition-colors">
+                Cooperative Ombudsman Grievance Portal
+              </h4>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                Statutory grievance mechanism under the Multi-State Cooperative Societies Rules. Lodge complaints regarding elections, deposits, fraud, or non-issuance of shares.
+              </p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-700 font-medium">
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Statutory Form VI & VII E-Filing
+                </li>
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Real-time Complaint Tracking & Appellate Authority
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <a href="#ombudsman" class="font-bold text-red-700 flex items-center gap-1">
+                <span>Lodge Official Complaint</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <span class="text-[10px] text-slate-400">Statutory Portal</span>
+            </div>
+          </div>
+
+          <!-- Card 6: NCCT Training & Certifications -->
+          <div class="bg-white rounded-lg border border-slate-300 hover:border-purple-700 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between">
+                <div class="w-11 h-11 rounded-lg bg-purple-50 text-purple-900 border border-purple-200 flex items-center justify-center group-hover:bg-purple-900 group-hover:text-amber-400 transition-colors">
+                  <span class="material-symbols-outlined text-2xl">school</span>
+                </div>
+                <span class="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded uppercase">NCCT Autonomous</span>
+              </div>
+              <h4 class="text-base font-bold text-govNavy mt-3 group-hover:text-purple-900 transition-colors">
+                NCCT Cooperative Management Education
+              </h4>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                Capacity building via VAMNICOM Pune and 19 Institutes of Cooperative Management (ICMs) across India. Professional diplomas, PACS leadership programs & e-certifications.
+              </p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-700 font-medium">
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  Higher Diploma in Cooperative Management (HDCM)
+                </li>
+                <li class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-emerald">check_circle</span>
+                  National Certificate Verification System
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <a href="https://ncct.ac.in" target="_blank" class="font-bold text-purple-900 flex items-center gap-1">
+                <span>Visit NCCT Training Portal</span>
+                <span class="material-symbols-outlined text-sm">open_in_new</span>
+              </a>
+              <span class="text-[10px] text-slate-400">ncct.ac.in</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. NATIONAL COOPERATIVE TELEMETRY & REAL-TIME STATS -->
+    <section id="telemetry" class="bg-govNavy text-white py-12 px-4 sm:px-8 relative overflow-hidden">
+      <!-- Subtle Ashoka Chakra decorative background -->
+      <div class="absolute -right-20 -top-20 opacity-5 pointer-events-none">
+        <svg class="w-96 h-96 text-white" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" stroke="currentColor" stroke-width="0.8"/>
+        </svg>
+      </div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-400 bg-slate-900/80 px-3 py-1 rounded-full border border-slate-700">
+            National Cooperative Database • राष्ट्रीय सहकारिता सांख्यिकी
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold mt-3 tracking-tight">
+            Scale and Impact of India's Cooperative Sector
+          </h3>
+          <p class="text-xs text-slate-300 mt-1">Live verified telemetry from Ministry of Cooperation & National Informatics Centre (NIC)</p>
+        </div>
+
+        <!-- 5 Key Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          
+          <div class="bg-slate-900/80 border border-slate-700/80 rounded-lg p-4 text-center hover:border-amber-400 transition-colors">
+            <div class="w-9 h-9 mx-auto rounded-full bg-amber-400/10 text-amber-400 flex items-center justify-center mb-2">
+              <span class="material-symbols-outlined text-xl">corporate_fare</span>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 font-mono">8.5+ Lakh</div>
+            <div class="text-xs font-semibold text-white mt-1">Registered Cooperatives</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Across 36 States & UTs</div>
+          </div>
+
+          <div class="bg-slate-900/80 border border-slate-700/80 rounded-lg p-4 text-center hover:border-emerald transition-colors">
+            <div class="w-9 h-9 mx-auto rounded-full bg-emerald/20 text-emerald flex items-center justify-center mb-2">
+              <span class="material-symbols-outlined text-xl">groups</span>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono">30+ Crore</div>
+            <div class="text-xs font-semibold text-white mt-1">Individual Members</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Farmers, Artisans & Women</div>
+          </div>
+
+          <div class="bg-slate-900/80 border border-slate-700/80 rounded-lg p-4 text-center hover:border-blue-400 transition-colors">
+            <div class="w-9 h-9 mx-auto rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mb-2">
+              <span class="material-symbols-outlined text-xl">computer</span>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-blue-300 font-mono">79,630</div>
+            <div class="text-xs font-semibold text-white mt-1">Computerized PACS</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">On Common ERP Software</div>
+          </div>
+
+          <div class="bg-slate-900/80 border border-slate-700/80 rounded-lg p-4 text-center hover:border-amber-400 transition-colors">
+            <div class="w-9 h-9 mx-auto rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center mb-2">
+              <span class="material-symbols-outlined text-xl">payments</span>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-amber-300 font-mono">₹2,925.39 Cr</div>
+            <div class="text-xs font-semibold text-white mt-1">Digital PACS Outlay</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Approved by Union Cabinet</div>
+          </div>
+
+          <div class="col-span-2 sm:col-span-1 bg-slate-900/80 border border-slate-700/80 rounded-lg p-4 text-center hover:border-emerald transition-colors">
+            <div class="w-9 h-9 mx-auto rounded-full bg-emerald-400/20 text-emerald-300 flex items-center justify-center mb-2">
+              <span class="material-symbols-outlined text-xl">verified</span>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-300 font-mono">₹2.06 Lakh Cr</div>
+            <div class="text-xs font-semibold text-white mt-1">PMFBY Claims Settled</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Disbursed directly into DBT accounts</div>
+          </div>
+
+        </div>
+
+        <!-- Telemetry Data Sync Bar -->
+        <div class="mt-8 pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald inline-block"></span>
+            <span>Live Data Sync: <strong>National Cooperative Database (cooperativedatabase.gov.in)</strong></span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span>Last Census Cycle: <strong>FY 2023-24 (Q4)</strong></span>
+            <a href="#" class="text-amber-400 hover:underline font-semibold flex items-center gap-1">
+              <span>Download State-wise Census Report</span>
+              <span class="material-symbols-outlined text-xs">download</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- NEW NATIONAL MULTI-STATE COOPERATIVES INITIATIVE SHOWCASE -->
+    <section class="py-8 px-4 sm:px-8 bg-white border-b border-slate-200">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-6">
+          <span class="text-xs font-bold text-saffron uppercase tracking-wider">Historic Cabinet Decision</span>
+          <h3 class="text-xl font-extrabold text-govNavy">Three New National Level Multi-State Cooperative Societies</h3>
+          <p class="text-xs text-slate-600 mt-0.5">Empowering PACS as primary shareholders to boost export, organic farming, and certified seed multiplication.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          
+          <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 flex items-start gap-3">
+            <div class="w-10 h-10 rounded bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined">yard</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-govNavy uppercase">1. National Seed Cooperative</h5>
+              <p class="text-xs font-bold text-slate-800">Bharatiya Beej Sahakari Samiti Ltd (BBSSL)</p>
+              <p class="text-[11px] text-slate-600 mt-1">Multiplication, testing, and distribution of high-yield certified quality seeds by PACS farmers.</p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 flex items-start gap-3">
+            <div class="w-10 h-10 rounded bg-emerald-100 text-emerald flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined">eco</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-govNavy uppercase">2. National Organic Cooperative</h5>
+              <p class="text-xs font-bold text-slate-800">National Cooperative Organics Ltd (NCOL)</p>
+              <p class="text-[11px] text-slate-600 mt-1">Certified testing, branding ('Bharat Organics'), and marketing for fair organic farmer prices.</p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 flex items-start gap-3">
+            <div class="w-10 h-10 rounded bg-blue-100 text-blue-900 flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined">public</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-govNavy uppercase">3. National Export Cooperative</h5>
+              <p class="text-xs font-bold text-slate-800">National Cooperative Exports Ltd (NCEL)</p>
+              <p class="text-[11px] text-slate-600 mt-1">Facilitating agricultural surplus export directly into global markets with direct farmer profit return.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 8. COMPREHENSIVE GIGW GOVERNMENT FOOTER -->
+  <footer class="bg-[#0A2540] text-slate-300 text-xs border-t-4 border-saffron mt-auto">
+    
+    <!-- Top Footer: Essential Government Portals -->
+    <div class="border-b border-slate-700/80 py-8 px-4 sm:px-8">
+      <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+        
+        <div>
+          <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-3 pb-1 border-b border-slate-700 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-amber-400">account_balance</span>
+            Apex Apex Portals
+          </h5>
+          <ul class="space-y-1.5 text-xs">
+            <li><a href="https://cooperation.gov.in" target="_blank" class="hover:text-amber-300 hover:underline">cooperation.gov.in (Official)</a></li>
+            <li><a href="https://crcs.gov.in" target="_blank" class="hover:text-amber-300 hover:underline">crcs.gov.in (Central Registrar)</a></li>
+            <li><a href="https://ncct.ac.in" target="_blank" class="hover:text-amber-300 hover:underline">ncct.ac.in (Cooperative Training)</a></li>
+            <li><a href="https://pmfby.gov.in" target="_blank" class="hover:text-amber-300 hover:underline">pmfby.gov.in (Fasal Bima)</a></li>
+            <li><a href="https://nabard.org" target="_blank" class="hover:text-amber-300 hover:underline">nabard.org (PACS ERP Refinance)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-3 pb-1 border-b border-slate-700 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-emerald">gavel</span>
+            Statutory & Legal
+          </h5>
+          <ul class="space-y-1.5 text-xs">
+            <li><a href="#mscs-act" class="hover:text-amber-300 hover:underline">Multi-State Co-op Societies Act 2023</a></li>
+            <li><a href="#rules" class="hover:text-amber-300 hover:underline">Cooperative Election Authority Rules</a></li>
+            <li><a href="#circulars" class="hover:text-amber-300 hover:underline">Gazette Notifications & Circulars</a></li>
+            <li><a href="#pacs-bylaws" class="hover:text-amber-300 hover:underline">Standard Model PACS By-laws</a></li>
+            <li><a href="#ombudsman-rules" class="hover:text-amber-300 hover:underline">Cooperative Ombudsman Regulations</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-3 pb-1 border-b border-slate-700 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-blue-400">support</span>
+            Helpline & Support
+          </h5>
+          <ul class="space-y-1.5 text-xs">
+            <li class="flex items-center gap-1.5 text-white">
+              <span class="material-symbols-outlined text-xs text-amber-400">call</span>
+              PMFBY Crop Helpline: <strong>14447</strong> (Toll Free)
+            </li>
+            <li class="flex items-center gap-1.5 text-white">
+              <span class="material-symbols-outlined text-xs text-amber-400">call</span>
+              Kisan Call Centre: <strong>1800-180-1551</strong>
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-xs text-amber-400">mail</span>
+              <span>coop-helpdesk@gov.in</span>
+            </li>
+            <li class="text-slate-400 text-[11px] pt-1">
+              Atal Akshay Urja Bhawan, CGO Complex, Lodhi Road, New Delhi - 110003
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-3 pb-1 border-b border-slate-700 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-saffron">flag</span>
+            National Initiatives
+          </h5>
+          <ul class="space-y-1.5 text-xs">
+            <li><a href="https://india.gov.in" target="_blank" class="hover:text-amber-300 hover:underline">india.gov.in (National Portal)</a></li>
+            <li><a href="https://mygov.in" target="_blank" class="hover:text-amber-300 hover:underline">mygov.in (Citizen Engagement)</a></li>
+            <li><a href="https://data.gov.in" target="_blank" class="hover:text-amber-300 hover:underline">data.gov.in (Open Government Data)</a></li>
+            <li><a href="https://pgportal.gov.in" target="_blank" class="hover:text-amber-300 hover:underline">CPGRAMS (Public Grievances)</a></li>
+            <li><a href="https://digitalindia.gov.in" target="_blank" class="hover:text-amber-300 hover:underline">Digital India Initiative</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mandatory GIGW Website Policies Strip -->
+    <div class="bg-[#061729] py-3.5 px-4 sm:px-8 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-slate-400">
+        <a href="#privacy" class="hover:text-white">Privacy Policy</a>
+        <span>|</span>
+        <a href="#terms" class="hover:text-white">Terms of Use</a>
+        <span>|</span>
+        <a href="#copyright" class="hover:text-white">Copyright Policy</a>
+        <span>|</span>
+        <a href="#hyperlink" class="hover:text-white">Hyperlinking Policy</a>
+        <span>|</span>
+        <a href="#accessibility" class="hover:text-white">Accessibility Statement</a>
+        <span>|</span>
+        <a href="#disclaimer" class="hover:text-white">Disclaimer</a>
+        <span>|</span>
+        <a href="#sitemap" class="hover:text-white">Sitemap</a>
+      </div>
+    </div>
+
+    <!-- Official Hosting & NIC Management Attribution -->
+    <div class="py-5 px-4 sm:px-8 text-center text-slate-400 text-[11px] leading-relaxed">
+      <div class="max-w-4xl mx-auto space-y-1.5">
+        <p>
+          Website Content Managed by <strong>Ministry of Cooperation, Government of India</strong> (सहकारिता मंत्रालय, भारत सरकार).
+        </p>
+        <p>
+          Designed, Developed and Hosted by <strong>National Informatics Centre (NIC)</strong>, Ministry of Electronics & Information Technology, Government of India.
+        </p>
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-4 text-slate-500 text-[10px]">
+          <span>Last Updated: <strong>24 October 2024</strong></span>
+          <span>•</span>
+          <span>GIGW Compliance: <strong>Level AA (Certified)</strong></span>
+          <span>•</span>
+          <span>Total Visitors: <strong>1,48,92,405</strong></span>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+</body>
+</html>

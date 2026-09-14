@@ -1,138 +1,69 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 interface StitchShaderWaveformProps {
   isActive?: boolean;
 }
 
 export const StitchShaderWaveform: React.FC<StitchShaderWaveformProps> = ({ isActive = true }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    let animationFrameId: number;
-
-    const syncSize = () => {
-      const w = canvas.clientWidth || 600;
-      const h = canvas.clientHeight || 180;
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
-      }
-    };
-
-    const resizeObserver = new ResizeObserver(syncSize);
-    resizeObserver.observe(canvas);
-    syncSize();
-
-    const gl = (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
-    if (!gl) return;
-
-    const vs = `
-      attribute vec2 a_position;
-      varying vec2 v_texCoord;
-      void main() {
-        v_texCoord = a_position * 0.5 + 0.5;
-        gl_Position = vec4(a_position, 0.0, 1.0);
-      }
-    `;
-
-    const fs = `
-      precision highp float;
-      uniform float u_time;
-      uniform vec2 u_resolution;
-      varying vec2 v_texCoord;
-
-      void main() {
-        vec2 uv = v_texCoord;
-        
-        // Multiple sine waves for the equalizer effect
-        float wave1 = sin(uv.x * 20.0 + u_time * 5.0) * 0.12 * sin(u_time * 2.0);
-        float wave2 = sin(uv.x * 35.0 - u_time * 7.0) * 0.06 * cos(u_time * 1.5);
-        float wave3 = sin(uv.x * 50.0 + u_time * 10.0) * 0.03 * sin(u_time * 3.0);
-        
-        float combinedWave = wave1 + wave2 + wave3;
-        
-        // Vertical lines centered vertically
-        float linePos = 0.5 + combinedWave;
-        float dist = abs(uv.y - linePos);
-        
-        // Colors inspired by India's tricolor and the Deep Navy theme
-        vec3 colorSaffron = vec3(1.0, 0.6, 0.2);  // #FF9933
-        vec3 colorEmerald = vec3(0.07, 0.53, 0.03); // #138808
-        vec3 colorWhite = vec3(1.0, 1.0, 1.0);
-        
-        vec3 finalColor = mix(colorSaffron, colorEmerald, uv.x);
-        finalColor = mix(finalColor, colorWhite, 0.5 + 0.5 * sin(u_time));
-        
-        // Glow effect
-        float glow = smoothstep(0.12, 0.0, dist);
-        vec3 outColor = finalColor * glow;
-        
-        gl_FragColor = vec4(outColor, glow * 0.85);
-      }
-    `;
-
-    const createShader = (type: number, src: string) => {
-      const shader = gl.createShader(type);
-      if (!shader) return null;
-      gl.shaderSource(shader, src);
-      gl.compileShader(shader);
-      return shader;
-    };
-
-    const vert = createShader(gl.VERTEX_SHADER, vs);
-    const frag = createShader(gl.FRAGMENT_SHADER, fs);
-    if (!vert || !frag) return;
-
-    const prog = gl.createProgram();
-    if (!prog) return;
-    gl.attachShader(prog, vert);
-    gl.attachShader(prog, frag);
-    gl.linkProgram(prog);
-    gl.useProgram(prog);
-
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW
-    );
-
-    const pos = gl.getAttribLocation(prog, 'a_position');
-    gl.enableVertexAttribArray(pos);
-    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-
-    const uTime = gl.getUniformLocation(prog, 'u_time');
-    const uRes = gl.getUniformLocation(prog, 'u_resolution');
-
-    let startTime = performance.now();
-
-    const render = (time: number) => {
-      syncSize();
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      const elapsed = (time - startTime) * 0.001;
-      if (uTime) gl.uniform1f(uTime, elapsed);
-      if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    animationFrameId = requestAnimationFrame(render);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      resizeObserver.disconnect();
-    };
-  }, [isActive]);
+  // 24 hardware-accelerated waveform bars with tricolor gradient styling
+  const bars = [
+    { height: '35%', color: '#FF9933', delay: '0.0s', duration: '1.4s' },
+    { height: '55%', color: '#FF9933', delay: '0.2s', duration: '1.6s' },
+    { height: '80%', color: '#FFB066', delay: '0.4s', duration: '1.3s' },
+    { height: '45%', color: '#FF9933', delay: '0.1s', duration: '1.5s' },
+    { height: '65%', color: '#FFA64D', delay: '0.3s', duration: '1.7s' },
+    { height: '90%', color: '#FF9933', delay: '0.5s', duration: '1.4s' },
+    { height: '40%', color: '#FFFFFF', delay: '0.2s', duration: '1.6s' },
+    { height: '70%', color: '#FFFFFF', delay: '0.4s', duration: '1.3s' },
+    { height: '100%', color: '#FFFFFF', delay: '0.1s', duration: '1.5s' },
+    { height: '60%', color: '#FFFFFF', delay: '0.3s', duration: '1.4s' },
+    { height: '85%', color: '#E2E8F0', delay: '0.5s', duration: '1.7s' },
+    { height: '50%', color: '#FFFFFF', delay: '0.0s', duration: '1.3s' },
+    { height: '75%', color: '#138808', delay: '0.2s', duration: '1.5s' },
+    { height: '95%', color: '#22C55E', delay: '0.4s', duration: '1.4s' },
+    { height: '40%', color: '#138808', delay: '0.1s', duration: '1.6s' },
+    { height: '80%', color: '#16A34A', delay: '0.3s', duration: '1.3s' },
+    { height: '60%', color: '#138808', delay: '0.5s', duration: '1.7s' },
+    { height: '40%', color: '#22C55E', delay: '0.2s', duration: '1.5s' }
+  ];
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none rounded-3xl opacity-65"
-      style={{ display: 'block' }}
-    />
+    <div
+      className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden rounded-3xl opacity-35 flex items-center justify-center gap-1.5 sm:gap-2 px-6"
+      style={{ transform: 'translateZ(0)' }}
+      aria-hidden="true"
+    >
+      {bars.map((bar, i) => (
+        <div
+          key={i}
+          className="w-1 sm:w-1.5 rounded-full"
+          style={{
+            height: bar.height,
+            backgroundColor: bar.color,
+            boxShadow: `0 0 8px ${bar.color}66`,
+            animation: isActive ? `smoothWave ${bar.duration} ease-in-out infinite alternate` : 'none',
+            animationDelay: bar.delay,
+            transformOrigin: 'center',
+            willChange: 'transform'
+          }}
+        />
+      ))}
+      <style>{`
+        @keyframes smoothWave {
+          0% {
+            transform: scaleY(0.35);
+            opacity: 0.4;
+          }
+          50% {
+            transform: scaleY(1);
+            opacity: 0.9;
+          }
+          100% {
+            transform: scaleY(0.45);
+            opacity: 0.5;
+          }
+        }
+      `}</style>
+    </div>
   );
 };

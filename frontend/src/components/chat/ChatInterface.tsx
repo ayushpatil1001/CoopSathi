@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Bot, Send, Mic, MicOff, Plus, Trash2, ShieldCheck, 
   Scale, FileText, Warehouse, MessageSquareText, 
-  Globe, Sparkles, AlertCircle, RefreshCw
+  Globe, Sparkles, AlertCircle, RefreshCw, Check, X
 } from 'lucide-react';
 import { ChatMessage, LanguageCode, VerifiedSource, AssistantType } from '../../types';
 import { SUPPORTED_LANGUAGES, getTranslation } from '../../data/translations';
@@ -34,6 +34,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [speechListener, setSpeechListener] = useState<{ stop: () => void } | null>(null);
   const [selectedSource, setSelectedSource] = useState<VerifiedSource | null>(null);
   const [activeCategory, setActiveCategory] = useState<AssistantType>(initialAssistantType || 'general');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -169,26 +171,43 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     setSpeechListener(listener);
   };
 
-  const handleClearHistory = () => {
-    if (window.confirm('Clear current chat conversation?')) {
-      storageService.clearChatHistory();
-      const welcomeMsg: ChatMessage = {
-        id: 'WELCOME-01',
-        sender: 'assistant',
-        text: getTranslation(currentLang, 'greeting'),
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        language: currentLang,
-        isVerified: true,
-        suggestedActions: [
-          'What are my voting rights?',
-          'Calculate PMFBY Premium',
-          'PACS Computerization',
-          'File a Grievance'
-        ]
-      };
+  const createWelcomeMessage = (lang: LanguageCode): ChatMessage => ({
+    id: 'WELCOME-01',
+    sender: 'assistant',
+    text: getTranslation(lang, 'greeting'),
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    language: lang,
+    isVerified: true,
+    confidence: 0.99,
+    suggestedActions: [
+      'What are my voting rights?',
+      'Calculate PMFBY Premium',
+      'PACS Computerization',
+      'File a Grievance'
+    ]
+  });
+
+  const handleConfirmDeleteAllHistory = () => {
+    storageService.clearChatHistory();
+    const welcomeMsg = createWelcomeMessage(currentLang);
+    setMessages([welcomeMsg]);
+    storageService.saveChatHistory([welcomeMsg]);
+    setShowDeleteModal(false);
+    setToastMessage('Chat history deleted successfully');
+    setTimeout(() => setToastMessage(null), 3500);
+  };
+
+  const handleDeleteSingleMessage = (messageId: string) => {
+    const updated = storageService.deleteChatMessage(messageId);
+    if (updated.length === 0) {
+      const welcomeMsg = createWelcomeMessage(currentLang);
       setMessages([welcomeMsg]);
       storageService.saveChatHistory([welcomeMsg]);
+    } else {
+      setMessages(updated);
     }
+    setToastMessage('Message removed from chat');
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
   const handleCategoryFilter = (category: AssistantType, prompt: string) => {
@@ -208,12 +227,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
             <div>
               <h1 className="text-base font-bold text-[#0A2540] flex items-center gap-2">
                 <span>CoopSathi AI Live Assistant</span>
-                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-emerald-300">
-                  RAG Live
+                <span className="bg-emerald-100 text-emerald-900 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-400 shadow-2xs flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-emerald-700" />
+                  <span>Official Government RAG LLM</span>
                 </span>
               </h1>
               <p className="text-xs text-slate-500">
-                Grounded in Ministry of Cooperation Gazette Notifications & PMFBY Guidelines
+                Grounded in MSCS Act 2023, PMFBY Operational Guidelines & Bhashini NLU
               </p>
             </div>
           </div>
@@ -235,13 +255,15 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               </select>
             </div>
 
+            {/* Delete History Button */}
             <button
-              onClick={handleClearHistory}
-              className="p-2 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition border border-slate-200"
-              title="Reset Conversation"
-              aria-label="Reset Conversation"
+              onClick={() => setShowDeleteModal(true)}
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border border-rose-200/80 transition text-xs font-bold shadow-2xs"
+              title="Delete all chat history"
+              aria-label="Delete all chat history"
             >
-              <RefreshCw className="w-4 h-4" />
+              <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+              <span>Delete History</span>
             </button>
           </div>
         </div>
@@ -254,7 +276,11 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           <div className="space-y-4">
             {/* New Conversation Button */}
             <button
-              onClick={handleClearHistory}
+              onClick={() => {
+                if (messages.length > 1) {
+                  setShowDeleteModal(true);
+                }
+              }}
               className="w-full bg-gov-blue-900 hover:bg-gov-blue-800 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-sm transition"
             >
               <Plus className="w-4 h-4 text-amber-400" />
@@ -291,6 +317,22 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 );
               })}
             </div>
+
+            {/* Clear History Sidebar Action */}
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-rose-700 hover:bg-rose-50 border border-dashed border-slate-300 hover:border-rose-300 transition"
+              title="Delete entire chat history"
+              aria-label="Delete entire chat history"
+            >
+              <span className="flex items-center space-x-2">
+                <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                <span>Delete History</span>
+              </span>
+              <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded font-mono text-slate-500">
+                {messages.length} msgs
+              </span>
+            </button>
           </div>
 
           {/* Bottom Sidebar Notice / Disclaimer */}
@@ -316,6 +358,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 currentLang={currentLang}
                 onViewSource={(source) => setSelectedSource(source)}
                 onSelectAction={(actionText) => handleSendMessage(actionText)}
+                onDeleteMessage={handleDeleteSingleMessage}
               />
             ))}
 
@@ -419,6 +462,53 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Confirmation Modal to Delete Chat History */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-fadeIn">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div className="flex items-start space-x-3">
+              <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                <Trash2 className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900">
+                  Delete Chat History?
+                </h3>
+                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  Are you sure you want to permanently delete all messages from this session? This action will remove the conversation stored on your browser and cannot be undone.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDeleteAllHistory}
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-sm transition flex items-center space-x-1.5"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Yes, Delete History</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-lg border border-slate-700 text-xs font-semibold flex items-center space-x-2 animate-fadeIn">
+          <Check className="w-4 h-4 text-emerald-400" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
 
       {/* Source Citation Drawer Modal */}
       <SourceDrawer source={selectedSource} onClose={() => setSelectedSource(null)} />

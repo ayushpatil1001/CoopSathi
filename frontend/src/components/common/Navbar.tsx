@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Bot, Sparkles, Menu, X, ShieldCheck, Scale, FileText, Landmark, MessageSquareText, ShieldAlert } from 'lucide-react';
+import { 
+  Landmark, FileText, Scale, ShieldCheck, MessageSquareText, 
+  Bot, Menu, X, ChevronDown, GraduationCap, BarChart3, HelpCircle 
+} from 'lucide-react';
 import { LanguageCode } from '../../types';
 import { getTranslation } from '../../data/translations';
 
@@ -13,13 +16,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, current
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'home', label: getTranslation(currentLang, 'navHome'), icon: Landmark },
-    { id: 'chat', label: getTranslation(currentLang, 'navChat'), icon: Bot, isHighlight: true },
-    { id: 'schemes', label: getTranslation(currentLang, 'navSchemes'), icon: FileText },
-    { id: 'pmfby', label: getTranslation(currentLang, 'navPmfby'), icon: ShieldCheck },
-    { id: 'pacs', label: getTranslation(currentLang, 'navPacs'), icon: Scale },
-    { id: 'grievance', label: getTranslation(currentLang, 'navGrievance'), icon: MessageSquareText },
-    { id: 'admin', label: getTranslation(currentLang, 'navAdmin'), icon: ShieldAlert },
+    { id: 'home', label: 'Home', icon: Landmark },
+    { id: 'schemes', label: 'Schemes & Subsidies', icon: FileText },
+    { id: 'pacs', label: 'PACS Services', icon: Scale, badge: '79,630 LIVE' },
+    { id: 'pmfby', label: 'PMFBY Crop Insurance', icon: ShieldCheck },
+    { id: 'grievance', label: 'Ombudsman & Grievance', icon: MessageSquareText },
+    { id: 'admin', label: 'Database & Telemetry', icon: BarChart3 },
   ];
 
   const handleNavClick = (id: string) => {
@@ -29,91 +31,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, current
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-18 py-2">
-          {/* Brand Logo & Tagline */}
-          <div
-            onClick={() => handleNavClick('home')}
-            className="flex items-center space-x-3 cursor-pointer group"
-          >
-            {/* Custom Icon Badge */}
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#0A2540] via-[#134A7B] to-[#138808] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-              <Sparkles className="w-6 h-6 text-amber-300 animate-pulse" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xl sm:text-2xl font-black tracking-tight text-[#0A2540]">
-                  CoopSathi<span className="text-[#FF9933]">.AI</span>
-                </span>
-                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-300">
-                  Gov 2026
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
-                {getTranslation(currentLang, 'tagline')}
-              </p>
-            </div>
-          </div>
-
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = currentTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
-                    isActive
-                      ? 'bg-[#0A2540] text-white shadow-sm'
-                      : item.isHighlight
-                      ? 'text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-amber-400' : ''}`} />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Primary Action Button */}
-          <div className="hidden sm:flex items-center space-x-3">
-            <button
-              onClick={() => handleNavClick('chat')}
-              className="flex items-center space-x-2 bg-gradient-to-r from-[#FF9933] to-[#EA580C] hover:from-[#EA580C] hover:to-[#C2410C] text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm hover:shadow-md transition-all transform hover:-translate-y-0.5"
-            >
-              <Bot className="w-4 h-4" />
-              <span>{getTranslation(currentLang, 'askButton')}</span>
-            </button>
-          </div>
-
-          {/* Mobile Menu Hamburger */}
-          <div className="flex lg:hidden items-center space-x-2">
-            <button
-              onClick={() => handleNavClick('chat')}
-              className="p-2 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs flex items-center space-x-1"
-            >
-              <Bot className="w-4 h-4" />
-              <span>AI</span>
-            </button>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none"
-              aria-label="Toggle Navigation Menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 px-4 pt-2 pb-6 space-y-1 shadow-lg animate-fadeIn">
+    <nav className="bg-[#0A2540] text-white shadow-md border-b-2 border-amber-500 sticky top-0 z-40">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
+        
+        {/* Desktop Navigation Links */}
+        <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 py-0 overflow-x-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentTab === item.id;
@@ -121,14 +43,96 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, current
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition ${
+                className={`inline-flex items-center gap-1.5 py-3 px-3.5 text-xs font-semibold whitespace-nowrap transition-colors border-b-2 ${
                   isActive
-                    ? 'bg-[#0A2540] text-white'
-                    : 'text-slate-700 hover:bg-slate-100'
+                    ? 'bg-[#061729] text-amber-400 border-amber-400'
+                    : 'border-transparent text-slate-200 hover:bg-slate-800 hover:text-amber-300'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-amber-400' : 'text-slate-500'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-amber-400' : 'text-slate-400'}`} />
                 <span>{item.label}</span>
+                {item.badge && (
+                  <span className="bg-[#138808] text-white text-[9px] font-extrabold px-1.5 py-0.2 rounded ml-1">
+                    {item.badge}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Quick Citizen Assistance Action Button */}
+        <div className="hidden sm:flex items-center space-x-3 py-2">
+          <button
+            onClick={() => handleNavClick('chat')}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded text-xs font-bold transition shadow-sm ${
+              currentTab === 'chat'
+                ? 'bg-amber-400 text-slate-950 ring-2 ring-amber-300'
+                : 'bg-[#FF9933] hover:bg-amber-500 text-slate-950'
+            }`}
+            title="Open CoopSathi AI Multilingual Citizen Helpdesk"
+          >
+            <Bot className="w-4 h-4 text-slate-950" />
+            <span>CoopSathi AI Helpdesk</span>
+          </button>
+        </div>
+
+        {/* Mobile Header & Hamburger */}
+        <div className="flex lg:hidden items-center justify-between w-full py-2.5">
+          <button
+            onClick={() => handleNavClick('home')}
+            className="text-white font-bold text-sm flex items-center space-x-2"
+          >
+            <Landmark className="w-4 h-4 text-amber-400" />
+            <span>CoopSathi AI Portal</span>
+          </button>
+
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => handleNavClick('chat')}
+              className="px-2.5 py-1 rounded bg-amber-400 text-slate-950 text-xs font-bold flex items-center space-x-1"
+            >
+              <Bot className="w-3.5 h-3.5" />
+              <span>Helpdesk</span>
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-1.5 rounded text-slate-200 hover:bg-slate-800 focus:outline-none"
+              aria-label="Toggle Navigation"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-[#061729] border-t border-slate-800 px-4 py-3 space-y-1 shadow-xl">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = currentTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded text-xs font-semibold transition ${
+                  isActive
+                    ? 'bg-slate-800 text-amber-400 font-bold border-l-2 border-amber-400'
+                    : 'text-slate-200 hover:bg-slate-800/60'
+                }`}
+              >
+                <div className="flex items-center space-x-2.5">
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-amber-400' : 'text-slate-400'}`} />
+                  <span>{item.label}</span>
+                </div>
+                {item.badge && (
+                  <span className="bg-[#138808] text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                    {item.badge}
+                  </span>
+                )}
               </button>
             );
           })}

@@ -69,6 +69,13 @@ export const storageService = {
     }
   },
 
+  deleteChatMessage(messageId: string): ChatMessage[] {
+    const current = this.getChatHistory();
+    const updated = current.filter(m => m.id !== messageId);
+    this.saveChatHistory(updated);
+    return updated;
+  },
+
   getGrievances(): GrievanceRecord[] {
     if (typeof window === 'undefined') return INITIAL_GRIEVANCE_RECORDS;
     try {

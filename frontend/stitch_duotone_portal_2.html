@@ -1,0 +1,756 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Ministry of Cooperation | सहकारिता मंत्रालय | Government of India</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Noto+Sans+Devanagari:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#0f172a',
+              950: '#020617',
+              900: '#0f172a',
+              800: '#1e293b',
+              700: '#334155',
+              600: '#475569',
+              500: '#64748b',
+              400: '#94a3b8',
+              300: '#cbd5e1',
+              200: '#e2e8f0',
+              100: '#f1f5f9',
+              50: '#f8fafc',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+            devanagari: ['"Noto Sans Devanagari"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 20;
+    }
+    .material-symbols-outlined.filled {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .animate-marquee {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 38s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+<body class="bg-white text-ink-800 font-sans antialiased min-h-screen flex flex-col selection:bg-ink-900 selection:text-white">
+<!-- 1. MONOCHROMATIC TOP ACCENT LINE -->
+<div class="h-[2px] w-full bg-ink-900"></div>
+<!-- 2. STREAMLINED GIGW ACCESSIBILITY & SOVEREIGN ATTRIBUTION BAR -->
+<header class="border-b border-ink-100 bg-ink-50/70 text-ink-600 text-[11px] py-1.5 px-4 sm:px-8">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+<!-- Left: Official Attribution & Skip Links -->
+<div class="flex items-center space-x-3 text-ink-600">
+<div class="flex items-center gap-1.5 font-medium tracking-normal text-ink-700">
+<svg class="w-3.5 h-3.5 text-ink-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4L18.4 5.6"></path>
+</svg>
+<span>भारत सरकार • Government of India</span>
+</div>
+<span class="text-ink-300">|</span>
+<a class="hover:text-ink-900 transition-colors hidden sm:inline" href="#main-content">Skip to main content</a>
+<span class="text-ink-300 hidden sm:inline">|</span>
+<a class="hover:text-ink-900 transition-colors hidden md:flex items-center gap-1" href="#accessibility">
+<span class="material-symbols-outlined text-[13px]">record_voice_over</span>
+<span>Screen Reader</span>
+</a>
+</div>
+<!-- Right: Refined Accessibility Controls & Language -->
+<div class="flex items-center space-x-3">
+<!-- Font sizing -->
+<div class="flex items-center text-ink-600 space-x-1 border border-ink-200 bg-white rounded px-1.5 py-0.5 shadow-[0_1px_1px_rgba(0,0,0,0.02)]">
+<button class="hover:text-ink-900 px-1 font-semibold text-[10px]" title="Decrease font">A-</button>
+<span class="text-ink-300 text-[10px]">|</span>
+<button class="text-ink-900 font-semibold px-1 text-[10px]" title="Reset font">A</button>
+<span class="text-ink-300 text-[10px]">|</span>
+<button class="hover:text-ink-900 px-1 font-semibold text-[10px]" title="Increase font">A+</button>
+</div>
+<button class="flex items-center gap-1 text-ink-600 hover:text-ink-900 px-2 py-0.5 border border-ink-200 bg-white rounded shadow-[0_1px_1px_rgba(0,0,0,0.02)] transition-colors" title="High Contrast Mode">
+<span class="material-symbols-outlined text-[13px]">contrast</span>
+<span class="hidden sm:inline">Contrast</span>
+</button>
+<div class="flex items-center gap-1 border border-ink-200 bg-white rounded px-2 py-0.5 shadow-[0_1px_1px_rgba(0,0,0,0.02)]">
+<span class="material-symbols-outlined text-[13px] text-ink-500">translate</span>
+<select aria-label="Select Language" class="bg-transparent text-ink-700 text-[11px] focus:outline-none cursor-pointer border-0 py-0 pl-0 pr-4">
+<option selected="" value="en">English</option>
+<option value="hi">हिन्दी (Hindi)</option>
+<option value="mr">मराठी (Marathi)</option>
+<option value="gu">ગુજરાતી (Gujarati)</option>
+<option value="ta">தமிழ் (Tamil)</option>
+<option value="te">తెలుగు (Telugu)</option>
+<option value="bn">বাংলা (Bengali)</option>
+</select>
+</div>
+</div>
+</div>
+</header>
+<!-- 3. REFINED MASTHEAD / IDENTITY BAR -->
+<section class="border-b border-ink-200/80 bg-white py-4 px-4 sm:px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
+<!-- Ministry Brand & State Emblem -->
+<div class="flex items-center gap-4">
+<!-- Ashoka Emblem Minimal -->
+<div class="flex-shrink-0 pr-4 border-r border-ink-200 flex items-center justify-center">
+<svg class="w-10 h-14 text-ink-800" fill="none" viewBox="0 0 100 120">
+<path d="M50 14C42 14 36 19 36 27C36 33 40 37 44 41C42 47 38 53 38 61C38 73 45 79 50 79C55 79 62 73 62 61C62 53 58 47 56 41C60 37 64 33 64 27C64 19 58 14 50 14Z" fill="#f8fafc" stroke="#1e293b" stroke-width="2.5"></path>
+<path d="M26 27C26 35 32 43 36 47C34 55 32 63 34 71" stroke="#1e293b" stroke-linecap="round" stroke-width="2"></path>
+<path d="M74 27C74 35 68 43 64 47C66 55 68 63 66 71" stroke="#1e293b" stroke-linecap="round" stroke-width="2"></path>
+<rect fill="#1e293b" height="7" rx="1.5" width="56" x="22" y="79"></rect>
+<circle cx="50" cy="82.5" fill="#ffffff" r="2.5"></circle>
+<path d="M29 86L33 94H67L71 86H29Z" fill="#334155"></path>
+<text fill="#1e293b" font-family="'Noto Sans Devanagari', sans-serif" font-size="8" font-weight="700" text-anchor="middle" x="50" y="106">सत्यमेव जयते</text>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-0.5">
+<span class="text-[10px] font-semibold uppercase tracking-wider text-ink-500 font-devanagari">भारत सरकार</span>
+<span class="text-[10px] text-ink-300">•</span>
+<span class="text-[10px] font-semibold uppercase tracking-wider text-ink-500">Government of India</span>
+</div>
+<h1 class="text-lg sm:text-xl font-bold text-ink-900 font-devanagari tracking-tight leading-none">
+            सहकारिता मंत्रालय
+          </h1>
+<h2 class="text-sm sm:text-base font-semibold text-ink-700 tracking-tight mt-0.5">
+            Ministry of Cooperation
+          </h2>
+<p class="text-[11px] text-ink-500 mt-0.5">
+            National Council for Cooperative Training (NCCT) • राष्ट्रीय सहकारी प्रशिक्षण परिषद
+          </p>
+</div>
+</div>
+<!-- Search & Sovereign Badges -->
+<div class="flex items-center gap-4 w-full md:w-auto justify-end">
+<!-- Clean Search Field -->
+<div class="relative w-full sm:w-72">
+<input class="w-full pl-9 pr-14 py-1.5 text-xs bg-ink-50 hover:bg-ink-100/70 focus:bg-white border border-ink-200 rounded text-ink-800 placeholder-ink-400 focus:outline-none focus:ring-1 focus:ring-ink-800 transition" placeholder="Search Acts, Rules, PACS, Circulars..." type="search">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-ink-400 text-sm">search</span>
+<kbd class="absolute right-2 top-2 text-[10px] font-mono text-ink-400 border border-ink-200 px-1 rounded bg-white hidden sm:inline">⌘K</kbd>
+</div>
+<!-- Minimalist Pill Logos -->
+<div class="hidden lg:flex items-center gap-2 border-l border-ink-200 pl-4">
+<div class="px-2.5 py-1 rounded border border-ink-200 text-left bg-ink-50/50">
+<span class="text-[9px] font-bold uppercase tracking-wider text-ink-500 block">Motto</span>
+<span class="text-xs font-bold text-ink-900">सहकार से समृद्धि</span>
+</div>
+<div class="px-2.5 py-1 rounded border border-ink-200 text-left bg-ink-50/50">
+<span class="text-[9px] font-bold uppercase tracking-wider text-ink-500 block">Initiative</span>
+<span class="text-xs font-semibold text-ink-900">Digital India</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. CLEAN TEXT NAVIGATION (Monochromatic Deep Obsidian Ink) -->
+<nav class="bg-ink-900 text-ink-300 border-b border-ink-800 sticky top-0 z-40">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between overflow-x-auto text-xs font-medium">
+<ul class="flex items-center whitespace-nowrap">
+<li>
+<a class="inline-flex items-center gap-1 py-3 px-3 text-white font-semibold border-b-2 border-white" href="#">
+<span>Home</span>
+</a>
+</li>
+<li>
+<a class="py-3 px-3 hover:text-white transition-colors" href="#about">About Ministry</a>
+</li>
+<li>
+<a class="py-3 px-3 hover:text-white transition-colors" href="#laws">MSCS Act 2023</a>
+</li>
+<li>
+<a class="py-3 px-3 hover:text-white transition-colors" href="#schemes">Schemes &amp; Subsidies</a>
+</li>
+<li>
+<a class="inline-flex items-center gap-1.5 py-3 px-3 hover:text-white transition-colors" href="#pacs">
+<span>PACS Services</span>
+<span class="bg-ink-800 border border-ink-700 text-ink-300 text-[10px] px-1.5 py-0.2 rounded font-mono">79,630</span>
+</a>
+</li>
+<li>
+<a class="py-3 px-3 hover:text-white transition-colors" href="#pmfby">Crop Insurance (PMFBY)</a>
+</li>
+<li>
+<a class="py-3 px-3 hover:text-white transition-colors" href="#ombudsman">Ombudsman</a>
+</li>
+<li>
+<a class="py-3 px-3 hover:text-white transition-colors" href="#ncct">NCCT Training</a>
+</li>
+<li>
+<a class="py-3 px-3 hover:text-white transition-colors" href="#telemetry">National Telemetry</a>
+</li>
+</ul>
+<!-- Subtle AI Assistant Quick Launcher -->
+<a class="hidden xl:inline-flex items-center gap-1.5 text-xs text-ink-300 hover:text-white border border-ink-700 bg-ink-800/80 hover:bg-ink-800 px-2.5 py-1 rounded transition-colors ml-4" href="#coopsathi">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-300"></span>
+<span>CoopSathi AI</span>
+</a>
+</div>
+</nav>
+<!-- 5. REFINED TICKER / OFFICIAL NOTICES (Monochrome & Subtle) -->
+<section class="border-b border-ink-100 bg-ink-50 text-[11px] py-1.5 px-4 sm:px-8 text-ink-600 overflow-hidden">
+<div class="max-w-7xl mx-auto flex items-center gap-3">
+<div class="flex-shrink-0 flex items-center gap-1 font-semibold text-ink-900 uppercase tracking-wider text-[10px] bg-white border border-ink-200 px-2 py-0.5 rounded shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-900 animate-pulse"></span>
+<span>Gazette</span>
+</div>
+<div class="overflow-hidden relative w-full flex items-center">
+<div class="animate-marquee space-x-8 text-ink-700">
+<span><strong>Model By-laws:</strong> Standardized multi-purpose adoption operational across 79,630 primary societies.</span>
+<span class="text-ink-300">•</span>
+<span><strong>PMFBY Calamity Alert:</strong> 72-Hour crop loss intimation active via Toll-Free 14447 and NCIP portal.</span>
+<span class="text-ink-300">•</span>
+<span><strong>National Cooperative Database:</strong> Census of 8.5+ Lakh cooperatives published with district-wise indicators.</span>
+<span class="text-ink-300">•</span>
+<span><strong>Kisan Credit Card (MISS):</strong> 4% effective interest subvention for prompt PACS repayment schedules.</span>
+<span class="text-ink-300">•</span>
+<span><strong>NCCT Admissions 2024-25:</strong> Higher Diploma in Cooperative Management (HDCM) registration active.</span>
+</div>
+</div>
+<a class="flex-shrink-0 text-ink-600 hover:text-ink-900 font-medium hover:underline hidden md:inline" href="#gazette">All Circulars →</a>
+</div>
+</section>
+<!-- MAIN CONTENT AREA -->
+<main class="flex-grow" id="main-content">
+<!-- 6. HERO STATEMENT & PRIMARY WORKSPACE -->
+<section class="py-12 sm:py-16 px-4 sm:px-8 border-b border-ink-100 bg-white">
+<div class="max-w-7xl mx-auto">
+<!-- Minimal Hero Typography Header -->
+<div class="max-w-3xl mb-12">
+<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded border border-ink-200 text-ink-600 text-[11px] font-medium bg-ink-50 mb-4">
+<span class="text-ink-900 font-semibold font-devanagari">सहकार से समृद्धि</span>
+<span class="text-ink-300">|</span>
+<span>Prosperity Through Cooperation</span>
+</div>
+<h2 class="text-2xl sm:text-4xl font-extrabold text-ink-900 tracking-tight leading-tight">
+            Empowering India's Rural Economy through Transparent, Modern Cooperatives
+          </h2>
+<p class="mt-3 text-sm sm:text-base text-ink-500 leading-relaxed max-w-2xl font-normal">
+            Strengthening Primary Agricultural Credit Societies (PACS), integrating multi-state cooperatives under the MSCS Act 2023, and delivering statutory security to 30+ crore members.
+          </p>
+</div>
+<!-- Two Column Architecture: Executive Profiles + AI Assistant Terminal -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Column 1: Executive Leadership (5 cols) -->
+<div class="lg:col-span-5 border border-ink-200 rounded-lg p-5 bg-white shadow-sm space-y-4">
+<div class="flex items-center justify-between pb-3 border-b border-ink-100">
+<span class="text-xs font-bold uppercase tracking-wider text-ink-900">Institutional Leadership</span>
+<span class="text-[10px] font-mono text-ink-500">GOI Executive</span>
+</div>
+<!-- Profile Cards -->
+<div class="space-y-3">
+<!-- Shri Amit Shah -->
+<div class="flex items-center gap-3.5 p-3 rounded border border-ink-100 hover:border-ink-300 bg-ink-50/50 transition">
+<div class="w-11 h-12 rounded bg-ink-100 border border-ink-200 text-ink-700 flex flex-col items-center justify-center flex-shrink-0 font-medium">
+<span class="material-symbols-outlined text-lg">person</span>
+</div>
+<div>
+<span class="text-[10px] font-semibold uppercase tracking-wider text-ink-500 block">Union Minister</span>
+<h4 class="text-xs font-bold text-ink-900">Shri Amit Shah</h4>
+<p class="text-[11px] text-ink-500">Minister for Cooperation &amp; Minister of Home Affairs</p>
+</div>
+</div>
+<!-- Shri Murlidhar Mohol -->
+<div class="flex items-center gap-3.5 p-3 rounded border border-ink-100 hover:border-ink-300 bg-ink-50/50 transition">
+<div class="w-11 h-12 rounded bg-ink-100 border border-ink-200 text-ink-700 flex flex-col items-center justify-center flex-shrink-0 font-medium">
+<span class="material-symbols-outlined text-lg">person</span>
+</div>
+<div>
+<span class="text-[10px] font-semibold uppercase tracking-wider text-ink-500 block">Minister of State</span>
+<h4 class="text-xs font-bold text-ink-900">Shri Murlidhar Mohol</h4>
+<p class="text-[11px] text-ink-500">Minister of State for Cooperation &amp; Civil Aviation</p>
+</div>
+</div>
+<!-- Dr. Ashish Kumar Bhutani -->
+<div class="flex items-center gap-3.5 p-3 rounded border border-ink-100 hover:border-ink-300 bg-ink-50/50 transition">
+<div class="w-11 h-12 rounded bg-ink-100 border border-ink-200 text-ink-700 flex flex-col items-center justify-center flex-shrink-0 font-medium">
+<span class="material-symbols-outlined text-lg">person</span>
+</div>
+<div>
+<span class="text-[10px] font-semibold uppercase tracking-wider text-ink-500 block">Secretary</span>
+<h4 class="text-xs font-bold text-ink-900">Dr. Ashish Kumar Bhutani, IAS</h4>
+<p class="text-[11px] text-ink-500">Secretary, Ministry of Cooperation</p>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-ink-100 text-[11px] text-ink-500 leading-normal">
+              "Cooperation is the bedrock of rural self-reliance. Transparent digital systems unlock unprecedented grassroots scale."
+            </div>
+</div>
+<!-- Column 2: CoopSathi AI Service Terminal (7 cols) -->
+<div class="lg:col-span-7 border border-ink-200 rounded-lg p-6 bg-ink-50/60 shadow-sm flex flex-col justify-between relative" id="coopsathi">
+<div>
+<!-- Terminal Header -->
+<div class="flex items-center justify-between pb-4 border-b border-ink-200">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-ink-900 text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-base">smart_toy</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-sm font-bold text-ink-900">CoopSathi AI • सहकार सारथी</h3>
+<span class="text-[10px] font-mono uppercase bg-white border border-ink-200 text-ink-600 px-1.5 py-0.2 rounded">Bhashini API</span>
+</div>
+<p class="text-[11px] text-ink-500">Official Multilingual Citizen Knowledge &amp; Grievance Terminal</p>
+</div>
+</div>
+<span class="text-[10px] text-ink-700 bg-white border border-ink-200 px-2 py-0.5 rounded font-mono font-medium">Online</span>
+</div>
+<!-- Input Area -->
+<div class="mt-4 bg-white border border-ink-200 rounded-md p-3 focus-within:border-ink-800 transition shadow-sm">
+<textarea class="w-full bg-transparent text-xs text-ink-800 placeholder-ink-400 focus:outline-none resize-none border-0 p-0" placeholder="Ask any question in 22 Official Indian languages (e.g., 'How to lodge a complaint with the Cooperative Ombudsman?' or 'पैक्स को कॉमन सर्विस सेंटर से कैसे जोड़ें?')" rows="2"></textarea>
+<div class="flex items-center justify-between pt-3 border-t border-ink-100 mt-2">
+<button class="inline-flex items-center gap-1.5 text-xs text-ink-700 hover:text-ink-900 bg-ink-50 hover:bg-ink-100 border border-ink-200 px-2.5 py-1 rounded transition">
+<span class="material-symbols-outlined text-sm text-ink-700">mic</span>
+<span>Speak (बोलें)</span>
+</button>
+<button class="inline-flex items-center gap-1 bg-ink-900 hover:bg-ink-800 text-white px-3.5 py-1.5 rounded text-xs font-semibold transition">
+<span>Ask CoopSathi</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Quick Queries -->
+<div class="mt-4">
+<span class="text-[10px] font-bold uppercase tracking-wider text-ink-400 block mb-2">Common Inquiries</span>
+<div class="flex flex-wrap gap-1.5">
+<button class="text-[11px] text-ink-700 bg-white hover:bg-ink-100 border border-ink-200 px-2.5 py-1 rounded transition">
+                    MSCS Act 2023 Election Rules
+                  </button>
+<button class="text-[11px] text-ink-700 bg-white hover:bg-ink-100 border border-ink-200 px-2.5 py-1 rounded transition">
+                    72-Hour PMFBY Claim Protocol
+                  </button>
+<button class="text-[11px] text-ink-700 bg-white hover:bg-ink-100 border border-ink-200 px-2.5 py-1 rounded transition">
+                    Model PACS By-laws (25+ Services)
+                  </button>
+<button class="text-[11px] text-ink-700 bg-white hover:bg-ink-100 border border-ink-200 px-2.5 py-1 rounded transition">
+                    NCCT Certificate Verification
+                  </button>
+</div>
+</div>
+</div>
+<!-- Terminal Status Footer -->
+<div class="mt-5 pt-3 border-t border-ink-200 flex items-center justify-between text-[11px] text-ink-500">
+<span>Database Version: <strong>2024.3 (Verified)</strong></span>
+<a class="text-ink-900 font-medium hover:underline flex items-center gap-0.5" href="#ombudsman">
+                Statutory Grievance Filing →
+              </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. CITIZEN & COOPERATIVE SERVICES (ULTRA-CLEAN MONOCHROME CARDS) -->
+<section class="py-12 sm:py-16 px-4 sm:px-8 bg-ink-50/50 border-b border-ink-100" id="services">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-3 border-b border-ink-200/80">
+<div>
+<span class="text-[10px] font-bold uppercase tracking-wider text-ink-400 block">Direct Access</span>
+<h3 class="text-xl sm:text-2xl font-bold text-ink-900 tracking-tight">
+              Priority Cooperative Services &amp; Citizen Portals
+            </h3>
+<p class="text-xs text-ink-500 mt-0.5">Statutory portals, regulatory filings, crop insurance, and digitized PACS operations.</p>
+</div>
+<span class="text-[11px] text-ink-500 font-mono mt-2 md:mt-0">
+            GIGW 3.0 Certified
+          </span>
+</div>
+<!-- 6 Minimalist Service Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+<!-- Card 1: MSCS Act -->
+<div class="bg-white rounded-lg border border-ink-200 hover:border-ink-400 p-6 flex flex-col justify-between transition-all group">
+<div>
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded bg-ink-50 border border-ink-200 flex items-center justify-center text-ink-800">
+<span class="material-symbols-outlined text-lg">gavel</span>
+</div>
+<span class="text-[10px] font-mono text-ink-600 uppercase bg-ink-50 px-2 py-0.5 rounded border border-ink-200">Act 2023</span>
+</div>
+<h4 class="text-sm font-bold text-ink-900 mt-4 group-hover:text-ink-700">
+                Cooperative Laws &amp; MSCS Act 2023
+              </h4>
+<p class="text-xs text-ink-500 mt-2 leading-relaxed">
+                Multi-State Co-operative Societies (MSCS) Act 2023, Sections 29, 45 &amp; 85 rules, model election codes, and CRCS gazette notifications.
+              </p>
+<ul class="mt-4 space-y-1.5 text-xs text-ink-600">
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Model By-laws for PACS &amp; Dairy Societies
+                </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Cooperative Election Authority (CEA) Rules
+                </li>
+</ul>
+</div>
+<div class="mt-6 pt-3 border-t border-ink-100 flex items-center justify-between text-xs font-semibold text-ink-900">
+<a class="hover:underline flex items-center gap-1" href="#laws">
+<span>View Acts &amp; Gazettes</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+<span class="text-[10px] font-mono text-ink-400">PDF • 4.2 MB</span>
+</div>
+</div>
+<!-- Card 2: PMFBY -->
+<div class="bg-white rounded-lg border border-ink-200 hover:border-ink-400 p-6 flex flex-col justify-between transition-all group">
+<div>
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded bg-ink-50 border border-ink-200 flex items-center justify-center text-ink-800">
+<span class="material-symbols-outlined text-lg">shield</span>
+</div>
+<span class="text-[10px] font-mono text-ink-600 uppercase bg-ink-50 px-2 py-0.5 rounded border border-ink-200">72-Hr Loss</span>
+</div>
+<h4 class="text-sm font-bold text-ink-900 mt-4 group-hover:text-ink-700">
+                PMFBY Crop Insurance &amp; Claims
+              </h4>
+<p class="text-xs text-ink-500 mt-2 leading-relaxed">
+                Pradhan Mantri Fasal Bima Yojana integration. Report localized crop loss within 72 hours of unseasonal rains, hailstorm, or waterlogging.
+              </p>
+<ul class="mt-4 space-y-1.5 text-xs text-ink-600">
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Direct NCIP Portal Claim Tracking
+                </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  National Insurance Helpline: <strong>14447</strong>
+</li>
+</ul>
+</div>
+<div class="mt-6 pt-3 border-t border-ink-100 flex items-center justify-between text-xs font-semibold text-ink-900">
+<a class="hover:underline flex items-center gap-1" href="https://pmfby.gov.in" target="_blank">
+<span>Access PMFBY Portal</span>
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+<span class="text-[10px] font-mono text-ink-400">Direct Link</span>
+</div>
+</div>
+<!-- Card 3: PACS Modernization -->
+<div class="bg-white rounded-lg border border-ink-200 hover:border-ink-400 p-6 flex flex-col justify-between transition-all group">
+<div>
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded bg-ink-50 border border-ink-200 flex items-center justify-center text-ink-800">
+<span class="material-symbols-outlined text-lg">storefront</span>
+</div>
+<span class="text-[10px] font-mono text-ink-600 uppercase bg-ink-50 px-2 py-0.5 rounded border border-ink-200">79,630 Units</span>
+</div>
+<h4 class="text-sm font-bold text-ink-900 mt-4 group-hover:text-ink-700">
+                PACS Digital Modernization (ERP)
+              </h4>
+<p class="text-xs text-ink-500 mt-2 leading-relaxed">
+                Centralized ERP onboarding for Primary Agricultural Credit Societies, enabling delivery of 25+ Common Service Center (CSC) services.
+              </p>
+<ul class="mt-4 space-y-1.5 text-xs text-ink-600">
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Banking, Fertilizer, &amp; Seed Multi-Services
+                </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Standardized Financial Accounting System
+                </li>
+</ul>
+</div>
+<div class="mt-6 pt-3 border-t border-ink-100 flex items-center justify-between text-xs font-semibold text-ink-900">
+<a class="hover:underline flex items-center gap-1" href="#pacs">
+<span>PACS ERP Status &amp; Login</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+<span class="text-[10px] font-mono text-ink-400">NABARD Assisted</span>
+</div>
+</div>
+<!-- Card 4: Kisan Credit Card -->
+<div class="bg-white rounded-lg border border-ink-200 hover:border-ink-400 p-6 flex flex-col justify-between transition-all group">
+<div>
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded bg-ink-50 border border-ink-200 flex items-center justify-center text-ink-800">
+<span class="material-symbols-outlined text-lg">credit_card</span>
+</div>
+<span class="text-[10px] font-mono text-ink-600 uppercase bg-ink-50 px-2 py-0.5 rounded border border-ink-200">MISS 4%</span>
+</div>
+<h4 class="text-sm font-bold text-ink-900 mt-4 group-hover:text-ink-700">
+                Kisan Credit Card (KCC) Subvention
+              </h4>
+<p class="text-xs text-ink-500 mt-2 leading-relaxed">
+                Modified Interest Subvention Scheme (MISS) providing short-term crop loans up to ₹3,00,000 at an effective 4% per annum for prompt repayment.
+              </p>
+<ul class="mt-4 space-y-1.5 text-xs text-ink-600">
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Animal Husbandry &amp; Fishery Extension
+                </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Simplified 1-Page Application Procedure
+                </li>
+</ul>
+</div>
+<div class="mt-6 pt-3 border-t border-ink-100 flex items-center justify-between text-xs font-semibold text-ink-900">
+<a class="hover:underline flex items-center gap-1" href="#kcc">
+<span>Guidelines &amp; Forms</span>
+<span class="material-symbols-outlined text-sm">download</span>
+</a>
+<span class="text-[10px] font-mono text-ink-400">Interest Subvention</span>
+</div>
+</div>
+<!-- Card 5: Cooperative Ombudsman -->
+<div class="bg-white rounded-lg border border-ink-200 hover:border-ink-400 p-6 flex flex-col justify-between transition-all group">
+<div>
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded bg-ink-50 border border-ink-200 flex items-center justify-center text-ink-800">
+<span class="material-symbols-outlined text-lg">balance</span>
+</div>
+<span class="text-[10px] font-mono text-ink-600 uppercase bg-ink-50 px-2 py-0.5 rounded border border-ink-200">Statutory</span>
+</div>
+<h4 class="text-sm font-bold text-ink-900 mt-4 group-hover:text-ink-700">
+                Cooperative Ombudsman Redressal
+              </h4>
+<p class="text-xs text-ink-500 mt-2 leading-relaxed">
+                Statutory grievance mechanism under MSCS Rules. Lodge complaints regarding elections, deposits, fraud, or non-issuance of shares.
+              </p>
+<ul class="mt-4 space-y-1.5 text-xs text-ink-600">
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Form VI &amp; VII E-Filing System
+                </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Real-time Tracking &amp; Appellate Bench
+                </li>
+</ul>
+</div>
+<div class="mt-6 pt-3 border-t border-ink-100 flex items-center justify-between text-xs font-semibold text-ink-900">
+<a class="hover:underline flex items-center gap-1" href="#ombudsman">
+<span>Lodge Complaint Online</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+<span class="text-[10px] font-mono text-ink-400">Redressal Desk</span>
+</div>
+</div>
+<!-- Card 6: NCCT Training -->
+<div class="bg-white rounded-lg border border-ink-200 hover:border-ink-400 p-6 flex flex-col justify-between transition-all group">
+<div>
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded bg-ink-50 border border-ink-200 flex items-center justify-center text-ink-800">
+<span class="material-symbols-outlined text-lg">school</span>
+</div>
+<span class="text-[10px] font-mono text-ink-600 uppercase bg-ink-50 px-2 py-0.5 rounded border border-ink-200">NCCT Apex</span>
+</div>
+<h4 class="text-sm font-bold text-ink-900 mt-4 group-hover:text-ink-700">
+                NCCT Cooperative Management Education
+              </h4>
+<p class="text-xs text-ink-500 mt-2 leading-relaxed">
+                Capacity building via VAMNICOM Pune and 19 Institutes of Cooperative Management (ICMs). Professional diplomas &amp; leadership programs.
+              </p>
+<ul class="mt-4 space-y-1.5 text-xs text-ink-600">
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  Higher Diploma in Cooperative Management
+                </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-ink-400"></span>
+                  National Certificate Verification System
+                </li>
+</ul>
+</div>
+<div class="mt-6 pt-3 border-t border-ink-100 flex items-center justify-between text-xs font-semibold text-ink-900">
+<a class="hover:underline flex items-center gap-1" href="https://ncct.ac.in" target="_blank">
+<span>ncct.ac.in Portal</span>
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+<span class="text-[10px] font-mono text-ink-400">Academic</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. MINIMALIST NATIONAL IMPACT & TELEMETRY -->
+<section class="py-14 px-4 sm:px-8 bg-white border-b border-ink-100" id="telemetry">
+<div class="max-w-7xl mx-auto">
+<div class="text-left mb-10 pb-3 border-b border-ink-200">
+<span class="text-[10px] font-mono text-ink-500 uppercase tracking-widest block">Live Telemetry • राष्ट्रीय सांख्यिकी</span>
+<h3 class="text-xl sm:text-2xl font-bold text-ink-900 tracking-tight mt-0.5">
+            National Cooperative Database
+          </h3>
+<p class="text-xs text-ink-500 mt-1">Census statistics verified by Ministry of Cooperation &amp; National Informatics Centre (NIC)</p>
+</div>
+<!-- 5 Clean Metric Blocks -->
+<div class="grid grid-cols-2 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-ink-200 border border-ink-200 rounded-lg overflow-hidden bg-white">
+<div class="p-6 text-left">
+<div class="text-[11px] font-medium text-ink-500">Registered Societies</div>
+<div class="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1 tracking-tight">8.5+ Lakh</div>
+<div class="text-[10px] text-ink-400 mt-1">Across 36 States &amp; UTs</div>
+</div>
+<div class="p-6 text-left">
+<div class="text-[11px] font-medium text-ink-500">Total Members</div>
+<div class="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1 tracking-tight">30+ Crore</div>
+<div class="text-[10px] text-ink-400 mt-1">Farmers, Artisans, Rural Women</div>
+</div>
+<div class="p-6 text-left">
+<div class="text-[11px] font-medium text-ink-500">Computerized PACS</div>
+<div class="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1 tracking-tight">79,630</div>
+<div class="text-[10px] text-ink-400 mt-1">Operating on Common ERP</div>
+</div>
+<div class="p-6 text-left">
+<div class="text-[11px] font-medium text-ink-500">Cabinet Outlay</div>
+<div class="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1 tracking-tight">₹2,925 Cr</div>
+<div class="text-[10px] text-ink-400 mt-1">PACS Digital Modernization</div>
+</div>
+<div class="p-6 text-left col-span-2 md:col-span-1">
+<div class="text-[11px] font-medium text-ink-500">PMFBY Disbursed</div>
+<div class="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1 tracking-tight">₹2.06 L Cr</div>
+<div class="text-[10px] text-ink-400 mt-1">Direct DBT Settlements</div>
+</div>
+</div>
+<div class="mt-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-ink-500 gap-2">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-900"></span>
+<span>Source: <strong>cooperativedatabase.gov.in</strong> (NIC Portal)</span>
+</div>
+<a class="text-ink-900 font-medium hover:underline flex items-center gap-1" href="#">
+<span>Download Annual Census Report (PDF)</span>
+<span class="material-symbols-outlined text-xs">download</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 9. THREE NEW NATIONAL COOPERATIVES (MINIMALIST INITIATIVE STRIP) -->
+<section class="py-12 px-4 sm:px-8 bg-ink-50/50 border-b border-ink-200">
+<div class="max-w-7xl mx-auto">
+<div class="text-left mb-6">
+<span class="text-[10px] font-mono text-ink-500 uppercase tracking-wider block">Historic Cabinet Initiative</span>
+<h3 class="text-base sm:text-lg font-bold text-ink-900">Three Apex Multi-State Cooperative Societies</h3>
+<p class="text-xs text-ink-500">PACS empowerment through direct equity participation in global exports, organic branding, and seeds.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-4 rounded-md border border-ink-200 bg-white hover:border-ink-300 transition">
+<span class="text-[10px] font-mono text-ink-400 uppercase block">1. Quality Seeds</span>
+<h5 class="text-xs font-bold text-ink-900 mt-0.5">Bharatiya Beej Sahakari Samiti (BBSSL)</h5>
+<p class="text-[11px] text-ink-500 mt-1">Multiplication and distribution of certified high-yield seeds directly produced by PACS members.</p>
+</div>
+<div class="p-4 rounded-md border border-ink-200 bg-white hover:border-ink-300 transition">
+<span class="text-[10px] font-mono text-ink-400 uppercase block">2. Organic Marketing</span>
+<h5 class="text-xs font-bold text-ink-900 mt-0.5">National Cooperative Organics Ltd (NCOL)</h5>
+<p class="text-[11px] text-ink-500 mt-1">Standardized testing, packaging, and marketing for fair organic farmer price realizations under 'Bharat Organics'.</p>
+</div>
+<div class="p-4 rounded-md border border-ink-200 bg-white hover:border-ink-300 transition">
+<span class="text-[10px] font-mono text-ink-400 uppercase block">3. Global Export</span>
+<h5 class="text-xs font-bold text-ink-900 mt-0.5">National Cooperative Exports Ltd (NCEL)</h5>
+<p class="text-[11px] text-ink-500 mt-1">Direct overseas market access for cooperative surplus with dividends returned to primary societies.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- 10. ULTRA-PROFESSIONAL MINIMALIST MONOCHROME FOOTER -->
+<footer class="bg-ink-900 text-ink-400 text-xs border-t border-ink-800 mt-auto">
+<!-- Link Grid -->
+<div class="max-w-7xl mx-auto py-10 px-4 sm:px-8 border-b border-ink-800/80">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<div>
+<h5 class="text-ink-200 font-semibold text-xs uppercase tracking-wider mb-3">
+            Apex Portals
+          </h5>
+<ul class="space-y-2 text-ink-400 text-xs">
+<li><a class="hover:text-white transition" href="https://cooperation.gov.in" target="_blank">cooperation.gov.in</a></li>
+<li><a class="hover:text-white transition" href="https://crcs.gov.in" target="_blank">crcs.gov.in (Registrar)</a></li>
+<li><a class="hover:text-white transition" href="https://ncct.ac.in" target="_blank">ncct.ac.in (NCCT Apex)</a></li>
+<li><a class="hover:text-white transition" href="https://pmfby.gov.in" target="_blank">pmfby.gov.in (Insurance)</a></li>
+<li><a class="hover:text-white transition" href="https://nabard.org" target="_blank">nabard.org</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-ink-200 font-semibold text-xs uppercase tracking-wider mb-3">
+            Statutory &amp; Legal
+          </h5>
+<ul class="space-y-2 text-ink-400 text-xs">
+<li><a class="hover:text-white transition" href="#mscs">MSCS Act 2023</a></li>
+<li><a class="hover:text-white transition" href="#election">Cooperative Election Rules</a></li>
+<li><a class="hover:text-white transition" href="#circulars">Gazette Notifications</a></li>
+<li><a class="hover:text-white transition" href="#bylaws">Standard Model PACS By-laws</a></li>
+<li><a class="hover:text-white transition" href="#ombudsman">Ombudsman Regulations</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-ink-200 font-semibold text-xs uppercase tracking-wider mb-3">
+            Citizen Support
+          </h5>
+<ul class="space-y-2 text-ink-400 text-xs">
+<li class="text-ink-300">PMFBY Toll Free: <span class="text-white font-mono font-medium">14447</span></li>
+<li class="text-ink-300">Kisan Call Centre: <span class="text-white font-mono font-medium">1800-180-1551</span></li>
+<li>Email: <a class="hover:text-white text-ink-300 transition" href="mailto:coop-helpdesk@gov.in">coop-helpdesk@gov.in</a></li>
+<li class="text-[11px] text-ink-500 pt-1 leading-normal">
+              Atal Akshay Urja Bhawan, CGO Complex, Lodhi Road, New Delhi 110003
+            </li>
+</ul>
+</div>
+<div>
+<h5 class="text-ink-200 font-semibold text-xs uppercase tracking-wider mb-3">
+            National Portals
+          </h5>
+<ul class="space-y-2 text-ink-400 text-xs">
+<li><a class="hover:text-white transition" href="https://india.gov.in" target="_blank">india.gov.in</a></li>
+<li><a class="hover:text-white transition" href="https://mygov.in" target="_blank">mygov.in</a></li>
+<li><a class="hover:text-white transition" href="https://data.gov.in" target="_blank">data.gov.in</a></li>
+<li><a class="hover:text-white transition" href="https://pgportal.gov.in" target="_blank">CPGRAMS Redressal</a></li>
+<li><a class="hover:text-white transition" href="https://digitalindia.gov.in" target="_blank">Digital India</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Mandatory Policies Strip -->
+<div class="py-3 px-4 sm:px-8 border-b border-ink-800/60 bg-[#0b1322]">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] text-ink-400">
+<a class="hover:text-ink-200" href="#privacy">Privacy Policy</a>
+<span>•</span>
+<a class="hover:text-ink-200" href="#terms">Terms of Use</a>
+<span>•</span>
+<a class="hover:text-ink-200" href="#copyright">Copyright Policy</a>
+<span>•</span>
+<a class="hover:text-ink-200" href="#hyperlink">Hyperlinking Policy</a>
+<span>•</span>
+<a class="hover:text-ink-200" href="#accessibility">Accessibility Statement</a>
+<span>•</span>
+<a class="hover:text-ink-200" href="#disclaimer">Disclaimer</a>
+<span>•</span>
+<a class="hover:text-ink-200" href="#sitemap">Sitemap</a>
+</div>
+</div>
+<!-- Official Hosting & NIC Management Attribution -->
+<div class="py-5 px-4 sm:px-8 text-center text-[11px] text-ink-400">
+<div class="max-w-4xl mx-auto space-y-1">
+<p>Website Content Managed by <strong>Ministry of Cooperation, Government of India</strong> (सहकारिता मंत्रालय, भारत सरकार).</p>
+<p class="text-ink-400">Designed, Developed and Hosted by <strong>National Informatics Centre (NIC)</strong>, MeitY, Government of India.</p>
+<div class="pt-2 flex flex-wrap items-center justify-center gap-3 text-ink-400 text-[10px]">
+<span>Last Updated: <strong>24 October 2024</strong></span>
+<span>•</span>
+<span>GIGW Compliance: <strong>Level AA</strong></span>
+<span>•</span>
+<span>Certified Standard v3.0</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
