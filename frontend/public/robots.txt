@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /.env
+Disallow: /src/
+
+# Sitemap
+Sitemap: https://coopsathi.gov.in/sitemap.xml
+
+# Crawl-delay for bots
+Crawl-delay: 10

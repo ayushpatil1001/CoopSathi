@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f2417;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a3d28;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Top tricolor stripe -->
+  <rect width="400" height="8" x="0" y="0" fill="#FF9933"/>
+  <rect width="400" height="8" x="400" y="0" fill="#FFFFFF"/>
+  <rect width="400" height="8" x="800" y="0" fill="#138808"/>
+  <!-- Emblem circle placeholder -->
+  <circle cx="100" cy="100" r="55" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.3"/>
+  <!-- Ministry Title -->
+  <text x="600" y="220" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="#FFFFFF" text-anchor="middle">CoopSathi AI</text>
+  <text x="600" y="290" font-family="Arial, sans-serif" font-size="26" fill="#9BB3A2" text-anchor="middle">Official Portal — Ministry of Cooperation</text>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="22" fill="#7A9E86" text-anchor="middle">Government of India</text>
+  <!-- Divider -->
+  <rect x="300" y="380" width="600" height="2" fill="#2D5038" opacity="0.8"/>
+  <!-- Tagline -->
+  <text x="600" y="430" font-family="Arial, sans-serif" font-size="20" fill="#9BB3A2" text-anchor="middle">Sahakar Se Samriddhi — Prosperity Through Cooperation</text>
+  <!-- Stats row -->
+  <text x="250" y="510" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle">8.5L+</text>
+  <text x="250" y="540" font-family="Arial, sans-serif" font-size="14" fill="#7A9E86" text-anchor="middle">Societies</text>
+  <text x="600" y="510" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle">30Cr+</text>
+  <text x="600" y="540" font-family="Arial, sans-serif" font-size="14" fill="#7A9E86" text-anchor="middle">Members</text>
+  <text x="950" y="510" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle">79,630</text>
+  <text x="950" y="540" font-family="Arial, sans-serif" font-size="14" fill="#7A9E86" text-anchor="middle">PACS Computerized</text>
+  <!-- URL -->
+  <text x="600" y="608" font-family="Arial, sans-serif" font-size="16" fill="#4A7A5A" text-anchor="middle">coopsathi.gov.in</text>
+</svg>
