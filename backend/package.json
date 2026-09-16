@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "tsc && node -e \"const fs=require('fs'); fs.mkdirSync('dist/data', {recursive:true}); fs.copyFileSync('src/data/schemesDatabase.json', 'dist/data/schemesDatabase.json'); fs.copyFileSync('src/data/statutoryDatabase.json', 'dist/data/statutoryDatabase.json');\"",
     "start": "tsx src/server.ts"
   },
   "dependencies": {

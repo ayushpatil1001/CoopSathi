@@ -168,6 +168,67 @@ RULES:
   }
 
   /**
+   * Synthesizes rich overview for any of the 93+ official government schemes
+   */
+  private synthesizeSchemeProfile(scheme: any, language: string): string {
+    const title = scheme.title;
+    const ministry = scheme.ministry || 'Government of India';
+    const summary = scheme.benefitSummary || '';
+    const objective = scheme.objective || '';
+    const benefits = (scheme.benefits || []).map((b: string) => `• ${b}`).join('\n');
+    const eligibility = (scheme.eligibilityCriteria || []).map((e: string) => `• ${e}`).join('\n');
+    const beneficiaries = (scheme.targetBeneficiaries || []).join(', ');
+    const url = scheme.officialUrl || 'https://myscheme.gov.in';
+    const helpline = scheme.helpline || '1800-180-1551';
+
+    if (language === 'mr') {
+      return `**${title} – अधिकृत माहिती व लाभ**\n\n` +
+        `🏛️ **संबंधित मंत्रालय:** ${ministry}\n\n` +
+        `🎯 **उद्दिष्ट:**\n${objective}\n\n` +
+        `💰 **प्रमुख आर्थिक लाभ:**\n${summary}\n${benefits}\n\n` +
+        `✅ **पात्रता निकष:**\n${eligibility}\n\n` +
+        `👥 **लक्ष्य लाभार्थी:** ${beneficiaries}\n\n` +
+        `🌐 **अधिकृत पोर्टल:** [${url}](${url})\n` +
+        `📞 **२४x७ राष्ट्रीय हेल्पलाइन:** ${helpline}\n\n` +
+        `💡 *अर्ज प्रक्रिया जाणून घेण्यासाठी "या योजनेसाठी अर्ज कसा करावा?" असा प्रश्न विचारा.*`;
+    }
+
+    if (language === 'hi') {
+      return `**${title} – आधिकारिक विवरण एवं लाभ**\n\n` +
+        `🏛️ **संबंधित मंत्रालय:** ${ministry}\n\n` +
+        `🎯 **योजना का उद्देश्य:**\n${objective}\n\n` +
+        `💰 **प्रमुख वित्तीय लाभ:**\n${summary}\n${benefits}\n\n` +
+        `✅ **पात्रता मानदंड:**\n${eligibility}\n\n` +
+        `👥 **लक्षित लाभार्थी:** ${beneficiaries}\n\n` +
+        `🌐 **आधिकारिक पोर्टल:** [${url}](${url})\n` +
+        `📞 **२४x७ राष्ट्रीय हेल्पलाइन:** ${helpline}\n\n` +
+        `💡 *आवेदन प्रक्रिया जानने के लिए "इस योजना हेतु आवेदन कैसे करें?" पूछें।*`;
+    }
+
+    if (language === 'gu') {
+      return `**${title} – સત્તાવાર વિગત અને લાભો**\n\n` +
+        `🏛️ **સંબંધિત મંત્રાલય:** ${ministry}\n\n` +
+        `🎯 **મુખ્ય ઉદ્દેશ:**\n${objective}\n\n` +
+        `💰 **આર્થિક સહાય અને લાભ:**\n${summary}\n${benefits}\n\n` +
+        `✅ **પાત્રતાના માપદંડ:**\n${eligibility}\n\n` +
+        `👥 **લાભાર્થીઓ:** ${beneficiaries}\n\n` +
+        `🌐 **સત્તાવાર પોર્ટલ:** [${url}](${url})\n` +
+        `📞 **રાષ્ટ્રીય હેલ્પલાઇન:** ${helpline}\n\n` +
+        `💡 *અરજી કરવાની પ્રક્રિયા જાણવા માટે "અરજી કેવી રીતે કરવી?" પૂછો.*`;
+    }
+
+    return `**${title} – Official Scheme Overview**\n\n` +
+      `🏛️ **Nodal Ministry:** ${ministry}\n\n` +
+      `🎯 **Objective:**\n${objective}\n\n` +
+      `💰 **Key Financial & Welfare Benefits:**\n${summary}\n${benefits}\n\n` +
+      `✅ **Eligibility Criteria:**\n${eligibility}\n\n` +
+      `👥 **Target Beneficiaries:** ${beneficiaries}\n\n` +
+      `🌐 **Official Portal:** [${url}](${url})\n` +
+      `📞 **24x7 National Helpline:** ${helpline}\n\n` +
+      `💡 *To view application procedure, simply ask: "How to apply for ${scheme.shortName || title}?"*`;
+  }
+
+  /**
    * Sovereign Official Gov-RAG Synthesizer
    * Synthesizes verified statutory knowledge into natural multilingual guidance
    */
@@ -180,6 +241,123 @@ RULES:
 
     const primary = chunks[0];
     const secondary = chunks[1];
+
+    if (!primary) {
+      return 'CoopSathi AI: Information not found. Please visit https://india.gov.in or https://cooperation.gov.in.';
+    }
+
+    // 1. Matched Official Government Scheme with rich metadata
+    if (primary.schemeData) {
+      return this.synthesizeSchemeProfile(primary.schemeData, language);
+    }
+
+    // 2. Right to Information Act, 2005
+    if (primary.id === 'GOV-RTI-2005') {
+      if (language === 'mr') {
+        return `**माहितीचा अधिकार कायदा, २००५ (RTI Act 2005) – मार्गदर्शक माहिती:**\n\n` +
+          `१. **माहिती मिळवण्याचा मूलभूत अधिकार:** भारतातील कोणत्याही नागरिकाला केंद्र किंवा राज्य सरकारच्या सार्वजनिक प्राधिकरणांकडून सरकारी निर्णय, अभिलेख, निविदा आणि विकास कामांची माहिती मागण्याचा कायदेशीर अधिकार आहे.\n\n` +
+          `२. **३० दिवसांची अनिवार्य कालमर्यादा (SLA):** माहितीचा अर्ज मिळाल्यापासून जन माहिती अधिकाऱ्याने (PIO) **३० दिवसांच्या आत** माहिती पुरवणे कायद्याने बंधनकारक आहे. जर माहिती नागरिकाच्या 'जीवन किंवा स्वातंत्र्याशी' संबंधित असेल, तर ती **४८ तासांत** द्यावी लागते.\n\n` +
+          `३. **अर्ज शुल्क:** सर्वसाधारण अर्ज शुल्क फक्त **₹१०** आहे. दारिद्र्यरेषेखालील (BPL) नागरिकांना कोणतीही फी आकारली जात नाही.\n\n` +
+          `४. **प्रथम अपील:** वेळेत माहिती न मिळाल्यास किंवा असमाधानकारक असल्यास, ३० दिवसांत प्रथम अपीलीय प्राधिकरणाकडे (FAA) अपील दाखल करता येते.\n\n` +
+          `🌐 **ऑनलाइन अर्ज पोर्टल:** [rtionline.gov.in](https://rtionline.gov.in)`;
+      } else if (language === 'hi') {
+        return `**सूचना का अधिकार अधिनियम, २००५ (RTI Act 2005) – प्रमुख प्रावधान:**\n\n` +
+          `१. **संवैधानिक अधिकार:** प्रत्येक नागरिक को सरकारी कार्यालयों, विकास परियोजनाओं एवं सार्वजनिक प्राधिकरणों से अभिलेख, दस्तावेज एवं निर्णय की प्रति प्राप्त करने का विधिक अधिकार है।\n\n` +
+          `२. **३० दिनों की अनिवार्य समय-सीमा:** लोक सूचना अधिकारी (PIO) द्वारा आवेदन प्राप्ति के **३० दिनों के भीतर** सूचना उपलब्ध कराना अनिवार्य है। यदि मामला जीवन या स्वतंत्रता से संबंधित हो, तो **४८ घंटे** में सूचना दी जाती है।\n\n` +
+          `३. **आवेदन शुल्क:** केंद्रीय कार्यालयों हेतु शुल्क मात्र **₹१०** है (बीपीएल कार्डधारकों हेतु पूर्णतः निःशुल्क)।\n\n` +
+          `४. **अपील प्रक्रिया:** ३० दिनों में सूचना न मिलने पर धारा १९(१) के तहत प्रथम अपीलीय अधिकारी के समक्ष अपील दायर की जा सकती है।\n\n` +
+          `🌐 **ऑनलाइन पोर्टल:** [rtionline.gov.in](https://rtionline.gov.in)`;
+      } else {
+        return `**Right to Information Act, 2005 (RTI Act) – Statutory Guidelines:**\n\n` +
+          `1. **Empowerment of Citizens:** Any Indian citizen can inspect public work, obtain certified copies of government documents, and seek transparency from Central and State public authorities.\n\n` +
+          `2. **30-Day Mandatory SLA:** The Public Information Officer (PIO) is statutorily required to provide information within **30 days**. If the request concerns the life or liberty of a person, it must be provided within **48 hours**.\n\n` +
+          `3. **Nominal Fee:** Central RTI application fee is capped at **₹10** (Completely Free for Below Poverty Line - BPL cardholders).\n\n` +
+          `4. **First Appeal Mechanism:** If information is denied or not furnished within 30 days, the citizen may file a First Appeal under Section 19(1) within 30 days.\n\n` +
+          `🌐 **National Filing Portal:** [rtionline.gov.in](https://rtionline.gov.in)`;
+      }
+    }
+
+    // 3. Election Commission Voter ID / NVSP
+    if (primary.id === 'GOV-VOTER-ECI') {
+      if (language === 'mr') {
+        return `**मतदार ओळखपत्र व निवडणूक आयोग सेवा (ECI Voter Services):**\n\n` +
+          `१. **नवीन मतदार नोंदणी (फॉर्म ६):** १८ वर्षे पूर्ण केलेल्या प्रत्येक भारतीय नागरिकाला मतदार यादीत नाव नोंदवून अधिकृत 'EPIC' (मतदार ओळखपत्र) मिळवण्याचा हक्क आहे.\n\n` +
+          `२. **ऑनलाइन मतदार सेवा पोर्टल:** निवडणूक आयोगाच्या **voters.eci.gov.in** पोर्टलवरून किंवा 'Voter Helpline App' द्वारे घरबसल्या अर्ज करता येतो.\n\n` +
+          `३. **डिजिटल e-EPIC डाऊनलोड:** फॉर्म मंजूर होताच सुरक्षित डिजिटल मतदार ओळखपत्र (e-EPIC) पीडीएफ स्वरूपात तात्काळ डाऊनलोड करता येते.\n\n` +
+          `📞 **राष्ट्रीय मतदार २४x७ हेल्पलाइन:** १९५० (टोल-फ्री) | 🌐 **पोर्टल:** [voters.eci.gov.in](https://voters.eci.gov.in)`;
+      } else if (language === 'hi') {
+        return `**मतदाता पहचान पत्र एवं निर्वाचन आयोग नागरिक सेवाएं (ECI):**\n\n` +
+          `१. **नया मतदाता पंजीकरण (प्रपत्र ६):** १८ वर्ष की आयु पूर्ण कर चुके नागरिक भारत निर्वाचन आयोग के पोर्टल पर प्रपत्र ६ भरकर अपना मतदाता पहचान पत्र (EPIC) बनवा सकते हैं।\n\n` +
+          `२. **डिजिटल e-EPIC कार्ड:** आवेदन स्वीकृत होते ही डिजिटल हस्ताक्षरित e-EPIC कार्ड पीडीएफ में डाउनलोड किया जा सकता है, जो भौतिक कार्ड के समान वैध है।\n\n` +
+          `३. **सुधार एवं स्थानांतरण:** पता बदलने या नाम सुधारने हेतु प्रपत्र ८ ऑनलाइन भरें।\n\n` +
+          `📞 **राष्ट्रीय मतदाता हेल्पलाइन:** 1950 | 🌐 **आधिकारिक पोर्टल:** [voters.eci.gov.in](https://voters.eci.gov.in)`;
+      } else {
+        return `**Election Commission of India (ECI) – Voter Registration & Services:**\n\n` +
+          `1. **New Voter Enrollment (Form 6):** Indian citizens who have attained 18 years of age can enroll via Form 6 on the official ECI portal.\n\n` +
+          `2. **Instant e-EPIC Digital Download:** Once approved by the Electoral Registration Officer (ERO), you can download the digitally signed e-EPIC PDF valid across all Indian elections.\n\n` +
+          `3. **Corrections & Shifting (Form 8):** For address shift or demographic corrections, submit Form 8 online.\n\n` +
+          `📞 **National Voter Toll-Free Helpline:** 1950 | 🌐 **Official Portal:** [voters.eci.gov.in](https://voters.eci.gov.in)`;
+      }
+    }
+
+    // 4. NaMo Drone Didi
+    if (primary.id === 'WOMEN-DRONE-DIDI') {
+      if (language === 'mr') {
+        return `**नमो ड्रोन दीदी योजना (NaMo Drone Didi Scheme) – महिला सक्षमीकरण:**\n\n` +
+          `१. **८०% थेट अनुदान:** केंद्र सरकार महिला स्वयंसहाय्यता समूहांना (SHGs) शेतीसाठी आधुनिक कीटकनाशक व खत फवारणी ड्रोन खरेदीसाठी **८०% (जास्तीत जास्त ₹८ लाख)** थेट अनुदान देते.\n\n` +
+          `२. **१५ दिवसांचे मोफत डीजीसीए (DGCA) पायलट प्रशिक्षण:** समूहातील महिला सदस्याला अधिकृत ड्रोन पायलट लायसन्स व १० दिवसांचे कृषी फवारणी तंत्रज्ञान प्रशिक्षण मोफत दिले जाते.\n\n` +
+          `३. **शाश्वत ग्रामीण उत्पन्न:** ड्रोन भाडेतत्त्वावर देऊन महिला पायलट दरमहा **₹१५,००० ते ₹२५,०००** ची शाश्वत कमाई करू शकतात.\n\n` +
+          `🏛️ **अंमलबजावणी:** दीनदयाळ अंत्योदय योजना – DAY-NRLM व कृषी मंत्रालय.`;
+      } else {
+        return `**NaMo Drone Didi Scheme – Empowering Rural Women via Agritech:**\n\n` +
+          `1. **80% Central Drone Subsidy:** Provides 80% capital subsidy (capped at **₹8.00 Lakh**) to Women Self-Help Groups (SHGs) for purchasing modern agricultural spray drones.\n\n` +
+          `2. **15-Day Free DGCA Drone Pilot Certification:** Women SHG members receive professional DGCA-certified drone pilot training and agronomy spray protocols.\n\n` +
+          `3. **Sustainable Livelihoods:** Drone Didis earn ₹15,000 to ₹25,000 per month by offering precision nano-urea and pesticide spraying services to village farmers.\n\n` +
+          `🏛️ **Implementing Agencies:** DAY-NRLM & Ministry of Agriculture and Farmers Welfare.`;
+      }
+    }
+
+    // 5. Lakhpati Didi
+    if (primary.id === 'WOMEN-LAKHPATI-DIDI') {
+      if (language === 'mr') {
+        return `**लखपती दीदी योजना (Lakhpati Didi Initiative):**\n\n` +
+          `१. **उद्दिष्ट:** ग्रामीण भागातील महिला स्वयंसहाय्यता समूहांच्या (SHGs) किमान ३ कोटी महिलांचे वार्षिक उत्पन्न **किमान ₹१ लाख किंवा त्यापेक्षा अधिक** करणे.\n\n` +
+          `२. **सुलभ कर्ज व व्याज सवलत:** डे-एनआरएलएम (DAY-NRLM) अंतर्गत महिलांना व्यवसाय सुरू करण्यासाठी **₹१ लाख ते ₹३ लाख** पर्यंत विनातारण सवलतीच्या व्याजदरात कर्ज.\n\n` +
+          `३. **कौशल्य प्रशिक्षण:** शेळीपालन, दुग्धव्यवसाय, मधुमक्षिकापालन, सेंद्रिय खत निर्मिती आणि एलईडी बल्ब उत्पादनाचे विशेष प्रशिक्षण.\n\n` +
+          `🏛️ **अधिकृत माहिती:** [aajeevika.gov.in](https://aajeevika.gov.in)`;
+      } else {
+        return `**Lakhpati Didi Initiative (DAY-NRLM):**\n\n` +
+          `1. **Vision:** Enable at least 3 Crore rural women SHG members to earn a sustainable income of **at least ₹1.00 Lakh per annum**.\n\n` +
+          `2. **Financial Enablement:** Access to low-interest, collateral-free credit (₹1 to ₹3 Lakh) through Community Investment Funds and bank linkages.\n\n` +
+          `3. **Value Chain & Skill Training:** Training in organic farming, goat rearing, poultry, drone flying, tailoring, and food processing.\n\n` +
+          `🏛️ **Official Portal:** [aajeevika.gov.in](https://aajeevika.gov.in)`;
+      }
+    }
+
+    // 6. NCCT & VAMNICOM Training
+    if (primary.id === 'COOP-NCCT') {
+      return `**National Council for Cooperative Training (NCCT) & VAMNICOM Pune:**\n\n` +
+        `1. **Statutory Mandate:** Operating under the Ministry of Cooperation, NCCT oversees 5 Regional Institutes of Cooperative Management (RICMs) and 14 Institutes of Cooperative Management (ICMs) across India.\n\n` +
+        `2. **Premier Institute:** Vaikunth Mehta National Institute of Cooperative Management (VAMNICOM), Pune offers AICTE-approved PGDM-ABM programs and leadership training for top cooperative executives.\n\n` +
+        `3. **PACS Secretary Modernization:** Conducts nationwide digital training modules for 100,000+ PACS secretaries on the national Cloud ERP system.\n\n` +
+        `🌐 **Official Portal:** [ncct.ac.in](https://ncct.ac.in) | [vamnicom.gov.in](https://vamnicom.gov.in)`;
+    }
+
+    // 7. DigiLocker Legal Parity
+    if (primary.id === 'GOV-DIGILOCKER') {
+      return `**DigiLocker Digital Public Infrastructure (IT Rules 2016):**\n\n` +
+        `1. **Statutory Validity (Rule 9A):** Under Rule 9A of the Information Technology (Preservation and Retention of Information by Intermediaries Providing Digital Locker Facilities) Rules 2016, issued documents in DigiLocker are treated at par with original physical documents.\n\n` +
+        `2. **Verifiable Issued Documents:** Legally accepted for Driving Licences, RC books, Aadhaar, PAN, marksheets, and cooperative share certificates by traffic police, railways, and banks.\n\n` +
+        `🌐 **Official Portal:** [digilocker.gov.in](https://digilocker.gov.in)`;
+    }
+
+    // 8. Aadhaar UIDAI
+    if (primary.id === 'GOV-AADHAAR-UIDAI') {
+      return `**UIDAI Aadhaar Services & Direct Benefit Transfer (DBT):**\n\n` +
+        `1. **Section 7 Mandate:** Under Section 7 of the Aadhaar Act 2016, Aadhaar authentication is the verified gateway for DBT benefits in PM-KISAN, PMFBY, and PMAY.\n\n` +
+        `2. **NPCI Bank Seeding:** Ensure your active bank account is NPCI-seeded to receive direct subsidy transfers.\n\n` +
+        `📞 **UIDAI 24x7 Helpline:** 1947 | 🌐 **Portal:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+    }
 
     if (primary.id === 'MSCS-SEC29' || primary.id === 'MSCS-SEC45') {
       if (language === 'mr') {
@@ -342,48 +520,245 @@ RULES:
   }
 
   private deriveSuggestedActions(chunks: RAGChunk[], query: string): string[] {
-    const primaryId = chunks[0]?.id || '';
-    const isHowToApply = /how\s+(to|can\s+i|do\s+i)?\s*(apply|register|enroll|avail|submit|file|claim)|application\s+process|steps\s+to|procedure\s+to|form\s+filling|process\s+to|where\s+to\s+apply|eligibility\s+and\s+apply|कसा\s+(करावा|करावे|भरावा|नोंदवावा)|अर्ज|अर्ज\s+प्रक्रिया|पायऱ्या|पायरी|आवेदन\s+कैसे|आवेदन\s+प्रक्रिया|आवेदन|चरण|प्रक्रिया|अप्लाई|કેવી\s+રીતે\s+અરજી|અરજી\s+કેવી\s+રીતે|અરજી\s+પ્રક્રિયા|અરજી|પગલાં|કઈ\s+રીતે|વિશે\s+અરજી|விண்ணப்பிப்பது|దరఖాస్తు|আবেদন/i.test(query);
+    const primary = chunks[0];
+    if (!primary) return ['Check Scheme Eligibility', 'Download Application Form', 'Track Status'];
 
-    if (isHowToApply) {
-      if (primaryId.includes('PMFBY') || /pmfby|fasal|bima|crop|विमा|पीक|फसल/i.test(query)) {
-        return ['Apply Online on pmfby.gov.in', 'Required Documents Checklist', 'Call 14447 Helpline'];
-      }
-      if (primaryId.includes('PACS') || /pacs|society|पैक्स|पॅक्स|मંડળી/i.test(query)) {
-        return ['Download Form 1 Membership', 'Explore 25+ PACS Services', 'Locate Nearest PACS'];
-      }
-      if (primaryId.includes('KCC') || primaryId.includes('CREDIT') || /kcc|loan|कर्ज|ऋण|ધિરાણ/i.test(query)) {
-        return ['Download 1-Page KCC Form', '4% Interest Terms', 'Visit PACS DCCB Branch'];
-      }
-      if (primaryId.includes('MSCS-SEC85') || /grievance|complaint|ombudsman|तक्रार|शिकायत/i.test(query)) {
-        return ['Download Form VI Grievance', 'CRCS Ombudsman Portal', '30-Day SLA Rules'];
-      }
-      return ['Check Scheme Eligibility', 'Download Application Form', 'Track Application Status'];
+    // 1. If matched chunk is an official scheme with schemeData
+    if (primary.schemeData) {
+      const s = primary.schemeData;
+      let portalHost = 'Official Portal';
+      try {
+        if (s.officialUrl) {
+          const u = new URL(s.officialUrl);
+          portalHost = u.hostname.replace('www.', '');
+        }
+      } catch {}
+
+      const helplineNumber = s.helpline ? s.helpline.split('/')[0].split(',')[0].trim() : '1800-180-1551';
+      return [
+        `Apply Online on ${portalHost}`,
+        `Check Eligibility & Documents`,
+        `Call Helpline: ${helplineNumber}`
+      ];
     }
 
-    if (primaryId.includes('MSCS-SEC29') || primaryId.includes('MSCS-SEC45')) {
-      return ['View MSCS Act 2023 Summary', 'File Grievance on Voting Denial', 'Check Active Member Checklist'];
+    // 2. Statutory Knowledge chunk actions
+    const id = primary.id;
+    if (id === 'GOV-RTI-2005') {
+      return ['File RTI Online (rtionline.gov.in)', '30-Day SLA & First Appeal', 'RTI Fee: ₹10 (BPL Free)'];
     }
-    if (primaryId.includes('PMFBY')) {
-      return ['Calculate Premium Online', '72-Hour Calamity Guide', 'Track Crop Loss Intimation'];
+    if (id === 'GOV-VOTER-ECI') {
+      return ['Apply Form 6 (voters.eci.gov.in)', 'Download e-EPIC Digital Card', 'Call 1950 Voter Helpline'];
     }
-    if (primaryId.includes('PACS')) {
-      return ['Explore 25+ PACS Services', 'Jan Aushadhi Application', 'KCC Loan via PACS ERP'];
+    if (id === 'GOV-DIGILOCKER') {
+      return ['Open DigiLocker (digilocker.gov.in)', 'Issued Documents Legal Status (Rule 9A)', 'Link Aadhaar to DigiLocker'];
     }
-    if (primaryId.includes('KCC') || primaryId.includes('CREDIT')) {
-      return ['Calculate 4% KCC Interest', 'Collateral-Free Credit Rules', 'AIF Cold Storage Subsidies'];
+    if (id === 'GOV-AADHAAR-UIDAI') {
+      return ['Book Appointment at Ask Kendra', 'Update Mobile Number in Aadhaar', 'Check Aadhaar-Bank DBT Status'];
     }
-    if (primaryId.includes('MSCS-SEC85')) {
-      return ['Download Form VI Complaint', 'Track Existing Ticket', 'Contact Ombudsman'];
+    if (id === 'GOV-PASSPORT-SEVA') {
+      return ['Apply on passportindia.gov.in', 'Tatkaal vs Normal Passport', 'Track Dispatch Status'];
     }
-    return ['Cooperative By-Laws', 'PMFBY Crop Insurance', 'PACS Computerization', 'File Grievance'];
+    if (id === 'WOMEN-DRONE-DIDI') {
+      return ['80% Drone Subsidy Rules', 'Namo Drone Didi SHG Criteria', '15-Day DGCA Pilot Training'];
+    }
+    if (id === 'WOMEN-LAKHPATI-DIDI') {
+      return ['Lakhpati Didi SHG Criteria', '₹1-3 Lakh Collateral-Free Credit', 'Community Resource Person Guidance'];
+    }
+    if (id === 'COOP-NCCT') {
+      return ['NCCT Training Calendar', 'VAMNICOM Pune Cooperative MBA', 'PACS Secretary Digital Training'];
+    }
+    if (id === 'COOP-BBSSL') {
+      return ['Certified Seeds Purchase (bbssl.in)', 'PACS Seed Distribution Margin', 'Become BBSSL Member Society'];
+    }
+    if (id === 'COOP-NCOL') {
+      return ['Bharat Organics Certification', 'PACS Organic Aggregation Centre', 'Direct Export Market Premium'];
+    }
+    if (id === 'COOP-NCEL') {
+      return ['Export Access via NCEL', 'Surplus Agri Produce Aggregation', 'Export Documentation Support'];
+    }
+    if (id === 'COOP-WHITE-REV-2') {
+      return ['Set up Dairy PACS in Village', '50% NDDB Micro-Dairy Subsidy', 'Micro-Chilling & Milk Testing Grant'];
+    }
+    if (id === 'MSCS-SEC29' || id === 'MSCS-SEC45') {
+      return ['View Active Member Criteria', 'File Complaint on Voting Denial', 'Section 29 MSCS Act Gazette'];
+    }
+    if (id === 'MSCS-SEC85') {
+      return ['Download Form VI Grievance Form', 'CRCS Ombudsman Digital Portal', '30-Day Statutory Redressal SLA'];
+    }
+    if (id === 'PACS-MODEL-BYLAWS' || id === 'PACS-ERP-MISSION') {
+      return ['Download Form 1 PACS Membership', 'Explore 25+ Business Activities', 'Jan Aushadhi Kendra Application'];
+    }
+    if (id.includes('PMFBY')) {
+      return ['Report Loss within 72 Hours', 'Call 14447 PMFBY Helpline', 'Crop Insurance App Download'];
+    }
+    if (id.includes('KCC') || id.includes('CREDIT')) {
+      return ['Download 1-Page KCC Form', 'Calculate 4% Interest Terms', 'Collateral-Free Limit Rules'];
+    }
+
+    return ['Check Scheme Eligibility', 'Download Application Form', 'Track Application Status'];
+  }
+
+  /**
+   * Synthesizes 5-step application guide for any of the 93+ official government schemes
+   */
+  private synthesizeSchemeApplication(s: any, language: string): string {
+    const title = s.title;
+    const shortName = s.shortName || title;
+    const step1 = s.applicationProcess?.step1 || 'Check eligibility requirements and prepare documents.';
+    const step2 = s.applicationProcess?.step2 || 'Visit the designated online portal or local office.';
+    const step3 = s.applicationProcess?.step3 || 'Fill out the registration form with personal and land/bank details.';
+    const step4 = s.applicationProcess?.step4 || 'Upload required documents and submit the application.';
+    const step5 = s.applicationProcess?.step5 || 'Receive acknowledgment receipt and track status online.';
+    const docs = (s.requiredDocuments || ['Aadhaar Card', 'Bank Passbook']).join(', ');
+    const portal = s.officialUrl || 'https://myscheme.gov.in';
+    const helpline = s.helpline || '1800-180-1551';
+
+    if (language === 'mr') {
+      return `**पायरी-दर-पायरी मार्गदर्शक: ${title} साठी अर्ज कसा करावा**\n\n` +
+        `**पायरी १: पात्रता तपासा व आवश्यक कागदपत्रे गोळा करा**\n` +
+        `• **पात्रता:** ${(s.eligibilityCriteria || []).slice(0, 2).join('; ')}\n` +
+        `• **आवश्यक कागदपत्रे:** ${docs}\n\n` +
+        `**पायरी २: अर्ज करण्याचे माध्यम निवडा (ऑनलाइन किंवा ऑफलाइन)**\n` +
+        `• **ऑनलाइन माध्यम:** केंद्र सरकारच्या **${portal}** या अधिकृत पोर्टलवर जा.\n` +
+        `• **ऑफलाइन माध्यम:** गावातील **प्राथमिक कृषी पतसंस्था (PACS)**, सीएससी (CSC) केंद्र किंवा संबंधित बँक शाखेत जा.\n\n` +
+        `**पायरी ३: अधिकृत नोंदणी व तपशील भरणे**\n` +
+        `• ${step2} ${step3}\n\n` +
+        `**पायरी ४: कागदपत्रे अपलोड व पोचपावती (Acknowledgment)**\n` +
+        `• ${step4}\n\n` +
+        `**पायरी ५: अर्ज मंजुरी व ट्रॅकिंग**\n` +
+        `• ${step5}\n\n` +
+        `📞 **राष्ट्रीय २४x७ हेल्पलाइन:** ${helpline} | 🌐 **अधिकृत पोर्टल:** [${portal}](${portal})`;
+    }
+
+    if (language === 'hi') {
+      return `**चरण-दर-चरण मार्गदर्शिका: ${title} हेतु आवेदन कैसे करें**\n\n` +
+        `**चरण १: पात्रता जांचें एवं आवश्यक दस्तावेज तैयार करें**\n` +
+        `• **पात्रता:** ${(s.eligibilityCriteria || []).slice(0, 2).join('; ')}\n` +
+        `• **अनिवार्य दस्तावेज:** ${docs}\n\n` +
+        `**चरण २: आवेदन माध्यम का चयन करें (ऑनलाइन अथवा ऑफलाइन)**\n` +
+        `• **ऑनलाइन माध्यम:** आधिकारिक पोर्टल **${portal}** पर जाएं।\n` +
+        `• **ऑफलाइन माध्यम:** निकटतम **पैक्स (PACS)** समिति, जन सेवा केंद्र (CSC) अथवा बैंक शाखा में संपर्क करें।\n\n` +
+        `**चरण ३: पंजीकरण एवं विवरण प्रविष्टि**\n` +
+        `• ${step2} ${step3}\n\n` +
+        `**चरण ४: दस्तावेज अपलोड एवं पावती रसीद**\n` +
+        `• ${step4}\n\n` +
+        `**चरण ५: सत्यापन एवं आवेदन स्थिति ट्रैकिंग**\n` +
+        `• ${step5}\n\n` +
+        `📞 **राष्ट्रीय हेल्पलाइन:** ${helpline} | 🌐 **आधिकारिक पोर्टल:** [${portal}](${portal})`;
+    }
+
+    if (language === 'gu') {
+      return `**પગલાંવાર માર્ગદર્શિકા: ${title} માટે અરજી કેવી રીતે કરવી**\n\n` +
+        `**પગલું ૧: પાત્રતા ચકાસો અને જરૂરી દસ્તાવેજો એકત્રિત કરો**\n` +
+        `• **પાત્રતા:** ${(s.eligibilityCriteria || []).slice(0, 2).join('; ')}\n` +
+        `• **જરૂરી દસ્તાવેજો:** ${docs}\n\n` +
+        `**પગલું ૨: અરજીનું માધ્યમ પસંદ કરો (ઓનલાઇન કે ઓફલાઇન)**\n` +
+        `• **ઓનલાઇન પોર્ટલ:** ભારત સરકારના સત્તાવાર પોર્ટલ **${portal}** પર જાઓ.\n` +
+        `• **ઓફલાઇન કેન્દ્ર:** તમારી ગામની **પેક્સ (PACS)** મંડળી અથવા નજીકના CSC કેન્દ્ર પર જાઓ.\n\n` +
+        `**પગલું ૩: રજીસ્ટ્રેશન અને વિગતો ભરો**\n` +
+        `• ${step2} ${step3}\n\n` +
+        `**પગલું ૪: દસ્તાવેજો અપલોડ અને પહોંચ મેળવો**\n` +
+        `• ${step4}\n\n` +
+        `**પગલું ૫: ચકાસણી અને સ્થિતિ ટ્રેક કરો**\n` +
+        `• ${step5}\n\n` +
+        `📞 **રાષ્ટ્રીય હેલ્પલાઇન:** ${helpline} | 🌐 **સત્તાવાર પોર્ટલ:** [${portal}](${portal})`;
+    }
+
+    return `**Step-by-Step Guide: How to Apply for ${title}**\n\n` +
+      `**Step 1: Check Eligibility & Prepare Required Documents**\n` +
+      `• **Eligibility:** ${(s.eligibilityCriteria || []).slice(0, 2).join('; ')}\n` +
+      `• **Required Documents:** ${docs}\n\n` +
+      `**Step 2: Choose Application Channel (Online or Offline)**\n` +
+      `• **Online Channel:** Access the official Government Portal at **${portal}**.\n` +
+      `• **Offline Channel:** Visit your village **Primary Agricultural Credit Society (PACS)**, Common Service Centre (CSC), or nearest authorized Bank Branch.\n\n` +
+      `**Step 3: Registration & Data Entry**\n` +
+      `• ${step2} ${step3}\n\n` +
+      `**Step 4: Document Verification & Acknowledgment Receipt**\n` +
+      `• ${step4}\n\n` +
+      `**Step 5: Sanction, DBT Disbursal & Status Tracking**\n` +
+      `• ${step5}\n\n` +
+      `📞 **24x7 National Helpline:** ${helpline} | 🌐 **Official Portal:** [${portal}](${portal})`;
   }
 
   /**
    * Generates authoritative step-by-step application guidance across all major schemes & services
    */
   private synthesizeStepByStepApplication(query: string, language: string, chunks: RAGChunk[]): string {
-    const primaryId = chunks[0]?.id || '';
+    const primary = chunks[0];
+    if (!primary) {
+      return 'Please visit https://india.gov.in for government application guidelines.';
+    }
+
+    // 0. If matched chunk has rich schemeData
+    if (primary.schemeData) {
+      return this.synthesizeSchemeApplication(primary.schemeData, language);
+    }
+
+    // 0.1 RTI Act 2005 Application
+    if (primary.id === 'GOV-RTI-2005') {
+      if (language === 'mr') {
+        return `**पायरी-दर-पायरी मार्गदर्शक: माहिती अधिकारांतर्गत (RTI) अर्ज कसा करावा**\n\n` +
+          `**पायरी १: माहितीचा विषय व संबंधित मंत्रालय निश्चित करा**\n` +
+          `• तुम्हाला हवी असलेली माहिती केंद्र सरकारच्या कोणत्या विभागाशी संबंधित आहे ते तपासा.\n\n` +
+          `**पायरी २: अधिकृत ऑनलाइन पोर्टलवर जा**\n` +
+          `• केंद्र सरकारच्या **rtionline.gov.in** या पोर्टलवर जाऊन "Submit Request" वर क्लिक करा.\n\n` +
+          `**पायरी ३: अर्ज व अचूक प्रश्न लिहा**\n` +
+          `• ५०० शब्दांपर्यंत नेमके प्रश्न लिहा. वैयक्तिक माहिती व मोबाईल नंबर भरा.\n\n` +
+          `**पायरी ४: ₹१० नाममात्र शुल्क भरा**\n` +
+          `• UPI, नेट बँकिंग किंवा डेबिट कार्डने फक्त ₹१० फी भरा (BPL कार्डधारकांना पूर्ण मोफत).\n\n` +
+          `**पायरी ५: ३० दिवसांत उत्तर मिळवा (Statutory SLA)**\n` +
+          `• नोंदणी क्रमांक मिळतो. कायदेशीर नियमांनुसार **३० दिवसांच्या आत** जन माहिती अधिकाऱ्याने (PIO) उत्तर देणे बंधनकारक आहे.\n\n` +
+          `🌐 **अधिकृत पोर्टल:** [rtionline.gov.in](https://rtionline.gov.in)`;
+      } else {
+        return `**Step-by-Step Guide: How to File an RTI Application Online (RTI Act 2005)**\n\n` +
+          `**Step 1: Identify Public Authority & Specific Questions**\n` +
+          `• Identify the relevant Ministry, Department, or Autonomous body and frame concise, specific queries (within 500 words).\n\n` +
+          `**Step 2: Access the National RTI Online Portal**\n` +
+          `• Visit **rtionline.gov.in** and click on "Submit Request". Accept terms and guidelines.\n\n` +
+          `**Step 3: Fill Out Applicant & Public Authority Details**\n` +
+          `• Select Ministry/Department, enter personal details, email, and active mobile number for SMS alerts.\n\n` +
+          `**Step 4: Pay Statutory ₹10 Fee (Free for BPL)**\n` +
+          `• Pay the nominal ₹10 application fee via UPI, Net Banking, or Credit/Debit Card. If Below Poverty Line, upload BPL Certificate for 100% fee exemption.\n\n` +
+          `**Step 5: Track Registration ID & Receive Reply within 30 Days**\n` +
+          `• Note the unique Registration Number. Under Section 7(1), the PIO must reply within **30 days** (or 48 hours for life/liberty issues).\n\n` +
+          `🌐 **Official Portal:** [rtionline.gov.in](https://rtionline.gov.in)`;
+      }
+    }
+
+    // 0.2 Voter ID Registration Form 6
+    if (primary.id === 'GOV-VOTER-ECI') {
+      if (language === 'mr') {
+        return `**पायरी-दर-पायरी मार्गदर्शक: नवीन मतदार ओळखपत्रासाठी (Voter ID) अर्ज कसा करावा**\n\n` +
+          `**पायरी १: कागदपत्रे तयार ठेवा**\n` +
+          `• वयाचा पुरावा (आधार/जन्म दाखला), पत्त्याचा पुरावा (रेशन कार्ड/वीज बिल) आणि पासपोर्ट फोटो.\n\n` +
+          `**पायरी २: ECI पोर्टलवर 'फॉर्म ६' निवडा**\n` +
+          `• **voters.eci.gov.in** पोर्टलवर किंवा 'Voter Helpline App' वर जाऊन 'New Voter Registration (Form 6)' निवडा.\n\n` +
+          `**पायरी ३: वैयक्तिक व मतदारसंघाचा तपशील भरा**\n` +
+          `• विधानसभा मतदारसंघ, नाव, जन्मतारीख व पत्ता भरा आणि कागदपत्रे अपलोड करा.\n\n` +
+          `**पायरी ४: बीएलओ (BLO) प्रत्यक्ष पडताळणी**\n` +
+          `• अर्ज सबमिट केल्यावर संदर्भ क्रमांक मिळतो. स्थानिक मतदान केंद्र अधिकारी (BLO) घरपोच येऊन खातरजमा करतात.\n\n` +
+          `**पायरी ५: डिजिटल e-EPIC डाऊनलोड करा व मूळ कार्ड घरपोच मिळवा**\n` +
+          `• मंजुरी मिळताच e-EPIC पीडीएफ डाऊनलोड करा. मूळ प्लास्टिक कार्ड भारतीय पोस्टाद्वारे मोफत घरपोच पाठवले जाते.\n\n` +
+          `📞 **हेल्पलाइन:** १९५० | 🌐 **पोर्टल:** [voters.eci.gov.in](https://voters.eci.gov.in)`;
+      } else {
+        return `**Step-by-Step Guide: How to Apply for a New Voter ID Card (Form 6)**\n\n` +
+          `**Step 1: Check Eligibility & Prepare Documents**\n` +
+          `• Eligibility: Indian citizen aged 18+.\n` +
+          `• Documents: Aadhaar Card / Birth Certificate, Address Proof (Electricity bill / Ration card / Passport), and recent passport photo.\n\n` +
+          `**Step 2: Access ECI Voters Portal or App**\n` +
+          `• Visit **voters.eci.gov.in** or download the official **Voter Helpline App** on Android/iOS.\n\n` +
+          `**Step 3: Fill Out Form 6 (New Voter Registration)**\n` +
+          `• Select State, District, and Assembly Constituency. Fill out demographic details and upload verified documents.\n\n` +
+          `**Step 4: Field Verification by Booth Level Officer (BLO)**\n` +
+          `• Save your Reference ID. The designated BLO conducts physical verification of residency.\n\n` +
+          `**Step 5: Download Digital e-EPIC & Receive Postal Card**\n` +
+          `• Download your digitally signed e-EPIC card instantly online. The physical voter card is delivered via Speed Post free of cost.\n\n` +
+          `📞 **Toll-Free Helpline:** 1950 | 🌐 **Official Portal:** [voters.eci.gov.in](https://voters.eci.gov.in)`;
+      }
+    }
+
+    const primaryId = primary.id;
 
     // 1. PMFBY (Pradhan Mantri Fasal Bima Yojana) / Crop Insurance & Claims
     if (primaryId.includes('PMFBY') || /pmfby|fasal|bima|crop|विमा|पीक|फसल|કાપડ|બીમા/i.test(query)) {

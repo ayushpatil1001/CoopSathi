@@ -1,6 +1,7 @@
 import { ChatMessage, LanguageCode, VerifiedSource } from '../types';
 import { MOCK_VERIFIED_SOURCES } from '../data/mockKnowledgeBase';
 import { apiService } from './apiService';
+import { SCHEMES_CATALOG, SchemeItem } from '../data/schemesCatalog';
 
 export class AIChatService {
   // Intent classification & RAG retriever
@@ -12,17 +13,140 @@ export class AIChatService {
     }
 
     // Fallback to client-side RAG engine
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 300));
 
     const lower = query.toLowerCase().trim();
     let text = '';
     const sources: VerifiedSource[] = [];
     const actions: string[] = [];
-    const confidence = 0.94;
+    const confidence = 0.98;
 
     const isHowToApply = /how\s+(to|can\s+i|do\s+i)?\s*(apply|register|enroll|avail|submit|file|claim)|application\s+process|steps\s+to|procedure\s+to|form\s+filling|process\s+to|where\s+to\s+apply|eligibility\s+and\s+apply|कसा\s+(करावा|करावे|भरावा|नोंदवावा)|अर्ज|अर्ज\s+प्रक्रिया|पायऱ्या|पायरी|आवेदन\s+कैसे|आवेदन\s+प्रक्रिया|आवेदन|चरण|प्रक्रिया|अप्लाई|કેવી\s+રીતે\s+અરજી|અરજી\s+કેવી\s+રીતે|અરજી\s+પ્રક્રિયા|અરજી|પગલાં|કઈ\s+રીતે|વિશે\s+અરજી|விண்ணப்பிப்பது|దరఖాస్తు|আবেদন/i.test(query);
 
-    // 0. Dedicated Step-by-Step Guidance for Application Queries
+    // 0. Check RTI Act 2005
+    if (/\brti\b|right to information|माहिती अधिकार|सूचना का अधिकार/i.test(lower)) {
+      sources.push({
+        id: 'GOV-RTI-2005',
+        title: 'Right to Information (RTI) Online Filing and 30-Day SLA',
+        authority: 'Department of Personnel and Training (DoPT), Government of India',
+        actOrScheme: 'Right to Information Act, 2005',
+        sectionOrDoc: 'Section 6 & Section 7',
+        excerpt: 'Statutory right of citizens to obtain public information within 30 days for nominal Rs 10 fee.',
+        url: 'https://rtionline.gov.in',
+        verifiedDate: '15 Aug 2026'
+      });
+      actions.push('File RTI Online (rtionline.gov.in)', '30-Day SLA & First Appeal', 'RTI Fee: ₹10 (BPL Free)');
+      if (lang === 'mr') {
+        text = `**माहितीचा अधिकार कायदा, २००५ (RTI Act 2005) – अधिकृत माहिती:**\n\n` +
+          `१. **माहिती मिळवण्याचा मूलभूत अधिकार:** भारतातील प्रत्येक नागरिकाला शासकीय कार्यालयांकडून कागदपत्रे व नोंदी मागण्याचा कायदेशीर हक्क आहे.\n\n` +
+          `२. **३० दिवसांची मुदत (SLA):** अर्ज केल्यापासून ३० दिवसांच्या आत माहिती देणे बंधनकारक आहे (जीवित व स्वातंत्र्याशी संबंधित असल्यास ४८ तासांत).\n\n` +
+          `३. **अर्ज फी:** फक्त ₹१० (दारिद्र्यरेषेखालील BPL नागरिकांना विनामूल्य).\n\n` +
+          `🌐 **ऑनलाइन पोर्टल:** [rtionline.gov.in](https://rtionline.gov.in)`;
+      } else {
+        text = `**Right to Information Act, 2005 (RTI Act) – Statutory Guidelines:**\n\n` +
+          `1. **Statutory Right:** Any Indian citizen can request public records, government decisions, and tender documents.\n\n` +
+          `2. **Mandatory 30-Day SLA:** The PIO must provide information within 30 days (48 hours for life/liberty issues).\n\n` +
+          `3. **Nominal Fee:** Capped at ₹10 (100% Free for BPL cardholders).\n\n` +
+          `🌐 **National Portal:** [rtionline.gov.in](https://rtionline.gov.in)`;
+      }
+      return {
+        id: 'MSG-' + Date.now(),
+        sender: 'assistant',
+        text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: lang,
+        confidence,
+        isVerified: true,
+        sources,
+        suggestedActions: actions,
+        feedback: null
+      };
+    }
+
+    // 0.1 Check Voter ID / ECI
+    if (/voter|epic|nvsp|मतदार ओळखपत्र|मतदान ओळखपत्र|मतदाता पहचान/i.test(lower)) {
+      sources.push({
+        id: 'GOV-VOTER-ECI',
+        title: 'Voter Registration, EPIC Download and National Voter Services Portal',
+        authority: 'Election Commission of India (ECI)',
+        actOrScheme: 'Representation of the People Act, 1950',
+        sectionOrDoc: 'Registration of Electors Rules, 1960',
+        excerpt: 'Free enrollment of voters via Form 6 and instant digital e-EPIC card download.',
+        url: 'https://voters.eci.gov.in',
+        verifiedDate: '15 Aug 2026'
+      });
+      actions.push('Apply Form 6 (voters.eci.gov.in)', 'Download e-EPIC Digital Card', 'Call 1950 Voter Helpline');
+      if (lang === 'mr') {
+        text = `**नवीन मतदार नोंदणी व ओळखपत्र (Voter ID - Form 6):**\n\n` +
+          `१. **पात्रता:** १८ वर्षे पूर्ण केलेले सर्व भारतीय नागरिक.\n\n` +
+          `२. **अर्ज प्रक्रिया:** निवडणूक आयोगाच्या **voters.eci.gov.in** पोर्टलवर 'फॉर्म ६' भरा किंवा 'Voter Helpline App' वापरा.\n\n` +
+          `३. **डिजिटल e-EPIC:** अर्ज मंजूर होताच अधिकृत डिजिटल मतदार ओळखपत्र ऑनलाइन डाऊनलोड करा. मूळ कार्ड मोफत घरपोच मिळते.\n\n` +
+          `📞 **राष्ट्रीय हेल्पलाइन:** १९५० | 🌐 **पोर्टल:** [voters.eci.gov.in](https://voters.eci.gov.in)`;
+      } else {
+        text = `**New Voter Registration & EPIC Services (Election Commission of India):**\n\n` +
+          `1. **Eligibility:** All Indian citizens aged 18+.\n\n` +
+          `2. **Application (Form 6):** Apply online via **voters.eci.gov.in** or the official Voter Helpline App.\n\n` +
+          `3. **e-EPIC Download:** Instantly download your digitally signed voter card upon BLO approval.\n\n` +
+          `📞 **Toll-Free Helpline:** 1950 | 🌐 **Official Portal:** [voters.eci.gov.in](https://voters.eci.gov.in)`;
+      }
+      return {
+        id: 'MSG-' + Date.now(),
+        sender: 'assistant',
+        text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: lang,
+        confidence,
+        isVerified: true,
+        sources,
+        suggestedActions: actions,
+        feedback: null
+      };
+    }
+
+    // 0.2 Check if query matches any of the 93 schemes in SCHEMES_CATALOG
+    const matchedScheme = this.findMatchingScheme(lower);
+    if (matchedScheme) {
+      sources.push({
+        id: matchedScheme.id,
+        title: matchedScheme.title,
+        authority: matchedScheme.ministry || 'Government of India',
+        actOrScheme: matchedScheme.title,
+        sectionOrDoc: `${matchedScheme.shortName || matchedScheme.title} Guidelines`,
+        excerpt: `${matchedScheme.benefitSummary}. ${matchedScheme.objective}`,
+        url: matchedScheme.officialUrl,
+        verifiedDate: matchedScheme.lastUpdated || '2026-09-15'
+      });
+
+      let host = 'Official Portal';
+      try {
+        if (matchedScheme.officialUrl) {
+          host = new URL(matchedScheme.officialUrl).hostname.replace('www.', '');
+        }
+      } catch {}
+      const hp = matchedScheme.helpline ? matchedScheme.helpline.split('/')[0].split(',')[0].trim() : '1800-180-1551';
+      actions.push(`Apply Online on ${host}`, 'Check Eligibility & Documents', `Call Helpline: ${hp}`);
+
+      if (isHowToApply) {
+        text = this.formatSchemeApplication(matchedScheme, lang);
+      } else {
+        text = this.formatSchemeOverview(matchedScheme, lang);
+      }
+
+      return {
+        id: 'MSG-' + Date.now(),
+        sender: 'assistant',
+        text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: lang,
+        confidence,
+        isVerified: true,
+        sources,
+        suggestedActions: actions,
+        feedback: null
+      };
+    }
+
+    // 1. Dedicated Step-by-Step Guidance for Application Queries
     if (isHowToApply) {
       if (lower.includes('pmfby') || lower.includes('fasal') || lower.includes('bima') || lower.includes('crop') || lower.includes('विमा') || lower.includes('पीक') || lower.includes('फसल') || lower.includes('claim') || lower.includes('કાપડ')) {
         sources.push(MOCK_VERIFIED_SOURCES.pmfby_claim_intimation, MOCK_VERIFIED_SOURCES.pmfby_premium_rates);
@@ -660,6 +784,162 @@ Feel free to ask your question by voice or text in any of India's regional langu
       suggestedActions: actions,
       feedback: null
     };
+  }
+
+  private findMatchingScheme(lowerQuery: string): SchemeItem | undefined {
+    // 1. Direct key regex matches
+    if (/pm[- ]?kisan|kisan samman|६०००|6000|पीएम[- ]?किसान|પીએમ[- ]?કિસાન/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'pm-kisan');
+    }
+    if (/ayushman|pm[- ]?jay|golden card|आरोग्य कार्ड|आयुष्मान|5 lakh health/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'pm-jay');
+    }
+    if (/soil health|soil card|मृदा स्वास्थ्य|माती आरोग्य/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'soil-health-card');
+    }
+    if (/e[- ]?nam|national agriculture market|ई[- ]?नाम|कृषि बाजार/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'e-nam');
+    }
+    if (/pmay[- ]?g|pmay|awas yojana|आवास योजना|घरकुल/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'pmay-g');
+    }
+    if (/mudra|pmmy|shishu|kishor|tarun|मुद्रा लोन/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'mudra');
+    }
+    if (/mgnrega|nrega|100 days|मनरेगा|रोजगार हमी/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'mgnrega');
+    }
+    if (/sukanya|ssy|सुकन्या समृद्धी|सुकन्या समृद्धि/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'sukanya-samriddhi');
+    }
+    if (/atal pension|apy|अटल पेन्शन|अटल पेंशन/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'apy');
+    }
+    if (/ration card|onorc|one nation one ration|रेशन कार्ड|राशन कार्ड/i.test(lowerQuery)) {
+      return SCHEMES_CATALOG.find(s => s.id === 'onorc');
+    }
+
+    // 2. Exact word search across catalog
+    return SCHEMES_CATALOG.find(s => {
+      const idMatch = lowerQuery.includes(s.id);
+      const shortMatch = s.shortName && lowerQuery.includes(s.shortName.toLowerCase());
+      const titleMatch = lowerQuery.includes(s.title.toLowerCase());
+      return idMatch || shortMatch || titleMatch;
+    });
+  }
+
+  private formatSchemeOverview(scheme: SchemeItem, lang: LanguageCode): string {
+    const title = scheme.title;
+    const ministry = scheme.ministry || 'Government of India';
+    const summary = scheme.benefitSummary || '';
+    const objective = scheme.objective || '';
+    const benefits = (scheme.benefits || []).map(b => `• ${b}`).join('\n');
+    const eligibility = (scheme.eligibilityCriteria || []).map(e => `• ${e}`).join('\n');
+    const url = scheme.officialUrl || 'https://myscheme.gov.in';
+    const helpline = scheme.helpline || '1800-180-1551';
+
+    if (lang === 'mr') {
+      return `**${title} – अधिकृत माहिती व लाभ**\n\n` +
+        `🏛️ **संबंधित मंत्रालय:** ${ministry}\n\n` +
+        `🎯 **उद्दिष्ट:**\n${objective}\n\n` +
+        `💰 **प्रमुख आर्थिक लाभ:**\n${summary}\n${benefits}\n\n` +
+        `✅ **पात्रता निकष:**\n${eligibility}\n\n` +
+        `🌐 **अधिकृत पोर्टल:** [${url}](${url})\n` +
+        `📞 **२४x७ राष्ट्रीय हेल्पलाइन:** ${helpline}\n\n` +
+        `💡 *अर्ज प्रक्रिया जाणून घेण्यासाठी "अर्ज कसा करावा?" असा प्रश्न विचारा.*`;
+    }
+
+    if (lang === 'hi') {
+      return `**${title} – आधिकारिक विवरण एवं लाभ**\n\n` +
+        `🏛️ **संबंधित मंत्रालय:** ${ministry}\n\n` +
+        `🎯 **योजना का उद्देश्य:**\n${objective}\n\n` +
+        `💰 **प्रमुख वित्तीय लाभ:**\n${summary}\n${benefits}\n\n` +
+        `✅ **पात्रता मानदंड:**\n${eligibility}\n\n` +
+        `🌐 **आधिकारिक पोर्टल:** [${url}](${url})\n` +
+        `📞 **२४x७ राष्ट्रीय हेल्पलाइन:** ${helpline}\n\n` +
+        `💡 *आवेदन प्रक्रिया जानने के लिए "आवेदन कैसे करें?" पूछें।*`;
+    }
+
+    if (lang === 'gu') {
+      return `**${title} – સત્તાવાર વિગત અને લાભો**\n\n` +
+        `🏛️ **સંબંધિત મંત્રાલય:** ${ministry}\n\n` +
+        `🎯 **મુખ્ય ઉદ્દેશ:**\n${objective}\n\n` +
+        `💰 **આર્થિક સહાય અને લાભ:**\n${summary}\n${benefits}\n\n` +
+        `✅ **પાત્રતાના માપદંડ:**\n${eligibility}\n\n` +
+        `🌐 **સત્તાવાર પોર્ટલ:** [${url}](${url})\n` +
+        `📞 **રાષ્ટ્રીય હેલ્પલાઇન:** ${helpline}\n\n` +
+        `💡 *અરજી કરવાની પ્રક્રિયા જાણવા માટે "અરજી કેવી રીતે કરવી?" પૂછો.*`;
+    }
+
+    return `**${title} – Official Scheme Overview**\n\n` +
+      `🏛️ **Nodal Ministry:** ${ministry}\n\n` +
+      `🎯 **Objective:**\n${objective}\n\n` +
+      `💰 **Key Financial & Welfare Benefits:**\n${summary}\n${benefits}\n\n` +
+      `✅ **Eligibility Criteria:**\n${eligibility}\n\n` +
+      `🌐 **Official Portal:** [${url}](${url})\n` +
+      `📞 **24x7 National Helpline:** ${helpline}\n\n` +
+      `💡 *To view application procedure, simply ask: "How to apply for ${scheme.shortName || title}?"*`;
+  }
+
+  private formatSchemeApplication(scheme: SchemeItem, lang: LanguageCode): string {
+    const title = scheme.title;
+    const step1 = scheme.applicationProcess?.step1 || 'Check eligibility requirements and prepare documents.';
+    const step2 = scheme.applicationProcess?.step2 || 'Visit the designated online portal or local office.';
+    const step3 = scheme.applicationProcess?.step3 || 'Fill out the registration form with personal and land/bank details.';
+    const step4 = scheme.applicationProcess?.step4 || 'Upload required documents and submit the application.';
+    const step5 = scheme.applicationProcess?.step5 || 'Receive acknowledgment receipt and track status online.';
+    const docs = (scheme.requiredDocuments || ['Aadhaar Card', 'Bank Passbook']).join(', ');
+    const portal = scheme.officialUrl || 'https://myscheme.gov.in';
+    const helpline = scheme.helpline || '1800-180-1551';
+
+    if (lang === 'mr') {
+      return `**पायरी-दर-पायरी मार्गदर्शक: ${title} साठी अर्ज कसा करावा**\n\n` +
+        `**पायरी १: पात्रता तपासा व आवश्यक कागदपत्रे गोळा करा**\n` +
+        `• **पात्रता:** ${(scheme.eligibilityCriteria || []).slice(0, 2).join('; ')}\n` +
+        `• **आवश्यक कागदपत्रे:** ${docs}\n\n` +
+        `**पायरी २: अर्ज करण्याचे माध्यम निवडा (ऑनलाइन किंवा ऑफलाइन)**\n` +
+        `• **ऑनलाइन माध्यम:** केंद्र सरकारच्या **${portal}** या अधिकृत पोर्टलवर जा.\n` +
+        `• **ऑफलाइन माध्यम:** गावातील **प्राथमिक कृषी पतसंस्था (PACS)**, सीएससी (CSC) केंद्र किंवा संबंधित बँक शाखेत जा.\n\n` +
+        `**पायरी ३: अधिकृत नोंदणी व तपशील भरणे**\n` +
+        `• ${step2} ${step3}\n\n` +
+        `**पायरी ४: कागदपत्रे अपलोड व पोचपावती (Acknowledgment)**\n` +
+        `• ${step4}\n\n` +
+        `**पायरी ५: अर्ज मंजुरी व ट्रॅकिंग**\n` +
+        `• ${step5}\n\n` +
+        `📞 **राष्ट्रीय २४x७ हेल्पलाइन:** ${helpline} | 🌐 **अधिकृत पोर्टल:** [${portal}](${portal})`;
+    }
+
+    if (lang === 'hi') {
+      return `**चरण-दर-चरण मार्गदर्शिका: ${title} हेतु आवेदन कैसे करें**\n\n` +
+        `**चरण १: पात्रता जांचें एवं आवश्यक दस्तावेज तैयार करें**\n` +
+        `• **पात्रता:** ${(scheme.eligibilityCriteria || []).slice(0, 2).join('; ')}\n` +
+        `• **अनिवार्य दस्तावेज:** ${docs}\n\n` +
+        `**चरण २: आवेदन माध्यम का चयन करें (ऑनलाइन अथवा ऑफलाइन)**\n` +
+        `• **ऑनलाइन माध्यम:** आधिकारिक पोर्टल **${portal}** पर जाएं।\n` +
+        `• **ऑफलाइन माध्यम:** निकटतम **पैक्स (PACS)** समिति, जन सेवा केंद्र (CSC) अथवा बैंक शाखा में संपर्क करें।\n\n` +
+        `**चरण ३: पंजीकरण एवं विवरण प्रविष्टि**\n` +
+        `• ${step2} ${step3}\n\n` +
+        `**चरण ४: दस्तावेज अपलोड एवं पावती रसीद**\n` +
+        `• ${step4}\n\n` +
+        `**चरण ५: सत्यापन एवं आवेदन स्थिति ट्रैकिंग**\n` +
+        `• ${step5}\n\n` +
+        `📞 **राष्ट्रीय हेल्पलाइन:** ${helpline} | 🌐 **आधिकारिक पोर्टल:** [${portal}](${portal})`;
+    }
+
+    return `**Step-by-Step Guide: How to Apply for ${title}**\n\n` +
+      `**Step 1: Check Eligibility & Prepare Required Documents**\n` +
+      `• **Eligibility:** ${(scheme.eligibilityCriteria || []).slice(0, 2).join('; ')}\n` +
+      `• **Required Documents:** ${docs}\n\n` +
+      `**Step 2: Choose Application Channel (Online or Offline)**\n` +
+      `• **Online Channel:** Access the official Government Portal at **${portal}**.\n` +
+      `• **Offline Channel:** Visit your village **Primary Agricultural Credit Society (PACS)**, Common Service Centre (CSC), or nearest authorized Bank Branch.\n\n` +
+      `**Step 3: Registration & Data Entry**\n` +
+      `• ${step2} ${step3}\n\n` +
+      `**Step 4: Document Verification & Acknowledgment Receipt**\n` +
+      `• ${step4}\n\n` +
+      `**Step 5: Sanction, DBT Disbursal & Status Tracking**\n` +
+      `• ${step5}\n\n` +
+      `📞 **24x7 National Helpline:** ${helpline} | 🌐 **Official Portal:** [${portal}](${portal})`;
   }
 }
 
