@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Bot, User, Volume2, Square, Copy, Check, ThumbsUp, ThumbsDown, ShieldCheck, ChevronDown, ChevronUp, ExternalLink, Sparkles, Trash2 } from 'lucide-react';
 import { ChatMessage, LanguageCode, VerifiedSource } from '../../types';
 import { speechService } from '../../services/speechService';
+import { AnimatedMessageText } from './AnimatedMessageText';
 
 interface ChatMessageItemProps {
   message: ChatMessage;
@@ -47,24 +48,41 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Helper to format basic markdown (bold, lists)
+  // Helper to format basic markdown (bold, lists, step headers)
   const renderFormattedText = (rawText: string) => {
     const lines = rawText.split('\n');
     return lines.map((line, idx) => {
-      // Bold rendering
+      const trimmed = line.trim();
+
+      // Bold & Italic rendering
       const formattedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
       const italicLine = formattedLine.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-      if (line.trim().startsWith('- ') || line.trim().startsWith('• ')) {
+      // Highlight Step headers: e.g. "**Step 1: ...**", "**पायरी १: ...**", "**चरण १: ...**", "**પગલું ૧: ...**"
+      const isStepLine = /^((\*\*)?(Step\s+\d+|पायरी\s+[०-९\d]+|चरण\s+[०-९\d]+|પગલું\s+[૦-૯\d]+):?)/i.test(trimmed);
+      if (isStepLine) {
+        return (
+          <div
+            key={idx}
+            className="my-2.5 p-2 bg-emerald-50/80 border-l-3 border-emerald-600 rounded-r-lg text-emerald-950 font-bold text-xs sm:text-sm shadow-2xs"
+            dangerouslySetInnerHTML={{ __html: italicLine }}
+          />
+        );
+      }
+
+      // Bullet items: - or •
+      if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
         return (
           <li
             key={idx}
-            className="ml-4 list-disc my-1"
+            className="ml-5 list-disc my-1 text-slate-700"
             dangerouslySetInnerHTML={{ __html: italicLine.replace(/^[-•]\s*/, '') }}
           />
         );
       }
-      if (/^\d+\.\s/.test(line.trim())) {
+
+      // Numbered items: 1. or १. or ૧.
+      if (/^(\d+|[०-९]+|[૦-૯]+)\.\s/.test(trimmed)) {
         return (
           <div
             key={idx}
@@ -73,9 +91,11 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
           />
         );
       }
-      if (line.trim() === '') {
-        return <div key={idx} className="h-2" />;
+
+      if (trimmed === '') {
+        return <div key={idx} className="h-1.5" />;
       }
+
       return (
         <p
           key={idx}
@@ -159,7 +179,15 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
           {/* Message Content */}
           <div className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans">
             {isAssistant ? (
-              <div className="space-y-1">{renderFormattedText(message.text)}</div>
+              message.isGenerating ? (
+                <AnimatedMessageText
+                  fullText={message.text}
+                  isGenerating={true}
+                  textColorClass="text-slate-800"
+                />
+              ) : (
+                <div className="space-y-1">{renderFormattedText(message.text)}</div>
+              )
             ) : (
               <p className="text-white font-medium whitespace-pre-wrap">{message.text}</p>
             )}
@@ -236,17 +264,22 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
               <div className="flex items-center space-x-2">
                 <button
                   onClick={handleToggleAudio}
-                  className={`flex items-center space-x-1 px-2.5 py-1 rounded-md transition font-semibold text-xs ${
+                  className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-md transition font-semibold text-xs ${
                     isPlayingAudio
                       ? 'bg-red-100 text-red-700 font-bold border border-red-200 animate-pulse'
                       : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                   }`}
-                  title="Listen to response in selected language"
+                  title="Listen to response in detected language"
                 >
                   {isPlayingAudio ? (
                     <>
                       <Square className="w-3.5 h-3.5 fill-current" />
-                      <span>Stop Voice</span>
+                      <span>Speaking ({message.language ? message.language.toUpperCase() : currentLang.toUpperCase()})</span>
+                      <div className="flex items-center gap-0.5 ml-1">
+                        <span className="w-1 h-3 bg-red-600 rounded-full soundwave-bar-1"></span>
+                        <span className="w-1 h-4 bg-red-600 rounded-full soundwave-bar-2"></span>
+                        <span className="w-1 h-2 bg-red-600 rounded-full soundwave-bar-3"></span>
+                      </div>
                     </>
                   ) : (
                     <>

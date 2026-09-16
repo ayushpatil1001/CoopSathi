@@ -26,6 +26,7 @@ export interface ChatMessage {
   isOfficialGovLLM?: boolean;
   modelUsed?: string;
   retrievedContextCount?: number;
+  isGenerating?: boolean;
 }
 
 export interface VerifiedSource {

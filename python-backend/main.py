@@ -2,6 +2,7 @@ import os
 import base64
 import requests
 from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 
@@ -13,6 +14,20 @@ from supabase.client import create_client, Client
 from langchain.chains import RetrievalQA
 
 app = FastAPI(title="CoopSathi AI", description="Supabase + LangChain + LLaMA 3 + Bhashini API")
+
+# Strict CORS Whitelist for Frontend (https://coopsathi.vercel.app)
+allowed_origins_env = os.environ.get("ALLOWED_ORIGINS", "https://coopsathi.vercel.app")
+allowed_origins = [orig.strip().rstrip("/") for orig in allowed_origins_env.split(",") if orig.strip()]
+if os.environ.get("ENV", "development") != "production":
+    allowed_origins.extend(["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173"])
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 # ==========================================
 # 1. Database: Supabase (Structured + Vector)

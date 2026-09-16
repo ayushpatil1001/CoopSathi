@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Bot, Send, Mic, MicOff, Plus, Trash2, ShieldCheck, 
   Scale, FileText, Warehouse, MessageSquareText, 
-  Globe, Sparkles, AlertCircle, RefreshCw, Check, X
+  Sparkles, AlertCircle, RefreshCw, Check, X
 } from 'lucide-react';
 import { ChatMessage, LanguageCode, VerifiedSource, AssistantType } from '../../types';
 import { SUPPORTED_LANGUAGES, getTranslation } from '../../data/translations';
@@ -128,12 +128,18 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     const query = (textToSend || inputText).trim();
     if (!query) return;
 
+    // AI automatically analyzes the voice/text language input
+    const analyzedLang = speechService.analyzeVoiceLanguage(query, currentLang);
+    if (analyzedLang !== currentLang) {
+      onSelectLang(analyzedLang);
+    }
+
     const userMsg: ChatMessage = {
       id: 'USER-' + Date.now(),
       sender: 'user',
       text: query,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      language: currentLang,
+      language: analyzedLang,
     };
 
     const updatedMessages = [...messages, userMsg];
@@ -142,7 +148,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     setIsTyping(true);
 
     try {
-      const aiResponse = await aiChatService.generateResponse(query, currentLang);
+      const aiResponse = await aiChatService.generateResponse(query, analyzedLang);
+      aiResponse.language = analyzedLang;
+      aiResponse.isGenerating = true; // Trigger typewriter animation
       const newMessages = [...updatedMessages, aiResponse];
       setMessages(newMessages);
       storageService.saveChatHistory(newMessages);
@@ -163,9 +171,14 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     setIsListening(true);
     const listener = speechService.startListening(
       currentLang,
-      (transcript) => {
-        setInputText(transcript);
+      (transcript, detectedLang) => {
+        // Voice recognized and user stopped talking: disable mic automatically
         setIsListening(false);
+        setInputText(transcript);
+        const analyzed = detectedLang || speechService.analyzeVoiceLanguage(transcript, currentLang);
+        if (analyzed !== currentLang) {
+          onSelectLang(analyzed);
+        }
         handleSendMessage(transcript);
       },
       () => {
@@ -173,6 +186,15 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       },
       () => {
         setIsListening(false);
+      },
+      {
+        onInterim: (interim) => {
+          setInputText(interim);
+        },
+        onSpeechEnd: () => {
+          // Voice chat automatically stops when user stops talking
+          setIsListening(false);
+        }
       }
     );
     setSpeechListener(listener);
@@ -245,22 +267,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
             </div>
           </div>
 
-          {/* Controls: Language Switcher & Clear */}
+          {/* Controls: Clear History */}
           <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-1 bg-slate-100 px-2 py-1 rounded-lg border border-slate-200 text-xs">
-              <Globe className="w-3.5 h-3.5 text-gov-blue-700" />
-              <select
-                value={currentLang}
-                onChange={(e) => onSelectLang(e.target.value as LanguageCode)}
-                className="bg-transparent text-slate-800 font-semibold focus:outline-none cursor-pointer text-xs"
-              >
-                {SUPPORTED_LANGUAGES.map((l) => (
-                  <option key={l.code} value={l.code}>
-                    {l.nativeName} ({l.name})
-                  </option>
-                ))}
-              </select>
-            </div>
 
             {/* Delete History Button */}
             <button
@@ -455,7 +463,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               <div className="mt-2 text-xs text-red-600 font-semibold flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-                  Listening in {SUPPORTED_LANGUAGES.find(l => l.code === currentLang)?.name}... Speak your question clearly
+                  Listening... Speak in any language (Hindi, Marathi, Gujarati, English, etc.) — AI auto-detects and replies in that language
                 </span>
                 <button
                   type="button"

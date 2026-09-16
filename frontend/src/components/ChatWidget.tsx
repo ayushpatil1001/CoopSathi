@@ -3,6 +3,7 @@ import { aiChatService } from '../services/aiChatService';
 import { speechService } from '../services/speechService';
 import { ChatMessage, LanguageCode, VerifiedSource } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { AnimatedMessageText } from './chat/AnimatedMessageText';
 
 export default function ChatWidget() {
   const { language: portalLang, supportedLanguages } = useLanguage();
@@ -16,6 +17,7 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [generatingMessageId, setGeneratingMessageId] = useState<string | null>(null);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [showSources, setShowSources] = useState<VerifiedSource[] | null>(null);
 
@@ -75,18 +77,24 @@ export default function ChatWidget() {
     }
   }, [isOpen]);
 
-  const handleSend = async (queryText?: string, overrideLang?: LanguageCode) => {
+  const handleSend = async (queryText?: string, overrideLang?: LanguageCode, isFromVoice?: boolean) => {
     const textToSend = (queryText || input).trim();
     if (!textToSend || loading) return;
 
-    const targetLang = overrideLang || lang;
+    // Automatically analyze voice / text language from input
+    const detectedLang = overrideLang || speechService.analyzeVoiceLanguage(textToSend, lang);
+    if (detectedLang && detectedLang !== lang) {
+      setLang(detectedLang);
+    }
+    const targetLang = detectedLang;
 
     const userMessage: ChatMessage = {
       id: 'user-' + Date.now(),
       sender: 'user',
       text: textToSend,
       language: targetLang,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      feedback: isFromVoice ? ('voice' as any) : null
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -95,24 +103,25 @@ export default function ChatWidget() {
 
     try {
       const botReply = await aiChatService.generateResponse(textToSend, targetLang);
+      
+      // Trigger output generation animation
+      setGeneratingMessageId(botReply.id);
       setMessages(prev => [...prev, botReply]);
+      setLoading(false);
 
-      // If in Voice Mode or auto-speak is requested, speak the reply in the preferred language
-      if (voiceModeActive) {
-        setVoiceState('speaking');
+      // If initiated from Voice Chat, speak the reply in that detected language only
+      if (isFromVoice) {
+        setSpeakingId(botReply.id);
         speechService.speak(
           botReply.text,
           botReply.language || targetLang,
           () => {
-            setVoiceState('speaking');
             setSpeakingId(botReply.id);
           },
           () => {
-            setVoiceState('idle');
             setSpeakingId(null);
           },
           () => {
-            setVoiceState('idle');
             setSpeakingId(null);
           }
         );
@@ -125,22 +134,25 @@ export default function ChatWidget() {
           ? 'माहिती मिळवण्यात अडचण येत आहे. कृपया किसान कॉल सेंटर १८००-१८०-१५५१ वर संपर्क साधा.'
           : targetLang === 'hi'
           ? 'जानकारी प्राप्त करने में असमर्थ। कृपया किसान कॉल सेंटर 1800-180-1551 पर संपर्क करें।'
+          : targetLang === 'gu'
+          ? 'માહિતી મેળવવામાં મુશ્કેલી આવી રહી છે. કૃપા કરીને કિસાન કોલ સેન્ટર 1800-180-1551 પર સંપર્ક કરો.'
           : 'Unable to retrieve live advisory. Please contact the Kisan Call Centre at 1800-180-1551.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         language: targetLang
       };
+      setGeneratingMessageId(errorMsg.id);
       setMessages(prev => [...prev, errorMsg]);
-      if (voiceModeActive) {
+      setLoading(false);
+      if (isFromVoice) {
         speechService.speak(errorMsg.text, targetLang);
       }
-    } finally {
-      setLoading(false);
     }
   };
 
   /**
    * Start Voice Chat Session
-   * Listens to the user, analyzes the voice language, sets reply language accordingly, and speaks the response back.
+   * Listens to the user. When the question is recognized and the user stops talking,
+   * voice chat is disabled automatically, and the output generates with an animation.
    */
   const startVoiceChatSession = () => {
     setVoiceModeActive(true);
@@ -151,26 +163,40 @@ export default function ChatWidget() {
     recognitionRef.current = speechService.startListening(
       lang,
       (transcript, detectedLang) => {
+        // 1. Question recognized and speech finalized!
         setVoiceTranscript(transcript);
-        setVoiceState('analyzing');
         setDetectedVoiceLang(detectedLang);
 
-        // Update active language to match what was spoken
+        // Update active language if a different language was detected
         if (detectedLang && detectedLang !== lang) {
           setLang(detectedLang);
         }
 
-        setTimeout(() => {
-          handleSend(transcript, detectedLang);
-        }, 500);
+        // 2. Automatically disable voice chat mode
+        setVoiceModeActive(false);
+        setVoiceState('idle');
+        recognitionRef.current?.stop();
+
+        // 3. Send query and generate output in animation
+        handleSend(transcript, detectedLang, true /* isFromVoice */);
       },
       (err) => {
         console.warn('Voice chat error:', err);
         setVoiceState('idle');
+        setVoiceModeActive(false);
       },
       () => {
         if (voiceState === 'listening') {
           setVoiceState('idle');
+          setVoiceModeActive(false);
+        }
+      },
+      {
+        onInterim: (interim) => {
+          setVoiceTranscript(interim);
+        },
+        onSpeechEnd: () => {
+          setVoiceState('analyzing');
         }
       }
     );
@@ -258,19 +284,14 @@ export default function ChatWidget() {
                 <span>{voiceModeActive ? 'Live Voice' : 'Voice Chat'}</span>
               </button>
 
-              {/* Language Selector */}
-              <select
-                aria-label="Assistant Language"
-                value={lang}
-                onChange={(e) => setLang(e.target.value as LanguageCode)}
-                className="bg-emerald-800 text-white text-[11px] font-medium rounded px-2 py-0.5 border border-emerald-700 focus:outline-none"
+              {/* Auto-detected Language Indicator */}
+              <div 
+                className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-800/90 text-emerald-200 border border-emerald-700/80 text-[10px] font-medium select-none"
+                title="AI automatically analyzes and replies in your voice/text language"
               >
-                {supportedLanguages.map((l) => (
-                  <option key={l.code} value={l.code}>
-                    {l.nativeName}
-                  </option>
-                ))}
-              </select>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>{getLanguageLabel(lang)}</span>
+              </div>
 
               <button
                 onClick={() => setIsOpen(false)}
@@ -291,8 +312,9 @@ export default function ChatWidget() {
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                   Voice Assistant Active
                 </span>
-                <span className="text-[11px] bg-emerald-800 px-2 py-0.5 rounded text-emerald-200">
-                  Language: {getLanguageLabel(detectedVoiceLang)}
+                <span className="text-[11px] bg-emerald-800/90 px-2.5 py-0.5 rounded-full border border-emerald-700 text-emerald-200 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Auto-Detecting Language
                 </span>
               </div>
 
@@ -373,35 +395,49 @@ export default function ChatWidget() {
                     }`}
                   >
                     {/* Message Text */}
-                    <div className="whitespace-pre-wrap leading-relaxed">
-                      {msg.text.split('\n').map((line, i) => {
-                        const parts = line.split(/(\*\*.*?\*\*)/g);
-                        return (
-                          <p key={i} className="mb-1 last:mb-0">
-                            {parts.map((p, j) => {
-                              if (p.startsWith('**') && p.endsWith('**')) {
-                                return (
-                                  <strong key={j} className={msg.sender === 'user' ? 'text-white font-bold' : 'text-ink-900 font-bold'}>
-                                    {p.slice(2, -2)}
-                                  </strong>
-                                );
-                              }
-                              return p;
-                            })}
-                          </p>
-                        );
-                      })}
-                    </div>
+                    {msg.sender === 'assistant' ? (
+                      <AnimatedMessageText
+                        fullText={msg.text}
+                        isGenerating={msg.id === generatingMessageId}
+                        onComplete={() => setGeneratingMessageId(null)}
+                        onTextUpdate={() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                        textColorClass="text-ink-800"
+                        speedMs={16}
+                      />
+                    ) : (
+                      <div className="whitespace-pre-wrap leading-relaxed">
+                        <p className="text-white font-medium">{msg.text}</p>
+                        {msg.feedback === ('voice' as any) && (
+                          <div className="mt-1.5 flex items-center gap-1 text-[10px] text-emerald-200 bg-emerald-900/40 px-2 py-0.5 rounded border border-emerald-700/50 w-fit">
+                            <span className="material-symbols-outlined text-[12px] text-emerald-300">mic</span>
+                            <span>Recognized from Voice ({getLanguageLabel(msg.language || lang)})</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
 
-                    {/* Assistant Footer (Citations & Voice Playback) */}
+                    {/* Assistant Footer (Citations, Voice Playback & Speaking Animation) */}
                     {msg.sender === 'assistant' && (
-                      <div className="mt-2 pt-2 border-t border-ink-100 flex items-center justify-between text-[10px] text-ink-400">
-                        <div className="flex items-center gap-1.5">
+                      <div className={`mt-2 pt-2 border-t border-ink-100 flex flex-wrap items-center justify-between gap-1.5 text-[10px] text-ink-400 ${msg.id === generatingMessageId ? 'opacity-70' : 'animate-fadeIn'}`}>
+                        <div className="flex items-center gap-1.5 flex-wrap">
                           <span className="font-mono">{msg.timestamp}</span>
                           {msg.isVerified && (
-                            <span className="inline-flex items-center gap-0.5 text-emerald-700 font-semibold">
+                            <span className="inline-flex items-center gap-0.5 text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
                               <span className="material-symbols-outlined text-[12px]">verified</span>
                               Gazette Verified
+                            </span>
+                          )}
+
+                          {/* Soundwave Animation while Speaking */}
+                          {speakingId === msg.id && (
+                            <span className="inline-flex items-center gap-1 text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-300 font-semibold text-[9px] animate-pulse">
+                              <span className="flex items-end gap-0.5 h-3">
+                                <span className="w-0.5 bg-emerald-700 rounded-full soundwave-bar-1"></span>
+                                <span className="w-0.5 bg-emerald-700 rounded-full soundwave-bar-2"></span>
+                                <span className="w-0.5 bg-emerald-700 rounded-full soundwave-bar-3"></span>
+                                <span className="w-0.5 bg-emerald-700 rounded-full soundwave-bar-4"></span>
+                              </span>
+                              <span>Speaking ({getLanguageLabel(msg.language || lang)})</span>
                             </span>
                           )}
                         </div>
@@ -419,7 +455,11 @@ export default function ChatWidget() {
 
                           <button
                             onClick={() => handleSpeak(msg.id, msg.text, msg.language)}
-                            className="w-6 h-6 rounded hover:bg-ink-100 flex items-center justify-center text-ink-600 transition"
+                            className={`w-6 h-6 rounded flex items-center justify-center transition ${
+                              speakingId === msg.id 
+                                ? 'bg-emerald-100 text-emerald-800 font-bold' 
+                                : 'hover:bg-ink-100 text-ink-600'
+                            }`}
                             title={speakingId === msg.id ? 'Stop audio' : 'Listen with native voice'}
                             aria-label="Read message aloud"
                           >
@@ -432,8 +472,8 @@ export default function ChatWidget() {
                     )}
 
                     {/* Suggested Action Chips */}
-                    {msg.suggestedActions && msg.suggestedActions.length > 0 && (
-                      <div className="mt-2 pt-2 border-t border-ink-100 flex flex-wrap gap-1">
+                    {msg.suggestedActions && msg.suggestedActions.length > 0 && msg.id !== generatingMessageId && (
+                      <div className="mt-2 pt-2 border-t border-ink-100 flex flex-wrap gap-1 animate-fadeIn">
                         {msg.suggestedActions.map((action, k) => (
                           <button
                             key={k}
@@ -449,9 +489,20 @@ export default function ChatWidget() {
                 ))}
 
                 {loading && (
-                  <div className="bg-white border border-ink-200 text-ink-600 self-start rounded-xl p-3 shadow-sm flex items-center gap-2">
-                    <span className="material-symbols-outlined animate-spin text-base text-emerald-700">sync</span>
-                    <span className="text-[11px] font-medium">Synthesizing Government Gazettes &amp; Schematics...</span>
+                  <div className="bg-white border border-emerald-200 text-emerald-900 self-start rounded-xl p-3 shadow-sm flex items-center gap-3 animate-fadeIn">
+                    <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined animate-spin text-sm text-emerald-700">sync</span>
+                    </div>
+                    <div>
+                      <div className="text-[11px] font-bold flex items-center gap-1">
+                        <span>Synthesizing Official Gazette RAG</span>
+                        <span className="flex gap-0.5">
+                          <span className="w-1 h-1 bg-emerald-600 rounded-full animate-ping"></span>
+                          <span className="w-1 h-1 bg-emerald-600 rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></span>
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-ink-500">Retrieving official rules in {getLanguageLabel(lang)}...</p>
+                    </div>
                   </div>
                 )}
                 <div ref={messagesEndRef} />

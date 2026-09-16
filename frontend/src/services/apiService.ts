@@ -1,6 +1,7 @@
 import { ChatMessage, LanguageCode, Scheme, PmfbyCalculationRequest, PmfbyCalculationResult, GrievanceRecord, KnowledgeDocument } from '../types';
 
-const API_BASE = '/api';
+const VITE_API_ORIGIN = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+const API_BASE = VITE_API_ORIGIN ? `${VITE_API_ORIGIN}/api` : '/api';
 
 export interface RealTimeGovSummary {
   lastSynced: string;

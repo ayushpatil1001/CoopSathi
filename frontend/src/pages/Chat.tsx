@@ -4,6 +4,7 @@ import { aiChatService } from '../services/aiChatService';
 import { speechService } from '../services/speechService';
 import { ChatMessage, LanguageCode, VerifiedSource } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { AnimatedMessageText } from '../components/chat/AnimatedMessageText';
 
 export default function Chat() {
   const { language: portalLang, supportedLanguages } = useLanguage();
@@ -16,6 +17,7 @@ export default function Chat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [generatingMessageId, setGeneratingMessageId] = useState<string | null>(null);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [activeSources, setActiveSources] = useState<VerifiedSource[] | null>(null);
 
@@ -117,18 +119,24 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading, voiceActive]);
 
-  const handleSend = async (customQuery?: string, overrideLang?: LanguageCode) => {
+  const handleSend = async (customQuery?: string, overrideLang?: LanguageCode, isFromVoice?: boolean) => {
     const textToSend = (customQuery || input).trim();
     if (!textToSend || loading) return;
 
-    const targetLang = overrideLang || lang;
+    // Automatically analyze voice / text language from input
+    const detected = overrideLang || speechService.analyzeVoiceLanguage(textToSend, lang);
+    if (detected && detected !== lang) {
+      setLang(detected);
+    }
+    const targetLang = detected;
 
     const userMsg: ChatMessage = {
       id: 'user-' + Date.now(),
       sender: 'user',
       text: textToSend,
       language: targetLang,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      feedback: isFromVoice ? ('voice' as any) : null
     };
 
     setMessages(prev => [...prev, userMsg]);
@@ -137,51 +145,56 @@ export default function Chat() {
 
     try {
       const response = await aiChatService.generateResponse(textToSend, targetLang);
+      
+      // Trigger output generation animation
+      setGeneratingMessageId(response.id);
       setMessages(prev => [...prev, response]);
+      setLoading(false);
 
       // If in Voice Mode, speak the reply in the preferred/detected language automatically
-      if (voiceActive) {
-        setVoiceStatus('speaking');
+      if (isFromVoice) {
+        setSpeakingId(response.id);
         speechService.speak(
           response.text,
           response.language || targetLang,
           () => {
-            setVoiceStatus('speaking');
             setSpeakingId(response.id);
           },
           () => {
-            setVoiceStatus('idle');
             setSpeakingId(null);
           },
           () => {
-            setVoiceStatus('idle');
             setSpeakingId(null);
           }
         );
       }
     } catch {
-      setMessages(prev => [
-        ...prev,
-        {
-          id: 'err-' + Date.now(),
-          sender: 'assistant',
-          text: targetLang === 'mr'
-            ? 'माहिती मिळवण्यात अडचण येत आहे. कृपया किसान कॉल सेंटर १८००-१८०-१५५१ वर संपर्क साधा.'
-            : targetLang === 'hi'
-            ? 'जानकारी प्राप्त करने में असमर्थ। कृपया किसान कॉल सेंटर 1800-180-1551 पर संपर्क करें।'
-            : 'I am currently synthesizing official guidelines offline. For urgent queries, please call the Kisan Call Centre at 1800-180-1551.',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          language: targetLang
-        }
-      ]);
-    } finally {
+      const errReply: ChatMessage = {
+        id: 'err-' + Date.now(),
+        sender: 'assistant',
+        text: targetLang === 'mr'
+          ? 'माहिती मिळवण्यात अडचण येत आहे. कृपया किसान कॉल सेंटर १८००-१८०-१५५१ वर संपर्क साधा.'
+          : targetLang === 'hi'
+          ? 'जानकारी प्राप्त करने में असमर्थ। कृपया किसान कॉल सेंटर 1800-180-1551 पर संपर्क करें।'
+          : targetLang === 'gu'
+          ? 'માહિતી મેળવવામાં સમસ્યા આવી રહી છે. કૃપા કરીને કિસાન કોલ સેન્ટર 1800-180-1551 પર સંપર્ક કરો.'
+          : 'I am currently synthesizing official guidelines offline. For urgent queries, please call the Kisan Call Centre at 1800-180-1551.',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: targetLang
+      };
+      setGeneratingMessageId(errReply.id);
+      setMessages(prev => [...prev, errReply]);
       setLoading(false);
+      if (isFromVoice) {
+        speechService.speak(errReply.text, targetLang);
+      }
     }
   };
 
   /**
    * Voice Chat Session
-   * Listens to speech, analyzes voice language, changes reply language, and speaks response aloud
+   * Listens to speech. When the question is recognized and the user stops talking,
+   * voice chat is disabled automatically, and the output generates in an animation.
    */
   const startVoiceChatSession = () => {
     setVoiceActive(true);
@@ -192,25 +205,39 @@ export default function Chat() {
     recognitionRef.current = speechService.startListening(
       lang,
       (transcript, detectedLang) => {
+        // 1. Question recognized & speech ended!
         setSpokenTranscript(transcript);
-        setVoiceStatus('analyzing');
         setDetectedVoiceLang(detectedLang);
 
         if (detectedLang && detectedLang !== lang) {
           setLang(detectedLang);
         }
 
-        setTimeout(() => {
-          handleSend(transcript, detectedLang);
-        }, 500);
+        // 2. Automatically disable voice chat
+        setVoiceActive(false);
+        setVoiceStatus('idle');
+        recognitionRef.current?.stop();
+
+        // 3. Send query and generate output in animation
+        handleSend(transcript, detectedLang, true /* isFromVoice */);
       },
       (err) => {
         console.warn('Voice speech error:', err);
         setVoiceStatus('idle');
+        setVoiceActive(false);
       },
       () => {
         if (voiceStatus === 'listening') {
           setVoiceStatus('idle');
+          setVoiceActive(false);
+        }
+      },
+      {
+        onInterim: (interim) => {
+          setSpokenTranscript(interim);
+        },
+        onSpeechEnd: () => {
+          setVoiceStatus('analyzing');
         }
       }
     );
@@ -249,52 +276,15 @@ export default function Chat() {
         schemaType="WebPage"
       />
 
-      {/* Header & Controls */}
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-ink-900 flex items-center gap-2.5">
-            <span className="material-symbols-outlined text-3xl text-emerald-700">smart_toy</span>
-            CoopSathi AI — Multilingual Voice &amp; Chat Terminal
-          </h1>
-          <p className="text-ink-500 text-xs sm:text-sm mt-1">
-            Grounded in verified gazettes of the Ministry of Cooperation &amp; NCCT, Government of India
-          </p>
-        </div>
-
-        {/* Voice Chat Launch & Language Selection */}
-        <div className="flex items-center gap-3 self-start sm:self-auto flex-wrap">
-          {/* Prominent Voice Chat Option Button */}
-          <button
-            onClick={voiceActive ? stopVoiceChat : startVoiceChatSession}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition shadow-sm border ${
-              voiceActive
-                ? 'bg-rose-600 text-white border-rose-500 animate-pulse'
-                : 'bg-emerald-700 hover:bg-emerald-800 text-white border-emerald-600'
-            }`}
-          >
-            <span className="material-symbols-outlined text-base">
-              {voiceActive ? 'mic' : 'settings_voice'}
-            </span>
-            <span>{voiceActive ? 'Stop Voice Mode' : 'Start Voice Chat'}</span>
-          </button>
-
-          {/* Language Selector */}
-          <div className="flex items-center gap-1.5 border border-ink-200 bg-white rounded-lg px-2.5 py-1">
-            <span className="material-symbols-outlined text-base text-emerald-700">translate</span>
-            <select
-              value={lang}
-              onChange={(e) => setLang(e.target.value as LanguageCode)}
-              className="text-xs bg-transparent text-ink-800 focus:outline-none font-semibold cursor-pointer border-0 py-1"
-              aria-label="Select Assistant Language"
-            >
-              {supportedLanguages.map((l) => (
-                <option key={l.code} value={l.code}>
-                  {l.nativeName} ({l.name})
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-ink-900 flex items-center gap-2.5">
+          <span className="material-symbols-outlined text-3xl text-emerald-700">smart_toy</span>
+          CoopSathi AI — Multilingual Voice &amp; Chat Terminal
+        </h1>
+        <p className="text-ink-500 text-xs sm:text-sm mt-1">
+          Grounded in verified gazettes of the Ministry of Cooperation &amp; NCCT, Government of India
+        </p>
       </div>
 
       {/* Main Terminal Container */}
@@ -312,8 +302,9 @@ export default function Chat() {
                 <div>
                   <div className="font-bold text-xs sm:text-sm flex items-center gap-2">
                     <span>Voice Chat Active</span>
-                    <span className="text-[10px] bg-emerald-800 px-2 py-0.5 rounded border border-emerald-700">
-                      Analyzing Language: {supportedLanguages.find(l => l.code === detectedVoiceLang)?.name || detectedVoiceLang}
+                    <span className="text-[10px] bg-emerald-800/90 px-2.5 py-0.5 rounded-full border border-emerald-700 text-emerald-200 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      Auto-Detecting Voice Language
                     </span>
                   </div>
                   <div className="text-[11px] text-emerald-200 mt-0.5">
@@ -355,35 +346,49 @@ export default function Chat() {
                 }`}
               >
                 {/* Formatted Text */}
-                <div className="whitespace-pre-wrap leading-relaxed">
-                  {msg.text.split('\n').map((line, i) => {
-                    const parts = line.split(/(\*\*.*?\*\*)/g);
-                    return (
-                      <p key={i} className="mb-1.5 last:mb-0">
-                        {parts.map((part, j) => {
-                          if (part.startsWith('**') && part.endsWith('**')) {
-                            return (
-                              <strong key={j} className={msg.sender === 'user' ? 'text-white font-bold' : 'text-ink-900 font-bold'}>
-                                {part.slice(2, -2)}
-                              </strong>
-                            );
-                          }
-                          return part;
-                        })}
-                      </p>
-                    );
-                  })}
-                </div>
+                {msg.sender === 'assistant' ? (
+                  <AnimatedMessageText
+                    fullText={msg.text}
+                    isGenerating={msg.id === generatingMessageId}
+                    onComplete={() => setGeneratingMessageId(null)}
+                    onTextUpdate={() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                    textColorClass="text-ink-800 text-sm leading-relaxed"
+                    speedMs={16}
+                  />
+                ) : (
+                  <div>
+                    <p className="whitespace-pre-wrap leading-relaxed text-white font-medium">{msg.text}</p>
+                    {msg.feedback === ('voice' as any) && (
+                      <div className="mt-2 flex items-center gap-1.5 text-xs text-emerald-200 bg-emerald-900/50 px-2.5 py-1 rounded-md border border-emerald-700/60 w-fit">
+                        <span className="material-symbols-outlined text-sm text-emerald-300">mic</span>
+                        <span>Recognized from Voice ({supportedLanguages.find(l => l.code === (msg.language || lang))?.nativeName || msg.language})</span>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Assistant Verification & Voice Controls */}
                 {msg.sender === 'assistant' && (
-                  <div className="mt-3 pt-2.5 border-t border-ink-100 flex flex-wrap items-center justify-between gap-2 text-xs text-ink-500">
-                    <div className="flex items-center gap-2">
+                  <div className={`mt-3 pt-2.5 border-t border-ink-100 flex flex-wrap items-center justify-between gap-2 text-xs text-ink-500 ${msg.id === generatingMessageId ? 'opacity-70' : 'animate-fadeIn'}`}>
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-mono text-[11px]">{msg.timestamp}</span>
                       {msg.isVerified && (
                         <span className="inline-flex items-center gap-1 text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[11px]">
                           <span className="material-symbols-outlined text-[13px]">verified</span>
                           Gazette Grounded
+                        </span>
+                      )}
+
+                      {/* Soundwave Animation while Speaking */}
+                      {speakingId === msg.id && (
+                        <span className="inline-flex items-center gap-1.5 text-emerald-800 bg-emerald-100/90 px-2.5 py-0.5 rounded-full border border-emerald-300 font-semibold text-[11px] animate-pulse">
+                          <span className="flex items-end gap-0.5 h-3.5">
+                            <span className="w-0.5 bg-emerald-700 rounded-full soundwave-bar-1"></span>
+                            <span className="w-0.5 bg-emerald-700 rounded-full soundwave-bar-2"></span>
+                            <span className="w-0.5 bg-emerald-700 rounded-full soundwave-bar-3"></span>
+                            <span className="w-0.5 bg-emerald-700 rounded-full soundwave-bar-4"></span>
+                          </span>
+                          <span>Speaking in {supportedLanguages.find(l => l.code === (msg.language || lang))?.nativeName || msg.language}</span>
                         </span>
                       )}
                     </div>
@@ -401,7 +406,11 @@ export default function Chat() {
 
                       <button
                         onClick={() => handleSpeak(msg.id, msg.text, msg.language)}
-                        className="p-1 rounded hover:bg-ink-100 text-ink-600 transition"
+                        className={`p-1.5 rounded transition ${
+                          speakingId === msg.id 
+                            ? 'bg-emerald-100 text-emerald-800 font-bold' 
+                            : 'hover:bg-ink-100 text-ink-600'
+                        }`}
                         title={speakingId === msg.id ? 'Stop audio' : 'Listen with native voice'}
                         aria-label="Listen to response"
                       >
@@ -414,8 +423,8 @@ export default function Chat() {
                 )}
 
                 {/* Suggested Action Buttons */}
-                {msg.suggestedActions && msg.suggestedActions.length > 0 && (
-                  <div className="mt-3 pt-2 border-t border-ink-100 flex flex-wrap gap-1.5">
+                {msg.suggestedActions && msg.suggestedActions.length > 0 && msg.id !== generatingMessageId && (
+                  <div className="mt-3 pt-2 border-t border-ink-100 flex flex-wrap gap-1.5 animate-fadeIn">
                     {msg.suggestedActions.map((action, idx) => (
                       <button
                         key={idx}
@@ -431,9 +440,20 @@ export default function Chat() {
             ))}
 
             {loading && (
-              <div className="bg-white border border-ink-200 text-ink-600 self-start rounded-2xl p-4 shadow-sm flex items-center gap-3">
-                <span className="material-symbols-outlined animate-spin text-xl text-emerald-700">sync</span>
-                <span className="text-sm font-medium">Synthesizing Government Gazettes &amp; Schematics...</span>
+              <div className="bg-white border border-emerald-200 text-emerald-900 self-start rounded-2xl p-4 shadow-sm flex items-center gap-3 animate-fadeIn">
+                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined animate-spin text-lg text-emerald-700">sync</span>
+                </div>
+                <div>
+                  <div className="text-sm font-bold flex items-center gap-1.5">
+                    <span>Synthesizing Government Gazettes &amp; Schematics</span>
+                    <span className="flex gap-0.5">
+                      <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-ping"></span>
+                      <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></span>
+                    </span>
+                  </div>
+                  <p className="text-xs text-ink-500">Formulating verified response in {supportedLanguages.find(l => l.code === lang)?.nativeName || lang}...</p>
+                </div>
               </div>
             )}
             <div ref={messagesEndRef} />
