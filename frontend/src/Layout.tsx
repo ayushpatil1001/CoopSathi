@@ -7,8 +7,6 @@ import ChatWidget from './components/ChatWidget';
 export default function Layout() {
   const { language, setLanguage, t, supportedLanguages } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [fontSize, setFontSize] = useState<'normal' | 'large' | 'larger'>('normal');
-  const [highContrast, setHighContrast] = useState(false);
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
@@ -16,8 +14,8 @@ export default function Layout() {
   const navLinks = [
     { to: '/', label: t('navHome', 'Home') },
     { to: '/about', label: t('navAbout', 'About Ministry') },
+    { to: '/schemes', label: t('navSchemes', 'All Schemes'), badge: '93 LIVE', highlight: true },
     { to: '/laws', label: t('navLaws', 'MSCS Act 2023') },
-    { to: '/schemes', label: t('navSchemes', 'Schemes') },
     { to: '/pacs', label: t('navPacs', 'PACS Services') },
     { to: '/pmfby', label: t('navPmfby', 'PMFBY') },
     { to: '/ombudsman', label: t('navOmbudsman', 'Ombudsman') },
@@ -27,11 +25,11 @@ export default function Layout() {
 
   return (
     <>
-      <div className={`min-h-screen flex flex-col ${highContrast ? 'bg-zinc-950 text-yellow-300' : 'bg-ink-50 text-ink-900'} ${fontSize === 'larger' ? 'text-base' : fontSize === 'large' ? 'text-[15px]' : 'text-sm'} font-sans selection:bg-ink-900 selection:text-white`}>
-        {/* 1. STREAMLINED GIGW ACCESSIBILITY & SOVEREIGN ATTRIBUTION BAR */}
+      <div className="min-h-screen flex flex-col bg-ink-50 text-ink-900 text-sm font-sans selection:bg-ink-900 selection:text-white">
+        {/* 1. SOVEREIGN ATTRIBUTION & LANGUAGE BAR */}
         <header className="border-b border-ink-100 bg-ink-50/70 text-ink-600 text-[11px] py-1.5 px-4 sm:px-8">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-            {/* Left: Official Attribution & Skip Link */}
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+            {/* Left: Official Attribution */}
             <div className="flex items-center space-x-3 text-ink-600">
               <div className="flex items-center gap-1.5 font-medium tracking-normal text-ink-700">
                 <svg className="w-3.5 h-3.5 text-ink-500" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
@@ -40,67 +38,23 @@ export default function Layout() {
                 </svg>
                 <span>{t('govtIndia', 'भारत सरकार • Government of India')}</span>
               </div>
-              <a href="#main-content" className="text-[11px] text-ink-600 hover:text-ink-900 underline hidden md:inline font-medium" title={t('skipToContent', 'Skip to main content')}>
-                {t('skipToContent', 'Skip to main content')}
-              </a>
             </div>
 
-            {/* Right: Refined Accessibility Controls & Language Selector */}
-            <div className="flex items-center space-x-3">
-              {/* Font sizing */}
-              <div className="flex items-center text-ink-600 space-x-1 border border-ink-200 bg-white rounded px-1.5 py-0.5 shadow-[0_1px_1px_rgba(0,0,0,0.02)]">
-                <button
-                  onClick={() => setFontSize('normal')}
-                  className={`hover:text-ink-900 px-1 font-semibold text-[10px] ${fontSize === 'normal' ? 'text-emerald-700 font-bold' : ''}`}
-                  title="Normal font size"
-                >
-                  A-
-                </button>
-                <span className="text-ink-300 text-[10px]">|</span>
-                <button
-                  onClick={() => setFontSize('large')}
-                  className={`hover:text-ink-900 px-1 font-semibold text-[10px] ${fontSize === 'large' ? 'text-emerald-700 font-bold' : ''}`}
-                  title="Large font size"
-                >
-                  A
-                </button>
-                <span className="text-ink-300 text-[10px]">|</span>
-                <button
-                  onClick={() => setFontSize('larger')}
-                  className={`hover:text-ink-900 px-1 font-semibold text-[10px] ${fontSize === 'larger' ? 'text-emerald-700 font-bold' : ''}`}
-                  title="Larger font size"
-                >
-                  A+
-                </button>
-              </div>
-
-              {/* Contrast Mode Toggle */}
-              <button
-                onClick={() => setHighContrast(!highContrast)}
-                className={`flex items-center gap-1 px-2 py-0.5 border rounded shadow-[0_1px_1px_rgba(0,0,0,0.02)] transition-colors ${highContrast ? 'bg-yellow-400 text-black border-yellow-500 font-bold' : 'text-ink-600 hover:text-ink-900 border-ink-200 bg-white'}`}
-                title="Toggle High Contrast Mode"
-                aria-pressed={highContrast}
+            {/* Right: Dynamic Indian Language Selector */}
+            <div className="flex items-center gap-1 border-2 border-emerald-600 bg-white rounded px-2.5 py-0.5 shadow-xs">
+              <span className="material-symbols-outlined text-[14px] text-emerald-700">translate</span>
+              <select
+                aria-label={t('selectLanguage', 'Select Language')}
+                className="bg-transparent text-emerald-950 font-semibold text-[11px] focus:outline-none cursor-pointer border-0 py-0 pl-0 pr-4"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value as LanguageCode)}
               >
-                <span className="material-symbols-outlined text-[13px]">contrast</span>
-                <span className="hidden sm:inline">{highContrast ? 'Standard' : t('contrast', 'Contrast')}</span>
-              </button>
-
-              {/* Dynamic Indian Language Selector */}
-              <div className="flex items-center gap-1 border-2 border-emerald-600 bg-white rounded px-2.5 py-0.5 shadow-sm">
-                <span className="material-symbols-outlined text-[14px] text-emerald-700">translate</span>
-                <select
-                  aria-label={t('selectLanguage', 'Select Language')}
-                  className="bg-transparent text-emerald-950 font-semibold text-[11px] focus:outline-none cursor-pointer border-0 py-0 pl-0 pr-4"
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value as LanguageCode)}
-                >
-                  {supportedLanguages.map((l) => (
-                    <option key={l.code} value={l.code}>
-                      {l.nativeName} ({l.name})
-                    </option>
-                  ))}
-                </select>
-              </div>
+                {supportedLanguages.map((l) => (
+                  <option key={l.code} value={l.code}>
+                    {l.nativeName} ({l.name})
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </header>
@@ -174,10 +128,21 @@ export default function Layout() {
               {navLinks.map((link) => (
                 <li key={link.to}>
                   <Link
-                    className={`py-3 px-3 transition-colors flex items-center gap-1 ${isActive(link.to) ? 'text-white font-semibold border-b-2 border-white' : 'text-white/80 hover:text-white'}`}
+                    className={`py-3 px-3 transition-colors flex items-center gap-1.5 ${
+                      isActive(link.to)
+                        ? 'text-white font-bold border-b-2 border-amber-400'
+                        : (link as any).highlight
+                        ? 'text-amber-300 font-semibold hover:text-white'
+                        : 'text-white/85 hover:text-white'
+                    }`}
                     to={link.to}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
+                    {(link as any).badge && (
+                      <span className="bg-amber-400 text-slate-950 text-[9px] font-black px-1.5 py-0.5 rounded-full tracking-wide">
+                        {(link as any).badge}
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
@@ -195,8 +160,17 @@ export default function Layout() {
               <span className="text-xs font-medium">{t('menu', 'Menu')}</span>
             </button>
 
-            {/* AI Chatbot CTA */}
-            <div className="ml-auto md:ml-4 flex items-center">
+            {/* Action CTAs: All Schemes & AI Chatbot */}
+            <div className="ml-auto md:ml-4 flex items-center gap-2">
+              <Link
+                to="/schemes"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-full font-extrabold transition shadow-sm text-[11px]"
+                title="View all 93 Government Schemes with eligibility and application steps"
+              >
+                <span className="material-symbols-outlined text-[14px]">grid_view</span>
+                <span>All Schemes (93)</span>
+              </Link>
+
               <Link to="/chat" className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded-full font-bold transition shadow-sm border border-emerald-500 text-[11px]">
                 <span className="material-symbols-outlined text-[15px]">smart_toy</span>
                 <span>{t('navChat', 'CoopSathi AI')}</span>
@@ -211,11 +185,16 @@ export default function Layout() {
                 {navLinks.map((link) => (
                   <li key={link.to}>
                     <Link
-                      className={`block px-6 py-3 text-sm transition-colors ${isActive(link.to) ? 'text-white font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'}`}
+                      className={`flex items-center justify-between px-6 py-3 text-sm transition-colors ${isActive(link.to) ? 'text-white font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'}`}
                       to={link.to}
                       onClick={() => setMobileOpen(false)}
                     >
-                      {link.label}
+                      <span>{link.label}</span>
+                      {(link as any).badge && (
+                        <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full">
+                          {(link as any).badge}
+                        </span>
+                      )}
                     </Link>
                   </li>
                 ))}

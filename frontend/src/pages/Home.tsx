@@ -54,7 +54,7 @@ export default function Home() {
                   {/* Shri Amit Shah */}
                   <div className="flex items-center gap-3.5 p-3 rounded border border-ink-100 hover:border-ink-300 bg-ink-50/50 transition">
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/4/41/Amit_Shah_Official_Portrait.jpg"
+                      src="/images/leadership/amit_shah.jpg"
                       alt="Shri Amit Shah — Minister for Cooperation"
                       className="w-12 h-12 rounded-lg object-cover border border-ink-200 shadow-sm flex-shrink-0"
                       onError={(e) => handleImgError(e, 'Amit Shah')}
@@ -70,7 +70,7 @@ export default function Home() {
                   {/* Shri Murlidhar Mohol */}
                   <div className="flex items-center gap-3.5 p-3 rounded border border-ink-100 hover:border-ink-300 bg-ink-50/50 transition">
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Murlidhar_Mohol.png"
+                      src="/images/leadership/murlidhar_mohol.jpg"
                       alt="Shri Murlidhar Mohol — Minister of State for Cooperation"
                       className="w-12 h-12 rounded-lg object-cover border border-ink-200 shadow-sm flex-shrink-0"
                       onError={(e) => handleImgError(e, 'Murlidhar Mohol')}
@@ -86,9 +86,10 @@ export default function Home() {
                   {/* Dr. Ashish Kumar Bhutani */}
                   <div className="flex items-center gap-3.5 p-3 rounded border border-ink-100 hover:border-ink-300 bg-ink-50/50 transition">
                     <img
-                      src="https://ui-avatars.com/api/?name=Ashish+Kumar+Bhutani&background=1e3a29&color=fff&size=96"
+                      src="/images/leadership/ashish_bhutani.jpg"
                       alt="Dr. Ashish Kumar Bhutani — Secretary, Ministry of Cooperation"
                       className="w-12 h-12 rounded-lg object-cover border border-ink-200 shadow-sm flex-shrink-0"
+                      onError={(e) => handleImgError(e, 'Ashish Kumar Bhutani')}
                       loading="lazy"
                     />
                     <div>

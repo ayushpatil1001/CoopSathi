@@ -187,12 +187,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   
                   {/* Union Minister Shri Amit Shah */}
                   <div className="flex items-center gap-3.5 p-3 rounded-lg bg-amber-50/50 border border-amber-200/90 hover:border-amber-400 transition-all">
-                    <div className="w-13 h-15 rounded-md bg-slate-100 border-2 border-amber-400/80 overflow-hidden shrink-0 flex items-center justify-center shadow-xs">
-                      <div className="w-full h-full bg-slate-200 flex flex-col items-center justify-center text-slate-700">
-                        <User className="w-6 h-6 text-slate-600" />
-                        <span className="text-[8px] font-bold mt-0.5 text-slate-600 uppercase">Minister</span>
-                      </div>
-                    </div>
+                    <img
+                      src="/images/leadership/amit_shah.jpg"
+                      alt="Shri Amit Shah"
+                      className="w-13 h-15 rounded-md object-cover border-2 border-amber-400/80 shrink-0 shadow-xs"
+                      loading="lazy"
+                    />
                     <div>
                       <span className="text-[10px] uppercase font-bold text-[#FF9933] tracking-wider block">
                         Hon'ble Union Minister
@@ -208,12 +208,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
                   {/* MoS Shri Murlidhar Mohol */}
                   <div className="flex items-center gap-3.5 p-3 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all">
-                    <div className="w-13 h-15 rounded-md bg-slate-100 border border-slate-300 overflow-hidden shrink-0 flex items-center justify-center">
-                      <div className="w-full h-full bg-slate-200 flex flex-col items-center justify-center text-slate-700">
-                        <User className="w-5 h-5 text-slate-600" />
-                        <span className="text-[8px] font-medium mt-0.5 text-slate-600 uppercase">MoS</span>
-                      </div>
-                    </div>
+                    <img
+                      src="/images/leadership/murlidhar_mohol.jpg"
+                      alt="Shri Murlidhar Mohol"
+                      className="w-13 h-15 rounded-md object-cover border border-slate-300 shrink-0 shadow-xs"
+                      loading="lazy"
+                    />
                     <div>
                       <span className="text-[10px] uppercase font-bold text-blue-700 tracking-wider block">
                         Hon'ble Minister of State
@@ -229,12 +229,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
                   {/* Secretary Dr. Ashish Kumar Bhutani */}
                   <div className="flex items-center gap-3.5 p-3 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all">
-                    <div className="w-13 h-15 rounded-md bg-slate-100 border border-slate-300 overflow-hidden shrink-0 flex items-center justify-center">
-                      <div className="w-full h-full bg-slate-200 flex flex-col items-center justify-center text-slate-700">
-                        <Building2 className="w-5 h-5 text-slate-600" />
-                        <span className="text-[8px] font-medium mt-0.5 text-slate-600 uppercase">Secretary</span>
-                      </div>
-                    </div>
+                    <img
+                      src="/images/leadership/ashish_bhutani.jpg"
+                      alt="Dr. Ashish Kumar Bhutani, IAS"
+                      className="w-13 h-15 rounded-md object-cover border border-slate-300 shrink-0 shadow-xs"
+                      loading="lazy"
+                    />
                     <div>
                       <span className="text-[10px] uppercase font-bold text-[#138808] tracking-wider block">
                         Secretary (Cooperation)

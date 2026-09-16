@@ -17,7 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, current
 
   const navItems = [
     { id: 'home', label: 'Home', icon: Landmark },
-    { id: 'schemes', label: 'Schemes & Subsidies', icon: FileText },
+    { id: 'schemes', label: 'Schemes & Subsidies', icon: FileText, badge: '93 LIVE' },
     { id: 'pacs', label: 'PACS Services', icon: Scale, badge: '79,630 LIVE' },
     { id: 'pmfby', label: 'PMFBY Crop Insurance', icon: ShieldCheck },
     { id: 'grievance', label: 'Ombudsman & Grievance', icon: MessageSquareText },
