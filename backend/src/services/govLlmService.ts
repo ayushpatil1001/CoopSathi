@@ -26,11 +26,120 @@ export class GovLlmService {
   }
 
   private getBhashiniApiKey(): string {
-    return process.env.BHASHINI_API_KEY?.trim() || '';
+    return process.env.BHASHINI_INFERENCE_KEY?.trim() || process.env.BHASHINI_API_KEY?.trim() || '';
+  }
+
+  private getBhashiniInferenceKey(): string {
+    return process.env.BHASHINI_INFERENCE_KEY?.trim() || process.env.BHASHINI_API_KEY?.trim() || '';
+  }
+
+  private getBhashiniUdyatKey(): string {
+    return process.env.BHASHINI_UDYAT_KEY?.trim() || process.env.BHASHINI_ULCA_API_KEY?.trim() || '';
+  }
+
+  private getBhashiniUserId(): string {
+    return process.env.BHASHINI_USER_ID?.trim() || '';
   }
 
   private getGeminiApiKey(): string {
     return process.env.GEMINI_API_KEY?.trim() || '';
+  }
+
+  private isGreeting(query: string): boolean {
+    const clean = query.trim().toLowerCase();
+    return /^(hi|hello|hey|namaste|namaskar|pranam|kem\s*cho|vanakkam|sat\s*sri\s*akal|good\s*(morning|afternoon|evening)|who\s*are\s*you|what\s*(is|can)\s*(coopsathi|you\s*do)|तू\s*कोण\s*आहेस|काय\s*करू\s*शकतोस|आप\s*कौन\s*हैं|आप\s*क्या\s*कर\s*सकते\s*हैं|नमस्ते|नमस्कार|प्रणाम|केम\s*છો)(\s|[!?,.]|$)/i.test(clean) || (clean.length <= 4 && ['hi', 'hey', 'hello'].includes(clean));
+  }
+
+  private getGreetingResponse(language: string): string {
+    if (language === 'mr') {
+      return `**नमस्कार! मी CoopSathi AI – सहकारिता मंत्रालय व NCCT चा अधिकृत डिजिटल सहाय्यक.**\n\n` +
+        `मी भारतातील शेतकरी, सहकारी संस्थांचे सभासद आणि नागरिकांना अधिकृत सरकारी योजना व सहकार कायद्यांविषयी प्रमाणित माहिती देतो.\n\n` +
+        `**मी खालील विषयांवर आपली मदत करू शकतो:**\n` +
+        `• 🌾 **सरकारी योजना व अनुदाने:** पीएम-किसान, पीएमएफबीवाय (पीक विमा), केसीसी ४% कर्ज, नमो ड्रोन दीदी, लखपती दीदी, इ.\n` +
+        `• 🏛️ **पॅक्स (PACS) व सहकार सुधारणा:** आदर्श उपविधी, २५+ बहुउद्देशीय सेवा, संगणकीकरण व सभासदत्व.\n` +
+        `• 📝 **चरण-दर-चरण अर्ज प्रक्रिया:** योजनांसाठी अर्ज कसा करावा, लागणारी कागदपत्रे व अधिकृत पोर्टल्स.\n` +
+        `• ⚖️ **कायदेशीर तरतुदी:** बहुराज्य सहकारी संस्था कायदा २०२३ (MSCS Act), मतदानाचे हक्क व कलम २९.\n` +
+        `• 🛡️ **तक्रार निवारण:** सहकार लोकपालकडे (Ombudsman) तक्रार दाखल करण्याची पद्धत.\n\n` +
+        `💡 *तुम्हाला कोणत्या योजनेबद्दल किंवा नियमाबद्दल माहिती हवी आहे? खाली प्रश्न विचारा.*`;
+    }
+
+    if (language === 'hi') {
+      return `**नमस्ते! मैं CoopSathi AI हूँ – सहकारिता मंत्रालय एवं NCCT, भारत सरकार का आधिकारिक डिजिटल सहायक।**\n\n` +
+        `मैं भारतीय किसानों, सहकारी समितियों के सदस्यों एवं नागरिकों को प्रमाणित सरकारी योजनाओं और विधिक नियमों की सटीक जानकारी प्रदान करता हूँ।\n\n` +
+        `**मैं निम्न विषयों पर आपकी सहायता कर सकता हूँ:**\n` +
+        `• 🌾 **प्रमुख सरकारी योजनाएं एवं अनुदान:** पीएम-किसान, फसल बीमा (PMFBY), किसान क्रेडिट कार्ड (KCC 4% ऋण), ड्रोन दीदी, आदि।\n` +
+        `• 🏛️ **पैक्स (PACS) एवं सहकारी सेवाएं:** नए मॉडल उपनियम, 25+ बहुउद्देशीय सेवाएं, जन औषधि केंद्र एवं सदस्यता नियम।\n` +
+        `• 📝 **चरण-दर-चरण आवेदन प्रक्रिया:** योजनाओं में आवेदन कैसे करें, आवश्यक दस्तावेज एवं आधिकारिक पोर्टल।\n` +
+        `• ⚖️ **विधिक अधिकार:** बहु-राज्य सहकारी सोसायटी अधिनियम २०२३, मतदान अधिकार (धारा २९) एवं निर्वाचन।\n` +
+        `• 🛡️ **शिकायत निवारण:** सहकार लोकपाल (Ombudsman) के समक्ष शिकायत दर्ज करने की प्रक्रिया (प्रपत्र VI)।\n\n` +
+        `💡 *आप किस योजना अथवा विषय के बारे में जानना चाहते हैं? कृपया अपना प्रश्न पूछें।*`;
+    }
+
+    if (language === 'gu') {
+      return `**નમસ્તે! હું CoopSathi AI છું – સહકારિતા મંત્રાલય અને NCCT, ભારત સરકારનો સત્તાવાર ડિજિટલ સહાયક.**\n\n` +
+        `હું ભારતના ખેડૂતો અને સહકારી મંડળીઓના સભ્યોને સત્તાવાર સરકારી યોજનાઓ અને સહકારી કાયદાઓ વિશે સચોટ માર્ગદર્શન આપું છું.\n\n` +
+        `**હું તમને નીચેના વિષયોમાં સહાય કરી શકું છું:**\n` +
+        `• 🌾 **સરકારી યોજનાઓ અને સબસિડી:** પીએમ-કિસાન, પીએમએફબીવાય પાક વીમો, કેસીસી ૪% ધિરાણ, વગેરે.\n` +
+        `• 🏛️ **પેક્સ (PACS) મંડળી:** આદર્શ પેટા-નિયમો, ૨૫+ સેવાઓ અને સભ્યપદ પ્રક્રિયા.\n` +
+        `• 📝 **પગલાંવાર અરજી પ્રક્રિયા:** યોજનાઓમાં અરજી કેવી રીતે કરવી અને જરૂરી દસ્તાવેજો.\n` +
+        `• ⚖️ **સહકારી કાયદા:** મલ્ટી-સ્ટેટ કો-ઓપરેટિવ સોસાયટીઝ એક્ટ 2023 અને સભ્યોના મતદાન અધિકારો.\n` +
+        `• 🛡️ **ફરિયાદ નિવારણ:** સહકારી લોકપાલ સમક્ષ ફરિયાદ પ્રક્રિયા.\n\n` +
+        `💡 *આપને કઈ યોજના કે સહકારી નિયમ વિશે માહિતી જોઈએ છે? કૃપા કરીને જણાવો.*`;
+    }
+
+    return `**Hello! I am CoopSathi AI – Official Virtual Assistant for the Ministry of Cooperation & NCCT, Government of India.**\n\n` +
+      `I provide verified, statutory guidance grounded in official Acts, Gazettes, and the 93+ Central Government Schemes.\n\n` +
+      `**Here is how I can assist you:**\n` +
+      `• 🌾 **Government Schemes & Subsidies:** PM-KISAN, PMFBY Crop Insurance, 4% KCC Loans, AIF, NaMo Drone Didi, etc.\n` +
+      `• 🏛️ **PACS Modernization & Governance:** Model By-Laws, Cloud ERP, 25+ multipurpose activities, and membership enrollment.\n` +
+      `• 📝 **Step-by-Step Application Guides:** Detailed procedures, required KYC documents, application channels, and official links.\n` +
+      `• ⚖️ **Legal & Compliance Inquiries:** Multi-State Co-operative Societies (MSCS) Act 2023, Section 29 voting rights, board governance, and audit mandates.\n` +
+      `• 🛡️ **Grievance Redressal:** Filing complaints with the Co-operative Ombudsman under Section 85 (Form VI).\n\n` +
+      `💡 *What scheme, law, or service would you like to inquire about today?*`;
+  }
+
+  private isGibberish(query: string): boolean {
+    const clean = query.trim();
+    if (clean.length < 3) return true;
+    const lettersOnly = clean.replace(/[^a-zA-Z]/g, '');
+    if (lettersOnly.length > 5) {
+      const vowelCount = (lettersOnly.match(/[aeiouy]/gi) || []).length;
+      if (vowelCount === 0 || vowelCount / lettersOnly.length < 0.1) {
+        return true;
+      }
+    }
+    if (/^(.)\1{4,}$/.test(clean)) return true;
+    return false;
+  }
+
+  private getGibberishResponse(language: string): string {
+    if (language === 'mr') {
+      return `मी आपला प्रश्न स्पष्टपणे समजू शकलो नाही. **CoopSathi AI** म्हणून, मी आपल्याला अधिकृत सरकारी योजना (PMFBY, KCC, PM-KISAN), प्राथमिक कृषी पतसंस्था (PACS), बहुराज्य सहकारी संस्था कायदा २०२३ (MSCS Act) आणि अर्ज प्रक्रियेविषयी मदत करण्यास तयार आहे.\n\nकृपया आपला प्रश्न पुन्हा सुस्पष्ट शब्दात विचारा किंवा खालील विषयांवर क्लिक करा.`;
+    }
+    if (language === 'hi') {
+      return `मैं आपका प्रश्न स्पष्ट रूप से समझ नहीं पाया। **CoopSathi AI** के रूप में, मैं सरकारी योजनाओं (PMFBY, KCC, PM-KISAN), प्राथमिक कृषि ऋण समितियों (PACS), सहकारिता कानून और आवेदन प्रक्रिया की जानकारी देने के लिए उपलब्ध हूँ।\n\nकृपया अपना प्रश्न स्पष्ट शब्दों में पूछें अथवा नीचे दिए गए विकल्पों में से चुनें।`;
+    }
+    return `I couldn't quite understand your query. As **CoopSathi AI**, I am ready to provide verified guidance on Indian Government Schemes (PMFBY, KCC, PM-KISAN), Primary Agricultural Credit Societies (PACS), MSCS Act 2023 legal compliance, and step-by-step application procedures.\n\nPlease rephrase your question or select one of the suggested topics below.`;
+  }
+
+  private isOutOfDomain(query: string, maxScore: number): boolean {
+    if (maxScore > 10) return false;
+    const outOfDomainRegex = /\b(president\s+of|capital\s+of|prime\s+minister\s+of\s+(?!india)|movie|hollywood|bollywood|football|cricket\s+score|fifa|weather\s+in|python\s+code|javascript\s+code|write\s+a\s+poem|solve\s+equation|joke|sing\s+a\s+song)\b/i;
+    return outOfDomainRegex.test(query) || maxScore === 0;
+  }
+
+  private getOutOfDomainResponse(language: string): string {
+    if (language === 'mr') {
+      return `मी **CoopSathi AI**, **सहकारिता मंत्रालय, भारत सरकार** चा अधिकृत डिजिटल सहाय्यक आहे. माझी माहिती भारतीय सरकारी योजना, कृषी पतपुरवठा (KCC ४%), पीक विमा (PMFBY), पॅक्स (PACS) आधुनिकीकरण आणि सहकार कायद्यांपुरती मर्यादित आहे.\n\nमाझ्याकडे बाह्य विषयांची (उदा. परदेशी राजकारण किंवा मनोरंजनाची) माहिती उपलब्ध नाही, परंतु मी आपल्याला भारतातील **९३+ सरकारी योजना**, अनुदान किंवा सहकार नियमांविषयी निश्चितपणे मदत करू शकतो!`;
+    }
+    if (language === 'hi') {
+      return `मैं **CoopSathi AI**, **सहकारिता मंत्रालय, भारत सरकार** का आधिकारिक डिजिटल सहायक हूँ। मेरा ज्ञानक्षेत्र भारत सरकार की कल्याणकारी योजनाओं, कृषि ऋण (KCC ४%), फसल बीमा (PMFBY), पैक्स आधुनिकीकरण और सहकारी नियमों (MSCS Act) तक समर्पित है।\n\nमेरे पास गैर-सरकारी अथवा बाहरी सामान्य विषयों की जानकारी उपलब्ध नहीं है, परंतु मैं भारत की **९३+ सरकारी योजनाओं**, सब्सिडी एवं सहकारी प्रक्रियाओं पर आपकी पूरी सहायता कर सकता हूँ!`;
+    }
+    return `I am **CoopSathi AI**, the official virtual assistant dedicated to the **Ministry of Cooperation, Government of India**, agricultural credit (4% KCC), crop insurance (PMFBY), PACS modernization, and central government welfare schemes.\n\nI do not provide information on non-governmental topics, foreign politics, or entertainment, but I would be glad to help you with any of India's **93+ verified government schemes**, cooperative laws, subsidies, and application steps!`;
+  }
+
+  private isHowToApply(query: string): boolean {
+    return /how\s+(to|can\s+i|do\s+i|should\s+i|we)?\s*(apply|register|enroll|avail|submit|file|claim|get|obtain|join|take|open|acquire|access)|application\s+(process|steps|procedure|form|guide|method)|registration\s+(process|steps|procedure|form)|enrollment\s+(process|steps|procedure)|procedure\s+(to|for)|steps\s+(to|for)|process\s+(to|of)|form\s+filling|where\s+to\s+apply|eligibility\s+and\s+apply|कसा\s+(करावा|करावे|भरावा|नोंदवावा|मिळवावा|घेता\s+येईल)|कशी\s+(करावी|मिळेल)|कसे\s+(करावे|मिळेल|घ्यावे)|अर्ज\s*(कसा|कशी|प्रक्रिया|नमुना|करणे)?|नोंदणी|पायऱ्या|पायरी|आवेदन\s*(कैसे|प्रक्रिया|प्रपत्र|करना)?|पंजीकरण|चरण|प्रक्रिया|अप्लाई|કેવી\s+રીતે\s*(અરજી|મેળવવું|નોંધણી|લેવું)|અરજી\s*(કેવી\s+રીતે|પ્રક્રિયા|ફોર્મ)?|નોંધણી|પગલાં|કઈ\s+રીતે|વિશે\s+અरજી|વિશે\s+માહિતી|મેળવવી|વિશે\s+અરજી|விண்ணப்பிப்பது|దరఖాస్తు|আবেদন/i.test(query);
   }
 
   /**
@@ -42,6 +151,64 @@ export class GovLlmService {
     // Step 1: Execute RAG retrieval
     const ragResults = ragEngineService.retrieve(query, 3);
     const topChunks = ragResults.map(r => r.chunk);
+    const maxScore = ragResults[0]?.relevanceScore || 0;
+
+    // Check for Greetings
+    if (this.isGreeting(query)) {
+      return {
+        text: this.getGreetingResponse(language),
+        isOfficialGovLLM: true,
+        provider: 'official_gov_rag',
+        modelUsed: 'CoopSathi Conversational Engine',
+        confidence: 1.0,
+        sources: [],
+        suggestedActions: [
+          'How to apply for PMFBY crop insurance?',
+          'How to get KCC loan at 4%?',
+          'PACS 25+ Citizen Services',
+          'Cooperative Ombudsman Complaint (Form VI)'
+        ],
+        retrievedContextCount: 0
+      };
+    }
+
+    // Check for Gibberish / Noise
+    if (this.isGibberish(query)) {
+      return {
+        text: this.getGibberishResponse(language),
+        isOfficialGovLLM: true,
+        provider: 'official_gov_rag',
+        modelUsed: 'CoopSathi Clarification Engine',
+        confidence: 0.95,
+        sources: [],
+        suggestedActions: [
+          'What is PMFBY crop insurance?',
+          'How to join PACS?',
+          'Kisan Credit Card 4% Interest',
+          'Search 93+ Government Schemes'
+        ],
+        retrievedContextCount: 0
+      };
+    }
+
+    // Check for Out-of-Domain queries
+    if (this.isOutOfDomain(query, maxScore)) {
+      return {
+        text: this.getOutOfDomainResponse(language),
+        isOfficialGovLLM: true,
+        provider: 'official_gov_rag',
+        modelUsed: 'CoopSathi Scope Engine',
+        confidence: 0.95,
+        sources: [],
+        suggestedActions: [
+          'What are the 93+ Government Schemes?',
+          'How to apply for PM-KISAN?',
+          'PACS Modernization and ERP',
+          'MSCS Act 2023 Rules'
+        ],
+        retrievedContextCount: 0
+      };
+    }
 
     // Map chunks to frontend source interface
     const sources = topChunks.map(c => ({
@@ -56,17 +223,38 @@ export class GovLlmService {
     }));
 
     const suggestedActions = this.deriveSuggestedActions(topChunks, query);
-
-    // Step 2: Check if Gemini is configured to act as neural synthesizer with RAG context
+    const provider = this.getProvider();
+    const bhashiniKey = this.getBhashiniInferenceKey();
     const geminiKey = this.getGeminiApiKey();
-    if (geminiKey && geminiKey.length > 10 && !geminiKey.includes('your_gemini_api_key')) {
+
+    // Step 2A: If Bhashini provider is explicitly chosen
+    if (provider === 'bhashini') {
+      if (bhashiniKey && bhashiniKey.length > 5) {
+        const bhashiniResult = await this.generateWithBhashini(query, language, topChunks);
+        if (bhashiniResult) {
+          return {
+            text: bhashiniResult,
+            isOfficialGovLLM: true,
+            provider: 'bhashini',
+            modelUsed: `Digital India Bhashini (National Language Translation Mission - Dhruva)`,
+            confidence: 0.99,
+            sources,
+            suggestedActions,
+            retrievedContextCount: topChunks.length
+          };
+        }
+      }
+    }
+
+    // Step 2B: Check if Gemini is configured to act as neural synthesizer with RAG context
+    if (provider === 'gemini_gov_rag' || (provider !== 'bhashini' && geminiKey && geminiKey.length > 10 && !geminiKey.includes('your_gemini_api_key'))) {
       const geminiResult = await this.generateWithGeminiRAG(query, language, topChunks, geminiKey);
       if (geminiResult) {
         return {
           text: geminiResult,
           isOfficialGovLLM: true,
           provider: 'gemini_gov_rag',
-          modelUsed: `Gemini 1.5 Flash + Official Gov RAG Grounding`,
+          modelUsed: `Gemini 2.5 Flash + Official Gov RAG Grounding`,
           confidence: 0.99,
           sources,
           suggestedActions,
@@ -75,16 +263,15 @@ export class GovLlmService {
       }
     }
 
-    // Step 3: Check if Digital India Bhashini ULCA API is configured
-    const bhashiniKey = this.getBhashiniApiKey();
-    if (bhashiniKey && bhashiniKey.length > 10) {
+    // Step 3: Check if Digital India Bhashini is configured as fallback provider
+    if (bhashiniKey && bhashiniKey.length > 5) {
       const bhashiniResult = await this.generateWithBhashini(query, language, topChunks);
       if (bhashiniResult) {
         return {
           text: bhashiniResult,
           isOfficialGovLLM: true,
           provider: 'bhashini',
-          modelUsed: `Digital India Bhashini NLU (National Language Translation Mission)`,
+          modelUsed: `Digital India Bhashini (National Language Translation Mission - Dhruva)`,
           confidence: 0.98,
           sources,
           suggestedActions,
@@ -113,12 +300,21 @@ export class GovLlmService {
    */
   private async generateWithGeminiRAG(query: string, language: string, contextChunks: RAGChunk[], apiKey: string): Promise<string | null> {
     try {
-      const model = process.env.GEMINI_MODEL?.trim() || 'gemini-1.5-flash';
+      let model = process.env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash';
+      if (model === 'gemini-1.5-flash' || model === 'gemini-pro') {
+        model = 'gemini-2.5-flash';
+      }
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
-      const contextText = contextChunks
+      let contextText = contextChunks
         .map((c, i) => `[STATUTE ${i + 1}]: ${c.actOrScheme} - ${c.sectionOrClause} (${c.title})\nAuthority: ${c.authority}\nText: ${c.content}`)
         .join('\n\n');
+
+      // If user is asking an application question, inject the verified 5-step procedure into the RAG context
+      if (this.isHowToApply(query)) {
+        const verifiedSteps = this.synthesizeStepByStepApplication(query, language, contextChunks);
+        contextText += `\n\n=== VERIFIED STATUTORY STEP-BY-STEP APPLICATION PROCEDURE ===\n${verifiedSteps}\n=============================================================`;
+      }
 
       const systemPrompt = `You are "CoopSathi AI", the official legal and governance AI assistant for the Ministry of Cooperation and NCCT, Government of India.
 You must answer the user's question STRICTLY utilizing the following verified official statutory context:
@@ -133,7 +329,7 @@ RULES:
 3. Cite the exact Section, Clause, or Act (e.g., Section 29 MSCS Act 2023, Clause 21 PMFBY).
 4. Maintain a respectful, supportive, and authoritative government public service tone.
 5. MANDATORY STEP-BY-STEP FORMAT FOR APPLICATION QUERIES:
-   Whenever the user asks "How to apply", "how do I apply", "application process", "steps to apply", "registration procedure", "how can I file/claim", or queries like 'आवेदन कैसे करें', 'अर्ज कसा करावा', 'અરજી કેવી રીતે કરવી', 'ఎలా దరఖాస్తు చేయాలి', 'எப்படி விண்ணப்பிப்பது', 'কীভাবে আবেদন করবেন', you MUST format your response as a clear, numbered, sequential step-by-step guide:
+   Whenever the user asks "How to apply", "how do I apply", "application process", "steps to apply", "registration procedure", "how can I file/claim", or queries like 'आवेदन कैसे करें', 'अर्ज कसा करावा', 'અરજી કેવી રીતે કરવી', 'ఎలా దరఖాస్తు చేయాలి', 'எப்படி விண்ணப்பிப்பது', 'কীভাবে आवेदन করবেন', you MUST format your response as a clear, numbered, sequential step-by-step guide:
    - **Step 1: Check Eligibility & Prepare Required Documents**
    - **Step 2: Choose Application Channel (Online Portal or Offline PACS/Bank Branch)**
    - **Step 3: Registration & Form Details**
@@ -151,20 +347,106 @@ RULES:
         })
       });
 
-      if (!response.ok) return null;
-      const json = await response.json();
-      return json.candidates?.[0]?.content?.parts?.[0]?.text || null;
-    } catch {
+      if (!response.ok) {
+        console.warn(`[Gemini] API error HTTP ${response.status}: ${response.statusText}`);
+        return null;
+      }
+
+      const json = (await response.json()) as any;
+      const text = json?.candidates?.[0]?.content?.parts?.[0]?.text || null;
+      if (!text) return null;
+
+      // If Gemini returned a refusal (e.g. "not in provided context"), fall back to sovereign synthesizer
+      const isRefusal = /does\s+not\s+contain|not\s+mentioned\s+in\s+the\s+provided|not\s+available\s+in\s+the\s+provided|वैधानिक\s+संदर्भात\s+उपलब्ध\s+नाही|माहिती\s+उपलब्ध\s+नाही|संदर्भ\s+में\s+नहीं\s+दिया|उपलब्ध\s+नहीं\s+है|सંદર્ભમાં\s+નથી/i.test(text);
+      if (isRefusal) {
+        console.warn('[Gemini] Context absence refusal detected; falling back to Sovereign Synthesizer');
+        return null;
+      }
+
+      return text;
+    } catch (err) {
+      console.warn('[Gemini] Generation failed:', err);
       return null;
     }
   }
 
   /**
-   * Bhashini ULCA Pipeline Integration
+   * Digital India Bhashini (Dhruva / ULCA) Integration
+   * Grounded with Official Statutory RAG Context + High-Fidelity NMT Translation
    */
   private async generateWithBhashini(query: string, language: string, contextChunks: RAGChunk[]): Promise<string | null> {
-    // If Bhashini endpoint is configured, invoke Bhashini NLU; otherwise gracefully return null to fallback
-    return null;
+    const inferenceKey = this.getBhashiniInferenceKey();
+    if (!inferenceKey || inferenceKey.length < 5) return null;
+
+    try {
+      // 1. Synthesize sovereign statutory response in English first for pure legal precision
+      const baseAnswer = this.synthesizeGovRagAnswer(query, 'en', contextChunks);
+      if (!baseAnswer) return null;
+
+      // If user language is English, return the authoritative English statutory response directly
+      if (!language || language.toLowerCase() === 'en') {
+        return baseAnswer;
+      }
+
+      // 2. Call Bhashini Dhruva NMT inference pipeline to translate into citizen's native language
+      const targetLang = language.toLowerCase();
+      const computeUrl = 'https://dhruva-api.bhashini.gov.in/services/inference/pipeline';
+
+      // Split into logical paragraphs to ensure payload fits comfortably within compute limits
+      const paragraphs = baseAnswer.split('\n\n').filter(p => p.trim().length > 0);
+      const inputItems = paragraphs.map(p => ({ source: p }));
+
+      const payload = {
+        pipelineTasks: [
+          {
+            taskType: 'translation',
+            config: {
+              language: {
+                sourceLanguage: 'en',
+                targetLanguage: targetLang
+              }
+            }
+          }
+        ],
+        inputData: {
+          input: inputItems
+        }
+      };
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 7000); // 7-second SLA
+
+      const response = await fetch(computeUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': inferenceKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.warn(`[Bhashini] Dhruva API error HTTP ${response.status}: ${response.statusText}`);
+        return null;
+      }
+
+      const json = (await response.json()) as any;
+      const outputs = json?.pipelineResponse?.[0]?.output;
+      if (Array.isArray(outputs) && outputs.length > 0) {
+        const translated = outputs.map((item: any) => item.target || item.source).join('\n\n');
+        if (translated.trim().length > 0) {
+          return translated;
+        }
+      }
+
+      return null;
+    } catch (err) {
+      console.warn('[Bhashini] Dhruva inference request failed:', err);
+      return null;
+    }
   }
 
   /**
@@ -233,7 +515,7 @@ RULES:
    * Synthesizes verified statutory knowledge into natural multilingual guidance
    */
   private synthesizeGovRagAnswer(query: string, language: string, chunks: RAGChunk[]): string {
-    const isHowToApply = /how\s+(to|can\s+i|do\s+i)?\s*(apply|register|enroll|avail|submit|file|claim)|application\s+process|steps\s+to|procedure\s+to|form\s+filling|process\s+to|where\s+to\s+apply|eligibility\s+and\s+apply|कसा\s+(करावा|करावे|भरावा|नोंदवावा)|अर्ज|अर्ज\s+प्रक्रिया|पायऱ्या|पायरी|आवेदन\s+कैसे|आवेदन\s+प्रक्रिया|आवेदन|चरण|प्रक्रिया|अप्लाई|કેવી\s+રીતે\s+અરજી|અરજી\s+કેવી\s+રીતે|અરજી\s+પ્રક્રિયા|અરજી|પગલાં|કઈ\s+રીતે|વિશે\s+અરજી|விண்ணப்பிப்பது|దరఖాస్తు|আবেদন/i.test(query);
+    const isHowToApply = /how\s+(to|can\s+i|do\s+i|should\s+i|we)?\s*(apply|register|enroll|avail|submit|file|claim|get|obtain|join|take|open|acquire|access)|application\s+(process|steps|procedure|form|guide|method)|registration\s+(process|steps|procedure|form)|enrollment\s+(process|steps|procedure)|procedure\s+(to|for)|steps\s+(to|for)|process\s+(to|of)|form\s+filling|where\s+to\s+apply|eligibility\s+and\s+apply|कसा\s+(करावा|करावे|भरावा|नोंदवावा|मिळवावा|घेता\s+येईल)|कशी\s+(करावी|मिळेल)|कसे\s+(करावे|मिळेल|घ्यावे)|अर्ज\s*(कसा|कशी|प्रक्रिया|नमुना|करणे)?|नोंदणी|पायऱ्या|पायरी|आवेदन\s*(कैसे|प्रक्रिया|प्रपत्र|करना)?|पंजीकरण|चरण|प्रक्रिया|अप्लाई|કેવી\s+રીતે\s*(અરજી|મેળવવું|નોંધણી|લેવું)|અરજી\s*(કેવી\s+રીતે|પ્રક્રિયા|ફોર્મ)?|નોંધણી|પગલાં|કઈ\s+રીતે|વિશે\s+અરજી|વિશે\s+માહિતી|મેળવવી|વિશે\s+અરજી|விண்ணப்பிப்பது|దరఖాస్తు|আবেদন/i.test(query);
 
     if (isHowToApply) {
       return this.synthesizeStepByStepApplication(query, language, chunks);
@@ -690,11 +972,6 @@ RULES:
       return 'Please visit https://india.gov.in for government application guidelines.';
     }
 
-    // 0. If matched chunk has rich schemeData
-    if (primary.schemeData) {
-      return this.synthesizeSchemeApplication(primary.schemeData, language);
-    }
-
     // 0.1 RTI Act 2005 Application
     if (primary.id === 'GOV-RTI-2005') {
       if (language === 'mr') {
@@ -1044,7 +1321,12 @@ RULES:
       }
     }
 
-    // 5. General Scheme / Registration Procedure Fallback
+    // 5. If matched chunk has rich schemeData from 93+ schemes catalog
+    if (primary.schemeData) {
+      return this.synthesizeSchemeApplication(primary.schemeData, language);
+    }
+
+    // 6. General Scheme / Registration Procedure Fallback
     if (language === 'mr') {
       return `**पायरी-दर-पायरी मार्गदर्शक: सहकारी योजना व सेवांसाठी अर्ज प्रक्रिया**\n\n` +
         `**पायरी १: अधिकृत पात्रता व नियमावली तपासा**\n` +

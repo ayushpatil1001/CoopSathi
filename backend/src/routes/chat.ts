@@ -6,19 +6,39 @@ export const chatRouter = Router();
 
 // GET /api/chat/status - Status of Official Government LLM & RAG Engine
 chatRouter.get('/status', (_req: Request, res: Response) => {
-  const provider = process.env.GOV_LLM_PROVIDER || 'official_gov_rag';
-  const hasBhashini = Boolean(process.env.BHASHINI_API_KEY && process.env.BHASHINI_API_KEY.length > 5);
-  const hasGemini = Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.length > 10 && !process.env.GEMINI_API_KEY.includes('your_gemini_api_key'));
+  const provider = (process.env.GOV_LLM_PROVIDER || 'official_gov_rag').toLowerCase();
+  const hasBhashini = Boolean(
+    (process.env.BHASHINI_INFERENCE_KEY && process.env.BHASHINI_INFERENCE_KEY.length > 5) ||
+    (process.env.BHASHINI_API_KEY && process.env.BHASHINI_API_KEY.length > 5)
+  );
+  const hasGemini = Boolean(
+    process.env.GEMINI_API_KEY &&
+    process.env.GEMINI_API_KEY.length > 10 &&
+    !process.env.GEMINI_API_KEY.includes('your_gemini_api_key')
+  );
+
+  let activeProvider = 'official_gov_rag';
+  let modelName = 'Official Government RAG Engine (Bhashini-Aligned)';
+
+  if (provider === 'bhashini' && hasBhashini) {
+    activeProvider = 'bhashini';
+    modelName = 'Digital India Bhashini (National Language Translation Mission - Dhruva)';
+  } else if (provider === 'gemini_gov_rag' && hasGemini) {
+    activeProvider = 'gemini_gov_rag';
+    modelName = 'Gemini 2.5 Flash + Official Gov RAG Grounding';
+  } else if (hasBhashini) {
+    activeProvider = 'bhashini';
+    modelName = 'Digital India Bhashini (National Language Translation Mission - Dhruva)';
+  } else if (hasGemini) {
+    activeProvider = 'gemini_gov_rag';
+    modelName = 'Gemini 2.5 Flash + Official Gov RAG Grounding';
+  }
 
   res.json({
     status: 'online',
     isOfficialGovLLM: true,
-    activeProvider: hasGemini ? 'gemini_gov_rag' : hasBhashini ? 'bhashini' : 'official_gov_rag',
-    modelName: hasGemini
-      ? 'Gemini 1.5 Flash + Official Gov RAG Grounding'
-      : hasBhashini
-      ? 'Digital India Bhashini (National Language Translation Mission)'
-      : 'Official Government RAG Engine (Bhashini-Aligned)',
+    activeProvider,
+    modelName,
     ragCorpusChunksCount: ragEngineService.getCorpusSize(),
     statutoryActsIndexed: [
       'Multi-State Co-operative Societies (Amendment) Act 2023 (Act No. 11 of 2023)',
@@ -28,6 +48,7 @@ chatRouter.get('/status', (_req: Request, res: Response) => {
       'Co-operative Ombudsman Regulations (CRCS Forms VI & VII)'
     ],
     bhashiniConfigured: hasBhashini,
+    bhashiniHasUdyatKey: Boolean(process.env.BHASHINI_UDYAT_KEY && process.env.BHASHINI_UDYAT_KEY.length > 5),
     geminiConfigured: hasGemini
   });
 });

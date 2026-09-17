@@ -68,20 +68,22 @@ qa_chain = RetrievalQA.from_chain_type(
 # ==========================================
 class BhashiniVoiceService:
     def __init__(self):
-        # Users register on Bhashini (Ulca) to get UserID and API Key
+        # Users register on Bhashini (Udyat / ULCA) to get UserID, Udyat Key, and Inference Key
         self.user_id = os.environ.get("BHASHINI_USER_ID", "")
-        self.api_key = os.environ.get("BHASHINI_API_KEY", "")
+        self.udyat_key = os.environ.get("BHASHINI_UDYAT_KEY", "")
+        self.inference_key = os.environ.get("BHASHINI_INFERENCE_KEY", "") or os.environ.get("BHASHINI_API_KEY", "")
         self.compute_url = "https://dhruva-api.bhashini.gov.in/services/inference/pipeline"
+        self.auth_url = "https://dhruva-api.bhashini.gov.in/services/auth/pipeline"
 
     def _get_headers(self):
         return {
-            "Authorization": self.api_key,
+            "Authorization": self.inference_key,
             "Content-Type": "application/json"
         }
 
     def speech_to_text(self, audio_base64: str, source_lang: str) -> str:
         """Uses Bhashini ASR (Automatic Speech Recognition)"""
-        if not self.api_key:
+        if not self.inference_key:
             print("[Mock] Bhashini ASR: Translating Hindi Audio to Text")
             return "kya schemes available hain?" # Mock output
             
@@ -93,13 +95,13 @@ class BhashiniVoiceService:
             }
         }
         # Real Bhashini API call
-        response = requests.post(self.compute_url, headers=self._get_headers(), json=payload)
+        response = requests.post(self.compute_url, headers=self._get_headers(), json=payload, timeout=10)
         response.raise_for_status()
         return response.json()["pipelineResponse"][0]["output"][0]["source"]
 
     def text_to_speech(self, text: str, target_lang: str) -> str:
         """Uses Bhashini TTS (Text to Speech)"""
-        if not self.api_key:
+        if not self.inference_key:
             print(f"[Mock] Bhashini TTS: Generating audio for -> {text}")
             return "base64_encoded_audio_string" # Mock output
 
@@ -110,9 +112,36 @@ class BhashiniVoiceService:
                 "sourceLanguage": target_lang
             }
         }
-        response = requests.post(self.compute_url, headers=self._get_headers(), json=payload)
+        response = requests.post(self.compute_url, headers=self._get_headers(), json=payload, timeout=10)
         response.raise_for_status()
         return response.json()["pipelineResponse"][0]["audio"][0]["audioContent"]
+
+    def translate_text(self, text: str, source_lang: str, target_lang: str) -> str:
+        """Uses Bhashini NMT (Translation) to translate between Indian languages and English"""
+        if not self.inference_key or source_lang == target_lang:
+            return text
+
+        payload = {
+            "pipelineTasks": [{
+                "taskType": "translation",
+                "config": {
+                    "language": {
+                        "sourceLanguage": source_lang,
+                        "targetLanguage": target_lang
+                    }
+                }
+            }],
+            "inputData": {
+                "input": [{"source": text}]
+            }
+        }
+        try:
+            response = requests.post(self.compute_url, headers=self._get_headers(), json=payload, timeout=10)
+            response.raise_for_status()
+            return response.json()["pipelineResponse"][0]["output"][0]["target"]
+        except Exception as e:
+            print(f"[Warning] Bhashini translation error: {e}")
+            return text
 
 bhashini = BhashiniVoiceService()
 
