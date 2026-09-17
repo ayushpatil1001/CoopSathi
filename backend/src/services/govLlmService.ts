@@ -520,7 +520,7 @@ RULES:
    * Synthesizes verified statutory knowledge into natural multilingual guidance
    */
   private synthesizeGovRagAnswer(query: string, language: string, chunks: RAGChunk[]): string {
-    const isHowToApply = /how\s+(to|can\s+i|do\s+i|should\s+i|we)?\s*(apply|register|enroll|avail|submit|file|claim|get|obtain|join|take|open|acquire|access)|application\s+(process|steps|procedure|form|guide|method)|registration\s+(process|steps|procedure|form)|enrollment\s+(process|steps|procedure)|procedure\s+(to|for)|steps\s+(to|for)|process\s+(to|of)|form\s+filling|where\s+to\s+apply|eligibility\s+and\s+apply|कसा\s+(करावा|करावे|भरावा|नोंदवावा|मिळवावा|घेता\s+येईल)|कशी\s+(करावी|मिळेल)|कसे\s+(करावे|मिळेल|घ्यावे)|अर्ज\s*(कसा|कशी|प्रक्रिया|नमुना|करणे)?|नोंदणी|पायऱ्या|पायरी|आवेदन\s*(कैसे|प्रक्रिया|प्रपत्र|करना)?|पंजीकरण|चरण|प्रक्रिया|अप्लाई|કેવી\s+રીતે\s*(અરજી|મેળવવું|નોંધણી|લેવું)|અરજી\s*(કેવી\s+રીતે|પ્રક્રિયા|ફોર્મ)?|નોંધણી|પગલાં|કઈ\s+રીતે|વિશે\s+અરજી|વિશે\s+માહિતી|મેળવવી|વિશે\s+અરજી|விண்ணப்பிப்பது|దరఖాస్తు|আবেদন/i.test(query);
+    const isHowToApply = /how\s+(to|can\s+i|do\s+i|should\s+i|we)?\s*(apply|register|enroll|avail|submit|file|claim|get|obtain|join|take|open|acquire|access|download|order|change|update|link|renew|correct)|(change|changing|update|updating|download|downloading|order|ordering|link|linking)\s+(email|mobile|phone|number|address|pvc|aadhaar|aadhar|card|pan|dl|licen[cs]e)|application\s+(process|steps|procedure|form|guide|method)|registration\s+(process|steps|procedure|form)|enrollment\s+(process|steps|procedure)|procedure\s+(to|for)|steps\s+(to|for)|process\s+(to|of)|form\s+filling|where\s+to\s+apply|eligibility\s+and\s+apply|कसा\s+(करावा|करावे|भरावा|नोंदवावा|मिळवावा|घेता\s+येईल)|कशी\s+(करावी|मिळेल)|कसे\s+(करावे|मिळेल|घ्यावे)|अर्ज\s*(कसा|कशी|प्रक्रिया|नमुना|करणे)?|नोंदणी|पायऱ्या|पायरी|आवेदन\s*(कैसे|प्रक्रिया|प्रपत्र|करना)?|पंजीकरण|चरण|प्रक्रिया|अप्लाई|કેવી\s+રીતે\s*(અરજી|મેળવવું|નોંધણી|લેવું)|અરજી\s*(કેવી\s+રીતે|પ્રક્રિયા|ફોર્મ)?|નોંધણી|પગલાં|કઈ\s+રીते|વિશે\s+અરજી|વિશે\s+માહિતી|મેળવવી|વિશે\s+અરજી|விண்ணப்பிப்பது|దరఖాస్తు|আবেদন/i.test(query);
 
     if (isHowToApply) {
       return this.synthesizeStepByStepApplication(query, language, chunks);
@@ -1270,6 +1270,40 @@ RULES:
 
     // 0.25 Aadhaar Update (Changing Email, Mobile, Address, PVC Card)
     if (primaryId === 'GOV-AADHAAR-UIDAI' || /aadhar|aadhaar|adhar|uidai|आधार/i.test(query)) {
+      if (/download|e[- ]?aadhaar|eaadhaar|ई[- ]?आधार|डाऊनलोड|डाउनलोड/i.test(query)) {
+        return `**Step-by-Step Guide: How to Download e-Aadhaar PDF Online**\n\n` +
+          `**Step 1: Access Official myAadhaar Portal**\n` +
+          `• Visit **myaadhaar.uidai.gov.in** and click on **"Download Aadhaar"**.\n\n` +
+          `**Step 2: Enter Aadhaar Number or Enrolment ID (EID)**\n` +
+          `• Enter your 12-digit Aadhaar number (or 16-digit VID / 28-digit Enrolment ID) and complete the captcha.\n\n` +
+          `**Step 3: Authenticate via OTP**\n` +
+          `• Click **"Send OTP"** to receive a 6-digit code on your Aadhaar-registered mobile.\n` +
+          `• Enter the OTP. You can optionally check "Do you want a masked Aadhaar?" if you wish to mask the first 8 digits for privacy.\n\n` +
+          `**Step 4: Download Digitally Signed PDF**\n` +
+          `• Click **"Verify & Download"**. Your official digitally signed e-Aadhaar PDF will be downloaded instantly.\n\n` +
+          `**Step 5: Open Password-Protected PDF**\n` +
+          `• **Password Format:** The password is an 8-character combination of the **FIRST 4 LETTERS OF YOUR NAME IN CAPITAL LETTERS** followed by your **YEAR OF BIRTH (YYYY)**.\n` +
+          `• *Example:* If your name is SURESH KUMAR and year of birth is 1990, the password is **SURE1990**.\n\n` +
+          `📞 **UIDAI Toll-Free Helpline:** 1947 | 🌐 **Portal:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      }
+
+      if (/pvc|order\s*pvc|plastic\s*card|पीव्हीसी|पीवीसी/i.test(query)) {
+        return `**Step-by-Step Guide: How to Order Aadhaar PVC Card Online**\n\n` +
+          `**Step 1: Visit Official myAadhaar Portal**\n` +
+          `• Visit **myaadhaar.uidai.gov.in** and click on **"Order Aadhaar PVC Card"**.\n\n` +
+          `**Step 2: Enter Aadhaar Details & Non-Registered Mobile Support**\n` +
+          `• Enter your 12-digit Aadhaar Number or 28-digit EID and enter captcha.\n` +
+          `• If your mobile number is NOT registered with Aadhaar, check "My Mobile number is not registered" and enter any alternate mobile number to receive OTP.\n\n` +
+          `**Step 3: Verify OTP**\n` +
+          `• Enter the OTP received and accept terms & conditions.\n\n` +
+          `**Step 4: Pay Statutory ₹50 Fee Online**\n` +
+          `• Pay the standard government fee of **₹50** (inclusive of GST and Speed Post delivery across India) via UPI, Debit Card, or Net Banking.\n\n` +
+          `**Step 5: Track Speed Post Delivery**\n` +
+          `• Note your Service Request Number (SRN).\n` +
+          `• UIDAI prints the durable, water-resistant PVC card with holographic security emblem, QR code, and microtext, and dispatches it via India Post Speed Post within 5 working days.\n\n` +
+          `📞 **UIDAI Helpline:** 1947 | 🌐 **Portal:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      }
+
       if (language === 'mr') {
         return `**पायरी-दर-पायरी मार्गदर्शक: आधार कार्डमध्ये ईमेल / मोबाईल नंबर कसा बदलायचा (UIDAI)**\n\n` +
           `**पायरी १: ऑनलाइन अपॉइंटमेंट बुक करा (पर्यायी पण सोयीस्कर)**\n` +
@@ -1419,6 +1453,47 @@ RULES:
         `• Enter the final OTP received on mobile/email. A unique **Udyam Registration Number (URN)** is instantly generated.\n` +
         `• The digitally signed **Udyam Registration Certificate** with dynamic QR Code is issued within 24 to 48 hours and can be downloaded anytime free of cost.\n\n` +
         `📞 **MSME Helpline:** 011-23063288 | 🌐 **Portal:** [udyamregistration.gov.in](https://udyamregistration.gov.in)`;
+    }
+
+    // 0.296 Passport Seva Online Application (Passports Act, 1967)
+    if (primaryId === 'GOV-PASSPORT-SEVA' || /passport|पासपोर्ट|पारपत्र/i.test(query)) {
+      return `**Step-by-Step Guide: How to Apply for a Fresh / Renewal Passport (Passport Seva)**\n\n` +
+        `**Step 1: Register on Passport Seva Online Portal**\n` +
+        `• Visit the official government portal **passportindia.gov.in** (or download official mPassport Seva app).\n` +
+        `• Register using your active email address and select your jurisdictional Regional Passport Office (RPO).\n\n` +
+        `**Step 2: Fill Out Application Form 1 (Fresh or Reissue)**\n` +
+        `• Click on "Apply for Fresh Passport/Re-issue of Passport".\n` +
+        `• Select Application Type (Normal or Tatkaal), Passport Booklet type (36 or 60 pages), and enter personal/family details matching your Aadhaar and Matriculation certificate.\n\n` +
+        `**Step 3: Pay Statutory Fee & Schedule Appointment Slot**\n` +
+        `• Online fee payment is mandatory: **₹1,500** for Normal (36 pages) or **₹3,500** for Tatkaal.\n` +
+        `• Select your nearest **Passport Seva Kendra (PSK)** or **Post Office Passport Seva Kendra (POPSK)** and choose an available appointment date and time slot.\n\n` +
+        `**Step 4: Visit PSK / POPSK for Biometric & Document Verification**\n` +
+        `• Carry original documents: Proof of Date of Birth (Birth Certificate / School Leaving / Aadhaar), Proof of Present Address (Aadhaar / Voter ID / Utility Bill / Bank Passbook), and Non-ECR proof (Class 10+ certificate).\n` +
+        `• Complete Counter A (Biometric photo and fingerprints), Counter B (Document verification), and Counter C (Granting Officer approval).\n\n` +
+        `**Step 5: Police Verification & Speed Post Delivery**\n` +
+        `• Local police station will contact you for physical address and identity verification.\n` +
+        `• Upon successful police report, your passport is printed and delivered to your registered address via **Speed Post** (trackable online with Consignment Number).\n\n` +
+        `📞 **National Passport Toll-Free Helpline:** 1800-258-1800 | 🌐 **Portal:** [passportindia.gov.in](https://passportindia.gov.in)`;
+    }
+
+    // 0.297 DigiLocker Account Registration & Document Fetch (IT Act / Rule 9A)
+    if (primaryId === 'GOV-DIGILOCKER' || /digilocker|डिजिलॉकर/i.test(query)) {
+      return `**Step-by-Step Guide: How to Register on DigiLocker & Fetch Official Documents**\n\n` +
+        `**Step 1: Access DigiLocker Portal or Mobile App**\n` +
+        `• Visit **digilocker.gov.in** or install the official **DigiLocker app** from Google Play Store or Apple App Store.\n` +
+        `• Click on **"Sign Up"** to create a new citizen account.\n\n` +
+        `**Step 2: Enter Basic Details & Set 6-Digit Security PIN**\n` +
+        `• Enter your Full Name (as per Aadhaar), Date of Birth, Gender, Mobile Number, Email ID, and create a confidential **6-digit Security PIN**.\n\n` +
+        `**Step 3: Link 12-Digit Aadhaar & Verify via OTP**\n` +
+        `• Enter your 12-digit Aadhaar Number. An OTP will be sent to your Aadhaar-registered mobile number.\n` +
+        `• Enter OTP to authenticate and complete your account creation.\n\n` +
+        `**Step 4: Search & Fetch Issued Documents from Official Issuers**\n` +
+        `• Go to "Search Documents" and select issuer (e.g. UIDAI for Aadhaar, Income Tax Dept for PAN, MoRTH for Driving Licence/RC, CBSE/State Board for 10th/12th Marksheets, or Insurance companies).\n` +
+        `• Enter required identifier (e.g., PAN + Name, or DL number, or Roll Number) and click **"Get Document"**.\n\n` +
+        `**Step 5: Access Legally Valid Digital Documents Anytime**\n` +
+        `• Fetched certificates appear in your **"Issued Documents"** section with a verified digital signature.\n` +
+        `• **Legal Parity (Rule 9A):** Under Rule 9A of the IT (Preservation and Retention of Information by Intermediaries Providing Digital Locker Facilities) Rules, 2016, digital documents in DigiLocker are treated at par with original physical documents across all Indian authorities, police, RTOs, and airports.\n\n` +
+        `🌐 **Official Portal:** [digilocker.gov.in](https://digilocker.gov.in)`;
     }
 
     // 0.3 Patent Filing Application (The Patents Act, 1970)
