@@ -641,6 +641,120 @@ RULES:
         `📞 **UIDAI 24x7 Helpline:** 1947 | 🌐 **Portal:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
     }
 
+    // 9. The Patents Act, 1970
+    if (primary.id === 'GOV-PATENTS-ACT-1970') {
+      if (language === 'mr') {
+        return `**पेटंट कायदा, १९७० (The Patents Act, 1970) – अधिकृत कायदेशीर तरतुदी व मार्गदर्शक तत्त्वे:**\n\n` +
+          `१. **कायदेशीर चौकट व सक्षम प्राधिकरण:** भारतातील पेटंटचे नियमन **पेटंट कायदा, १९७० (The Patents Act, 1970)** आणि **पेटंट नियम, २०२४ (Patent Rules 2024)** अंतर्गत उद्योग व अंतर्गत व्यापार संवर्धन विभाग (DPIIT), वाणिज्य व उद्योग मंत्रालयाच्या पेटंट महानियंत्रक (CGPDTM) कार्यालयाद्वारे केले जाते.\n\n` +
+          `२. **पेटंट पात्रतेचे ३ अनिवार्य निकष (Patentability Criteria):**\n` +
+          `   • **नवीनता (Novelty):** शोध जगात कुठेही आधी प्रकाशित किंवा वापरात आलेला नसावा.\n` +
+          `   • **संशोधक पाऊल (Inventive Step - कलम २(१)(ja)):** संबंधित क्षेत्रातील सामान्य तंत्रज्ञासाठी तो शोध उघड नसावा व त्यात तांत्रिक प्रगती असावी.\n` +
+          `   • **औद्योगिक उपयुक्तता (Industrial Applicability - कलम २(१)(ac)):** शोधाचा उद्योगात प्रत्यक्ष वापर करता येणे शक्य असावे.\n\n` +
+          `३. **कायद्यातील गैर-पेटंटपात्र अपवाद (कलम ३ व कलम ४):**\n` +
+          `   • **कलम ३(d):** ज्ञात पदार्थाचे नवे रूप (औषधांचे एव्हरग्रीनिंग रोखण्यासाठी).\n` +
+          `   • **कलम ३(k):** गणितीय पद्धती, व्यावसायिक पद्धती, केवळ संगणक सॉफ्टवेअर (Software per se) किंवा अल्गोरिदम.\n` +
+          `   • **कलम ३(b) व कलम ४:** सार्वजनिक नीतिमत्तेविरुद्ध शोध आणि अणुऊर्जेशी संबंधित शोध.\n\n` +
+          `४. **पेटंटचा कायदेशीर कालावधी (कलम ५३):** अर्ज दाखल केल्याच्या तारखेपासून **२० वर्षे** (वार्षिक नूतनीकरण फी भरणे आवश्यक).\n\n` +
+          `५. **पेटंटधारकाचे विशेष हक्क (कलम ४८):** शोध उत्पादित करणे, विकणे, आयात करणे किंवा वापरण्यापासून अनधिकृत व्यक्तींना रोखण्याचा कायदेशीर एकाधिकार.\n\n` +
+          `६. **ई-फायलिंग व ८०% शुल्क सवलत:** वैयक्तिक संशोधक, महिला, नवउद्यमी (Startups) आणि एमएसएमईसाठी शासकीय शुल्कात **८०% सवलत** दिली जाते.\n\n` +
+          `🌐 **अधिकृत ई-फायलिंग पोर्टल:** [ipindia.gov.in](https://ipindia.gov.in) | [ipindiaservices.gov.in](https://ipindiaservices.gov.in)`;
+      } else if (language === 'hi') {
+        return `**पेटेंट अधिनियम, १९७० (The Patents Act, 1970) – विधिक प्रावधान एवं मार्गदर्शिका:**\n\n` +
+          `१. **विधिक व्यवस्था एवं प्राधिकरण:** भारत में पेटेंट का प्रशासन **पेटेंट अधिनियम, १९७० (The Patents Act, 1970)** एवं **पेटेंट नियम, २०२४ (Patent Rules 2024)** के अंतर्गत पेटेंट, डिजाइन एवं व्यापार चिह्न महानियंत्रक (CGPDTM), DPIIT, वाणिज्य एवं उद्योग मंत्रालय द्वारा किया जाता है।\n\n` +
+          `२. **पेटेंट पात्रता के ३ अनिवार्य मानदंड:**\n` +
+          `   • **नवीनता (Novelty):** आविष्कार विश्व स्तर पर पूर्व-प्रकाशित अथवा सार्वजनिक उपयोग में न हो।\n` +
+          `   • **अन्वेषी कदम (Inventive Step - धारा २(१)(ja)):** संबंधित क्षेत्र के विशेषज्ञ हेतु आविष्कार स्वतः स्पष्ट न हो और उसमें तकनीकी प्रगति हो।\n` +
+          `   • **औद्योगिक उपयोगिता (Industrial Applicability - धारा २(१)(ac)):** आविष्कार का उद्योग में व्यावहारिक निर्माण एवं उपयोग संभव हो।\n\n` +
+          `३. **गैर-पेटेंट योग्य विषय (धारा ३ एवं धारा ४ के अपवाद):**\n` +
+          `   • **धारा ३(d):** ज्ञात यौगिकों के नए रूप (दवाओं के एवरग्रीनिंग पर रोक)।\n` +
+          `   • **धारा ३(k):** गणितीय विधियां, व्यावसायिक प्रणालियां, अथवा केवल कंप्यूटर सॉफ्टवेयर (Software per se) एवं एल्गोरिदम।\n` +
+          `   • **धारा ४:** परमाणु ऊर्जा से संबंधित आविष्कार।\n\n` +
+          `४. **पेटेंट की विधिक अवधि (धारा ५३):** आवेदन तिथि से **२० वर्ष** (वार्षिक नवीनीकरण देय)।\n\n` +
+          `५. **पेटेंटधारक के अधिकार (धारा ४८):** अनधिकृत व्यक्तियों द्वारा पेटेंट उत्पाद या प्रक्रिया के निर्माण, उपयोग, विक्रय अथवा आयात को रोकने का अनन्य एकाधिकार।\n\n` +
+          `६. **ई-फाइलिंग एवं शुल्क रियायत:** स्टार्टअप्स, एमएसएमई एवं शिक्षण संस्थानों को सरकारी शुल्क में **८०% की भारी छूट** प्रदान की जाती है।\n\n` +
+          `🌐 **आधिकारिक पोर्टल:** [ipindia.gov.in](https://ipindia.gov.in) | [ipindiaservices.gov.in](https://ipindiaservices.gov.in)`;
+      } else {
+        return `**The Patents Act, 1970 – Statutory Legal Framework & Comprehensive Guidelines:**\n\n` +
+          `1. **Legislative Authority & Administration:** Patent rights in India are administered under **The Patents Act, 1970 (Act No. 39 of 1970)** as amended, and the **Patent Rules, 2024**, by the Office of the Controller General of Patents, Designs and Trade Marks (CGPDTM), DPIIT, Ministry of Commerce and Industry.\n\n` +
+          `2. **Three Core Patentability Criteria:**\n` +
+          `   • **Novelty:** The invention must not have been anticipated by publication anywhere in the world or prior public knowledge/use in India before the filing date.\n` +
+          `   • **Inventive Step / Non-Obviousness (Section 2(1)(ja)):** A technical advancement or economic significance that is not obvious to a person skilled in the relevant technical art.\n` +
+          `   • **Industrial Applicability (Section 2(1)(ac)):** The invention must be capable of being made or used in an industry.\n\n` +
+          `3. **Key Non-Patentable Subject Matter (Sections 3 & 4):**\n` +
+          `   • **Section 3(d):** Mere discovery of a new form of a known substance which does not result in enhanced therapeutic efficacy (prevents patent 'evergreening').\n` +
+          `   • **Section 3(k):** Mathematical methods, business methods, computer programmes per se, or algorithms.\n` +
+          `   • **Section 3(c) & 3(j):** Mere discovery of scientific principles, plants, animals, or biological processes.\n` +
+          `   • **Section 4:** Inventions relating to atomic energy are strictly non-patentable.\n\n` +
+          `4. **Statutory Term of Patent (Section 53):** Every granted patent has a term of **20 years** from the international/domestic filing date (contingent upon payment of annual maintenance/renewal fees).\n\n` +
+          `5. **Exclusive Legal Rights Conferred (Section 48):** Confers the exclusive statutory right to prevent unauthorized third parties from making, using, offering for sale, selling, or importing the patented product or process.\n\n` +
+          `6. **Compulsory Licensing (Section 84):** Any interested person can apply for a compulsory license after 3 years from grant if public requirements are unmet or the product is unaffordable.\n\n` +
+          `7. **Statutory Forms & 80% Fee Concessions:**\n` +
+          `   • **Form 1:** Application for Grant of Patent\n` +
+          `   • **Form 2:** Provisional or Complete Specification with Claims\n` +
+          `   • **Form 18 / 18A:** Request for Examination / Expedited Examination\n` +
+          `   • Startups, Individuals, Educational Institutions, and MSMEs receive an **80% reduction** in all statutory filing and renewal fees.\n\n` +
+          `🌐 **Official National E-Filing Portal:** [ipindia.gov.in](https://ipindia.gov.in) | [ipindiaservices.gov.in](https://ipindiaservices.gov.in)`;
+      }
+    }
+
+    // 10. Trade Marks Act, 1999
+    if (primary.id === 'GOV-TRADEMARKS-ACT-1999') {
+      return `**Trade Marks Act, 1999 – Statutory Trademark Registration & Brand Protection:**\n\n` +
+        `1. **Statutory Authority:** Administered by the Trade Marks Registry under CGPDTM, DPIIT, protecting brand names, logos, slogans, shapes, and distinctive sounds across 45 Classes (Nice Classification).\n\n` +
+        `2. **Registration Term & Renewal (Section 25):** Valid for **10 years** from filing date, perpetually renewable every 10 years via Form TM-R.\n\n` +
+        `3. **Rights & Infringement (Section 28 & 29):** Registration confers exclusive right to use the mark and seek civil injunctions, damages, and criminal remedies against counterfeiters.\n\n` +
+        `4. **Fee Concession:** Individuals, Startups, and MSMEs receive 50% discount on statutory filing fees (₹4,500 online vs ₹9,000 for standard bodies corporate).\n\n` +
+        `🌐 **Official Portal:** [ipindia.gov.in](https://ipindia.gov.in)`;
+    }
+
+    // 11. Copyright Act, 1957
+    if (primary.id === 'GOV-COPYRIGHT-ACT-1957') {
+      return `**The Copyright Act, 1957 – Protection of Literary, Artistic, Musical & Software Works:**\n\n` +
+        `1. **Statutory Scope:** Protects original literary, dramatic, musical, artistic works, cinematograph films, sound recordings, and software source code.\n\n` +
+        `2. **Term of Protection (Section 22):** Lifetime of the author plus **60 years** from the calendar year following death (60 years from publication for films/sound recordings).\n\n` +
+        `3. **Mandatory 30-Day Waiting Window:** Rule 70 mandates a 30-day objection period after filing Form XIV before processing by the Copyright Office.\n\n` +
+        `🌐 **Official Portal:** [copyright.gov.in](https://copyright.gov.in)`;
+    }
+
+    // 12. Consumer Protection Act, 2019
+    if (primary.id === 'GOV-CONSUMER-PROTECTION-2019') {
+      return `**Consumer Protection Act, 2019 – Citizen Consumer Rights & Dispute Redressal:**\n\n` +
+        `1. **Three-Tier Redressal Commission:**\n` +
+        `   • **District Commission:** Claims up to ₹50 Lakh (under 2021 pecuniary rules)\n` +
+        `   • **State Commission:** Claims from ₹50 Lakh to ₹2 Crore\n` +
+        `   • **National Commission (NCDRC):** Claims exceeding ₹2 Crore\n\n` +
+        `2. **Key Rights:** Protection against unfair trade practices, misleading advertisements, and product liability against defective goods/services.\n\n` +
+        `3. **Online E-Daakhil Filing:** File consumer complaints online 24x7 from anywhere via e-Daakhil.\n\n` +
+        `📞 **National Consumer Helpline:** 1915 | 🌐 **Portal:** [edaakhil.nic.in](https://edaakhil.nic.in)`;
+    }
+
+    // 13. Information Technology Act, 2000
+    if (primary.id === 'GOV-IT-ACT-2000') {
+      return `**Information Technology Act, 2000 – Cyber Law, Electronic Commerce & Security:**\n\n` +
+        `1. **Legal Recognition (Section 4 & 5):** Grants legal recognition to electronic records, digital signatures, and electronic contracts.\n\n` +
+        `2. **Offences & Penalties:** Criminalizes hacking, identity theft, unauthorized data tampering (Section 66), and violation of privacy (Section 66E).\n\n` +
+        `3. **Cyber Fraud Reporting:** Report cyber crimes, financial fraud, and cyber abuse immediately.\n\n` +
+        `📞 **National Cyber Helpline:** 1930 | 🌐 **Portal:** [cybercrime.gov.in](https://cybercrime.gov.in)`;
+    }
+
+    // 14. Companies Act, 2013
+    if (primary.id === 'GOV-COMPANIES-ACT-2013') {
+      return `**Companies Act, 2013 – Corporate Governance & Incorporation:**\n\n` +
+        `1. **Statutory Administration:** Administered by the Ministry of Corporate Affairs (MCA) and Registrar of Companies (RoC).\n\n` +
+        `2. **Incorporation:** Unified SPICe+ web-form (INC-32) enables simultaneous name reservation, company incorporation, PAN, TAN, EPFO, ESIC, and bank account.\n\n` +
+        `3. **Annual Compliance:** Mandatory filing of Financial Statements (Form AOC-4) and Annual Return (Form MGT-7).\n\n` +
+        `🌐 **Official Portal:** [mca.gov.in](https://mca.gov.in)`;
+    }
+
+    // 15. Constitution of India - Fundamental Rights
+    if (primary.id === 'GOV-CONSTITUTION-RIGHTS') {
+      return `**Constitution of India – Fundamental Rights (Part III, Articles 12–35):**\n\n` +
+        `1. **Right to Equality (Articles 14–18):** Equality before law and equal protection of laws; prohibition of discrimination.\n\n` +
+        `2. **Right to Freedom (Articles 19–22):** Freedom of speech, expression, assembly, association, movement, and life & personal liberty (Article 21).\n\n` +
+        `3. **Constitutional Remedies (Article 32 & 226):** Direct right to approach Supreme Court (Art 32) or High Court (Art 226) for enforcement via Writs: Habeas Corpus, Mandamus, Prohibition, Certiorari, and Quo Warranto.\n\n` +
+        `📞 **National Legal Services Authority (NALSA):** 15100 | 🌐 **Portal:** [nalsa.gov.in](https://nalsa.gov.in)`;
+    }
+
     if (primary.id === 'MSCS-SEC29' || primary.id === 'MSCS-SEC45') {
       if (language === 'mr') {
         return `**सहकारी संस्थेतील सभासदांचे मतदानाचे हक्क (MSCS Act २०२३):**\n\n` +
@@ -841,6 +955,27 @@ RULES:
     if (id === 'GOV-PASSPORT-SEVA') {
       return ['Apply on passportindia.gov.in', 'Tatkaal vs Normal Passport', 'Track Dispatch Status'];
     }
+    if (id === 'GOV-PATENTS-ACT-1970') {
+      return ['E-File Patent on ipindia.gov.in', 'Section 3 Exclusions & Patent Rules', 'Search Prior Art on InPASS'];
+    }
+    if (id === 'GOV-TRADEMARKS-ACT-1999') {
+      return ['E-File Trademark (ipindia.gov.in)', 'Search TM Public Registry', 'Form TM-A Filing & Fees'];
+    }
+    if (id === 'GOV-COPYRIGHT-ACT-1957') {
+      return ['E-File Copyright (copyright.gov.in)', 'Check Mandatory 30-Day Objection', 'Form XIV Registration Guide'];
+    }
+    if (id === 'GOV-CONSUMER-PROTECTION-2019') {
+      return ['File on e-Daakhil (edaakhil.nic.in)', 'National Consumer Helpline 1915', 'Pecuniary Limits (District/State/National)'];
+    }
+    if (id === 'GOV-IT-ACT-2000') {
+      return ['Report on cybercrime.gov.in', 'National Cyber Helpline 1930', 'Section 66 & 43A IT Compliance'];
+    }
+    if (id === 'GOV-COMPANIES-ACT-2013') {
+      return ['MCA21 Portal (mca.gov.in)', 'SPICe+ Company Incorporation', 'DIN & Annual Return (AOC-4/MGT-7)'];
+    }
+    if (id === 'GOV-CONSTITUTION-RIGHTS') {
+      return ['Fundamental Rights (Articles 14-32)', 'Article 32 & 226 Writs', 'Free Legal Aid (NALSA 15100)'];
+    }
     if (id === 'WOMEN-DRONE-DIDI') {
       return ['80% Drone Subsidy Rules', 'Namo Drone Didi SHG Criteria', '15-Day DGCA Pilot Training'];
     }
@@ -1036,6 +1171,50 @@ RULES:
     }
 
     const primaryId = primary.id;
+
+    // 0.3 Patent Filing Application (The Patents Act, 1970)
+    if (primaryId === 'GOV-PATENTS-ACT-1970' || /patent|patents|पेटंट|पेटेंट/i.test(query)) {
+      if (language === 'mr') {
+        return `**पायरी-दर-पायरी मार्गदर्शक: पेटंटसाठी अर्ज कसा करावा (The Patents Act, 1970)**\n\n` +
+          `**पायरी १: प्रायर आर्ट सर्च (Prior Art Search) करा**\n` +
+          `• केंद्र सरकारच्या InPASS पोर्टलवर (ipindiaservices.gov.in) शोध घेऊन आपल्या शोधासारखा आधीच कोणताही पेटंट अस्तित्वात नाही याची खात्री करा.\n\n` +
+          `**पायरी २: पेटंट तपशीलाचा मसुदा तयार करा (Form 2)**\n` +
+          `• संशोधन चालू असल्यास 'तात्पुरते तपशील' (Provisional Specification) किंवा पूर्ण संशोधन असल्यास 'संपूर्ण तपशील व क्लेम्स' (Complete Specification with Claims) तयार करा.\n\n` +
+          `**पायरी ३: IP India पोर्टलवर ऑनलाइन ई-फायलिंग (Form 1)**\n` +
+          `• **ipindia.gov.in** पोर्टलवर वर्ग ३ डिजिटल स्वाक्षरीने (DSC) नोंदणी करा आणि Form 1 (अर्ज) व Form 2 (तपशील) अपलोड करा.\n\n` +
+          `**पायरी ४: प्रसिद्धी (Publication) व तपासणी विनंती (Form 18)**\n` +
+          `• १८ महिन्यांनंतर अधिकृत गॅझेटमध्ये पेटंट प्रकाशित होतो (किंवा Form 9 द्वारे लवकर प्रसिद्धी). तपासणीसाठी Form 18 भरा.\n\n` +
+          `**पायरी ५: तपासणी अहवाल (FER) उत्तर व पेटंट मंजुरी (Grant)**\n` +
+          `• पेटंट परीक्षकाच्या आक्षेपांना कायदेशीर उत्तर दिल्यावर २० वर्षांसाठी पेटंटचे अधिकृत प्रमाणपत्र मंजूर केले जाते.\n\n` +
+          `🌐 **अधिकृत ई-फायलिंग पोर्टल:** [ipindia.gov.in](https://ipindia.gov.in)`;
+      } else if (language === 'hi') {
+        return `**चरण-दर-चरण मार्गदर्शिका: पेटेंट फाइल करने की प्रक्रिया (The Patents Act, 1970)**\n\n` +
+          `**चरण १: पूर्व कला खोज (Prior Art Search)**\n` +
+          `• आधिकारिक इनपास पोर्टल (ipindiaservices.gov.in) पर खोजकर सुनिश्चित करें कि आविष्कार पूर्व में सार्वजनिक या पेटेंटेड नहीं है।\n\n` +
+          `**चरण २: पेटेंट विनिर्देश तैयार करना (प्रपत्र २)**\n` +
+          `• आविष्कार के चरण अनुसार अनंतिम (Provisional) अथवा पूर्ण विनिर्देश (Complete Specification with Claims) तैयार करें।\n\n` +
+          `**चरण ३: आईपी इंडिया पोर्टल पर ई-फाइलिंग (प्रपत्र १)**\n` +
+          `• **ipindia.gov.in** पर डिजिटल सिग्नेचर (DSC) द्वारा प्रपत्र १ व प्रपत्र २ ऑनलाइन जमा करें।\n\n` +
+          `**चरण ४: प्रकाशन एवं परीक्षण हेतु अनुरोध (प्रपत्र १८)**\n` +
+          `• १८ माह में स्वतः प्रकाशन (अथवा प्रपत्र ९ से त्वरित प्रकाशन)। धारा ११बी के अंतर्गत प्रपत्र १८ भरकर परीक्षा का अनुरोध करें।\n\n` +
+          `**चरण ५: प्रथम परीक्षण रिपोर्ट (FER) समाधान एवं पेटेंट अनुदान**\n` +
+          `• आपत्तियों का विधिक समाधान प्रस्तुत करने पर २० वर्ष हेतु पेटेंट प्रमाणपत्र जारी किया जाता है।\n\n` +
+          `🌐 **आधिकारिक पोर्टल:** [ipindia.gov.in](https://ipindia.gov.in)`;
+      } else {
+        return `**Step-by-Step Guide: How to File a Patent in India (The Patents Act, 1970)**\n\n` +
+          `**Step 1: Conduct Prior Art Search & Novelty Verification**\n` +
+          `• Search the official Indian Patent Advanced Search System (InPASS) at **ipindiaservices.gov.in** and international databases (WIPO, Google Patents) to confirm worldwide novelty.\n\n` +
+          `**Step 2: Draft Patent Specification (Form 2)**\n` +
+          `• Draft a Provisional Specification (to secure priority date if research is ongoing) or Complete Specification (with detailed description, drawings, and legal Claims defining protection boundaries).\n\n` +
+          `**Step 3: Online E-Filing via IP India Portal (Form 1)**\n` +
+          `• Access **ipindia.gov.in** with Class 3 Digital Signature Certificate (DSC). Submit Form 1 (Application), Form 2 (Specification), Form 3 (Foreign filings undertaking), and Form 5 (Declaration of Inventorship).\n\n` +
+          `**Step 4: Publication & Request for Examination (Form 18 / 18A)**\n` +
+          `• The application is published in the Official Patent Journal after 18 months (or expedited via Form 9). File Form 18 (Request for Examination) within 48 months from the priority date.\n\n` +
+          `**Step 5: Respond to First Examination Report (FER) & Patent Grant**\n` +
+          `• The Patent Examiner issues an FER. Submit statutory response to objections within 6 months. Upon satisfaction of the Controller, the patent is granted for a **20-year statutory term**.\n\n` +
+          `🌐 **National E-Filing Portal:** [ipindia.gov.in](https://ipindia.gov.in)`;
+      }
+    }
 
     // 1. PMFBY (Pradhan Mantri Fasal Bima Yojana) / Crop Insurance & Claims
     if (primaryId.includes('PMFBY') || /pmfby|fasal|bima|crop|विमा|पीक|फसल|કાપડ|બીમા/i.test(query)) {

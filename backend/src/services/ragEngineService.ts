@@ -166,8 +166,43 @@ const SCHEME_ALIAS_MAP: AliasRule[] = [
   {
     patterns: [/swachh bharat|toilet subsidy|शौचालय|स्वच्छ भारत/i],
     targetIds: ['sbm-g']
+  },
+  {
+    patterns: [/patent|patents|acts of patent|patent act|patents act|patent law|patent rights|ip india|provisional specification|पेटंट|पेटेंट/i],
+    targetIds: ['GOV-PATENTS-ACT-1970']
+  },
+  {
+    patterns: [/trademark|trade mark|trademarks|brand protection|logo registration|ट्रेडमार्क/i],
+    targetIds: ['GOV-TRADEMARKS-ACT-1999']
+  },
+  {
+    patterns: [/copyright|copyrights|copyright act|artistic work|literary work|कॉपीराइट/i],
+    targetIds: ['GOV-COPYRIGHT-ACT-1957']
+  },
+  {
+    patterns: [/consumer protection|consumer court|consumer rights|edaakhil|1915\b|ग्राहक संरक्षण|उपभोक्ता/i],
+    targetIds: ['GOV-CONSUMER-PROTECTION-2019']
+  },
+  {
+    patterns: [/\bit act\b|information technology act|cyber law|cyber crime|cybercrime|1930\b|सायबर गुन्हा/i],
+    targetIds: ['GOV-IT-ACT-2000']
+  },
+  {
+    patterns: [/companies act|company act|company registration|mca21|spice\+|कंपनी कायदा/i],
+    targetIds: ['GOV-COMPANIES-ACT-2013']
+  },
+  {
+    patterns: [/constitution|fundamental rights|article 21\b|article 19\b|article 32\b|habeas corpus|writ petition|मूलभूत हक्क|मौलिक अधिकार/i],
+    targetIds: ['GOV-CONSTITUTION-RIGHTS']
   }
 ];
+
+const GOV_STOPWORDS = new Set([
+  'what', 'are', 'the', 'acts', 'act', 'of', 'in', 'is', 'for', 'and', 'to', 'how', 'do', 'i', 'can', 'we', 'should',
+  'a', 'an', 'on', 'with', 'about', 'tell', 'me', 'details', 'detail', 'info', 'information', 'rule', 'rules', 'law', 'laws',
+  'योजना', 'कायदे', 'कायदा', 'माहिती', 'आहे', 'आहेत', 'बद्दल', 'सांगा', 'काय',
+  'योजनाएं', 'नियम', 'कानून', 'बारे', 'में', 'बताएं', 'क्या', 'है', 'हैं'
+]);
 
 export class RagEngineService {
   private corpus: RAGChunk[] = [];
@@ -292,6 +327,8 @@ export class RagEngineService {
       }
     }
 
+    const contentTokens = queryTokens.filter(t => !GOV_STOPWORDS.has(t) && t.length > 2);
+
     const scored: RAGRetrievalResult[] = this.corpus.map(chunk => {
       let score = 0;
       const cIdLower = chunk.id.toLowerCase();
@@ -304,13 +341,12 @@ export class RagEngineService {
       }
 
       // Priority 2: Exact ID match (+200 points)
-      if (queryTokens.some(t => t.length > 2 && cIdLower === t)) {
+      if (contentTokens.some(t => cIdLower === t)) {
         score += 200;
       }
 
-      // Priority 3: Title matches (+40 points per token)
-      for (const t of queryTokens) {
-        if (t.length <= 2) continue;
+      // Priority 3: Title matches (+40 points per content token)
+      for (const t of contentTokens) {
         if (cTitleLower.includes(t)) {
           score += 40;
         }
@@ -319,13 +355,13 @@ export class RagEngineService {
       // Priority 4: Keywords matches (+25 points per keyword match)
       for (const kw of chunk.keywords) {
         const kwLower = kw.toLowerCase();
-        if (qLower.includes(kwLower) || queryTokens.includes(kwLower)) {
+        if (qLower.includes(kwLower) || contentTokens.includes(kwLower)) {
           score += 25;
         }
       }
 
-      // Priority 5: Content matches (+5 points per token)
-      for (const t of queryTokens) {
+      // Priority 5: Content matches (+5 points per content token)
+      for (const t of contentTokens) {
         if (t.length <= 3) continue;
         if (cContentLower.includes(t)) {
           score += 5;
