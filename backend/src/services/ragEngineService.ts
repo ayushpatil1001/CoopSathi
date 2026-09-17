@@ -116,12 +116,32 @@ const SCHEME_ALIAS_MAP: AliasRule[] = [
     targetIds: ['GOV-DIGILOCKER']
   },
   {
-    patterns: [/aadhaar|uidai|आधार कार्ड/i],
+    patterns: [/aadhaar|aadhar|adhar|uidai|myaadhaar|आधार|(email|mobile|address|phone|download|pvc|biometric).*(aadhar|aadhaar|adhar)|(aadhar|aadhaar|adhar).*(email|mobile|address|phone|download|pvc|biometric)/i],
     targetIds: ['GOV-AADHAAR-UIDAI']
+  },
+  {
+    patterns: [/pan\s*card|form\s*49a|instant\s*pan|epan|link\s*pan|utiitsl|tin[- ]nsdl|पॅन\s*कार्ड|पैन\s*कार्ड/i],
+    targetIds: ['GOV-PAN-CARD']
+  },
+  {
+    patterns: [/driving\s*licen[cs]e|learner\s*licen[cs]e|learning\s*licen[cs]e|parivahan|sarathi|vahan|rto\b|चालक\s*परवाना|ड्राइविंग\s*लाइसेंस/i],
+    targetIds: ['GOV-DRIVING-LICENCE']
+  },
+  {
+    patterns: [/birth\s*certificate|death\s*certificate|income\s*certificate|caste\s*certificate|domicile\s*certificate|non\s*creamy\s*layer|crsorgi|e[- ]?district|aaple\s*sarkar|दाखला|प्रमाण\s*पत्र/i],
+    targetIds: ['GOV-CITIZEN-CERTIFICATES']
+  },
+  {
+    patterns: [/epfo|provident\s*fund|\bpf\s*(balance|withdrawal|claim|passbook|advance|settlement|status)|uan\b|ईपीएफओ|पीएफ/i],
+    targetIds: ['GOV-EPFO-PF']
   },
   {
     patterns: [/passport|पासपोर्ट/i],
     targetIds: ['GOV-PASSPORT-SEVA']
+  },
+  {
+    patterns: [/udyam|msme|udyog\s*aadhaar|udyog\s*aadhar|उद्यम|सूक्ष्म\s*लघु|लघु\s*उद्योग/i],
+    targetIds: ['GOV-MSME-UDYAM']
   },
   {
     patterns: [/white revolution|dairy coop|दुग्ध क्रांती|श्वेत क्रांती|nddb/i],

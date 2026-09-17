@@ -103,6 +103,220 @@ export class AIChatService {
       };
     }
 
+    // 0.12 Check Aadhaar UIDAI Services (Changing Email, Mobile, Address, PVC Card)
+    if (/aadhaar|aadhar|adhar|uidai|myaadhaar|आधार/i.test(lower)) {
+      sources.push({
+        id: 'GOV-AADHAAR-UIDAI',
+        title: 'Aadhaar Services: Email & Mobile Update, PVC Card and Enrolment (UIDAI)',
+        authority: 'Unique Identification Authority of India (UIDAI), MeitY',
+        actOrScheme: 'Aadhaar Act, 2016 & Enrolment/Update Regulations',
+        sectionOrDoc: 'Section 3, Section 28 & Regulation 14',
+        excerpt: 'Statutory procedures for updating contact details (biometrics mandatory at ASK/Post Office, Rs 50 fee), online address change, and PVC card.',
+        url: 'https://myaadhaar.uidai.gov.in',
+        verifiedDate: '15 Aug 2026'
+      });
+      actions.push('Book ASK Appointment (uidai.gov.in)', 'Verify Email & Mobile on myaadhaar', 'Call 1947 Aadhaar Helpline');
+
+      if (/email|mobile|phone|ईमेल|मोबाईल|number/i.test(lower) || isHowToApply) {
+        if (lang === 'mr') {
+          text = `**पायरी-दर-पायरी मार्गदर्शक: आधार कार्डमध्ये ईमेल / मोबाईल नंबर कसा बदलायचा (UIDAI)**\n\n` +
+            `**पायरी १: ऑनलाइन अपॉइंटमेंट बुक करा (पर्यायी पण सोयीस्कर)**\n` +
+            `• **myaadhaar.uidai.gov.in** किंवा **appointments.uidai.gov.in** पोर्टलवर जा.\n` +
+            `• "Book an Appointment" निवडून आपले शहर व जवळचे आधार सेवा केंद्र निवडा.\n` +
+            `• मोबाईल नंबर टाकून OTP मिळवा आणि "Email/Mobile Update" निवडून सोयीस्कर वेळ निवडा. (अपॉइंटमेंट न घेता थेट केंद्रावर गेलात तरी चालते).\n\n` +
+            `**पायरी २: आधार सेवा केंद्र (ASK), बँक किंवा टपाल कार्यालयाला भेट द्या**\n` +
+            `• निवडलेल्या दिवशी केंद्रावर जा. अनेक भागात IPPB पोस्टमन घरोघरी येऊनही मोबाईल अपडेट करतात.\n\n` +
+            `**पायरी ३: आधार सुधारणा अर्ज (Update Form) भरा**\n` +
+            `• केंद्रावर उपलब्ध फॉर्म भरा आणि आपला १२ अंकी आधार क्रमांक व नवीन ईमेल आयडी / मोबाईल नंबर लिहा.\n\n` +
+            `**पायरी ४: बायोमेट्रिक पडताळणी द्या व ₹५० शासकीय फी भरा**\n` +
+            `• ईमेल किंवा मोबाईल जोडण्यासाठी **कोणत्याही कागदपत्रांची आवश्यकता नाही**.\n` +
+            `• फक्त बोटांचे ठसे (Fingerprint) किंवा डोळ्यांचे स्कॅन (Iris) द्या आणि विहित **₹५०** फी भरा.\n\n` +
+            `**पायरी ५: पावती (URN) मिळवा व ऑनलाइन पडताळणी करा**\n` +
+            `• १४ अंकी **Update Request Number (URN)** असलेली पावती मिळवा.\n` +
+            `• साधारण ५ ते १५ दिवसांत ईमेल अपडेट होतो. myaadhaar पोर्टलवर "Verify Email/Mobile" द्वारे खात्री करू शकता.\n\n` +
+            `📞 **UIDAI २४x७ टोल-फ्री हेल्पलाइन:** १९४७ | 🌐 **पोर्टल:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+        } else if (lang === 'hi') {
+          text = `**चरण-दर-चरण मार्गदर्शिका: आधार कार्ड में ईमेल / मोबाइल नंबर कैसे अपडेट करें (UIDAI)**\n\n` +
+            `**चरण १: ऑनलाइन अपॉइंटमेंट बुक करें (सुविधाजनक विकल्प)**\n` +
+            `• **myaadhaar.uidai.gov.in** पर जाकर "Book an Appointment" पर क्लिक करें।\n` +
+            `• अपना शहर/केंद्र चुनें, मोबाइल नंबर दर्ज कर OTP सत्यापित करें।\n` +
+            `• सेवा में "Email Update" अथवा "Mobile Update" चुनकर अपनी सुविधानुसार समय स्लॉट बुक करें (अथवा सीधे वॉक-इन करें)।\n\n` +
+            `**चरण २: निकटतम आधार सेवा केंद्र (ASK), बैंक अथवा डाकघर जाएं**\n` +
+            `• निर्धारित तिथि पर केंद्र जाएं। ग्रामीण क्षेत्रों में डाकिया (IPPB) घर आकर भी मोबाइल अपडेट करता है।\n\n` +
+            `**चरण ३: आधार सुधार प्रपत्र (Update Form) भरें**\n` +
+            `• केंद्र पर उपलब्ध प्रपत्र में अपना १२ अंकों का आधार नंबर एवं नया ईमेल आईडी/मोबाइल नंबर भरें।\n\n` +
+            `**चरण ४: बायोमेट्रिक सत्यापन एवं ₹५० सरकारी शुल्क**\n` +
+            `• ईमेल या मोबाइल अपडेट हेतु **किसी दस्तावेज की आवश्यकता नहीं** होती।\n` +
+            `• फिंगरप्रिंट या आईरिस बायोमेट्रिक सत्यापन कराएं एवं मात्र **₹५०** निर्धारित शुल्क जमा करें।\n\n` +
+            `**चरण ५: पावती रसीद (URN) प्राप्त करें एवं स्थिति जांचें**\n` +
+            `• १४ अंकों के **URN (Update Request Number)** वाली रसीद प्राप्त करें।\n` +
+            `• ५ से १५ दिनों में ईमेल अपडेट हो जाता है। myaadhaar पोर्टल पर "Verify Email/Mobile" से पुष्टि कर सकते हैं।\n\n` +
+            `📞 **UIDAI २४x७ राष्ट्रीय हेल्पलाइन:** 1947 | 🌐 **पोर्टल:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+        } else {
+          text = `**Step-by-Step Guide: How to Change / Update Email ID or Mobile Number in Aadhaar**\n\n` +
+            `**Step 1: Book an Appointment Online (Recommended)**\n` +
+            `• Visit **myaadhaar.uidai.gov.in** or **appointments.uidai.gov.in** and click on "Book an Appointment".\n` +
+            `• Select your City/Location, enter your mobile number to receive an OTP.\n` +
+            `• Select the service: **"Email ID Update"** (or Mobile Number Update) and choose your preferred date and time slot. (Walk-in without prior appointment is also accepted at all Aadhaar centres).\n\n` +
+            `**Step 2: Visit the Designated Aadhaar Seva Kendra (ASK), Post Office, or Bank**\n` +
+            `• Visit your nearest Aadhaar Seva Kendra, designated Post Office, or Bank branch. In many regions, India Post Payments Bank (IPPB) postmen provide doorstep mobile/email update service.\n\n` +
+            `**Step 3: Fill Out the Aadhaar Enrolment / Update Form**\n` +
+            `• Fill in the standard form mentioning your 12-digit Aadhaar number and clearly write the new Email ID to be linked.\n\n` +
+            `**Step 4: Biometric Authentication & ₹50 Statutory Fee**\n` +
+            `• **Zero Documents Required:** You do NOT need any documentary proof for updating an email address or mobile number.\n` +
+            `• Provide your biometric authentication (fingerprints or iris scan) to verify your identity and pay the standard fee of **₹50**.\n\n` +
+            `**Step 5: Collect URN Receipt & Verify Online**\n` +
+            `• Collect the stamped acknowledgment slip containing the 14-digit **Update Request Number (URN)**.\n` +
+            `• Track update status at **myaadhaar.uidai.gov.in/check-aadhaar-status** (typically updated within 5 to 15 working days).\n` +
+            `• Once completed, you can verify your registered email anytime at **myaadhaar.uidai.gov.in/verify-email-mobile**.\n\n` +
+            `📞 **UIDAI 24x7 Toll-Free Helpline:** 1947 | 📧 **Email:** help@uidai.gov.in`;
+        }
+      } else {
+        text = `**UIDAI Aadhaar Services – Changing Email/Mobile, Address & Citizen Services:**\n\n` +
+          `1. **Updating/Changing Email ID & Mobile Number (Biometrics Mandatory):** For cybersecurity reasons, mobile number and email **CANNOT be updated purely online without biometrics**. Residents must visit an **Aadhaar Seva Kendra (ASK)**, designated Bank/Post Office branch, or avail the India Post Payments Bank (IPPB) doorstep postman service.\n\n` +
+          `2. **Zero Documents Required:** No documentary proof is needed to update email or mobile; only biometric authentication (fingerprints or iris scan) is taken.\n\n` +
+          `3. **Statutory Fee:** Capped at **₹50** (government notified rate for demographic updates).\n\n` +
+          `4. **Address Update (100% Online):** Address can be updated from home via **myaadhaar.uidai.gov.in** by uploading a valid Proof of Address (POA) or Head of Family (HoF) consent.\n\n` +
+          `5. **PVC Card & e-Aadhaar:** Order a durable laminated PVC Aadhaar card for ₹50 delivered via Speed Post, or download password-protected e-Aadhaar PDF instantly.\n\n` +
+          `📞 **UIDAI 24x7 Toll-Free Helpline:** 1947 | 🌐 **Official Portal:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      }
+
+      return {
+        id: 'MSG-' + Date.now(),
+        sender: 'assistant',
+        text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: lang,
+        confidence,
+        isVerified: true,
+        sources,
+        suggestedActions: actions,
+        feedback: null
+      };
+    }
+
+    // 0.13 Check PAN Card Services
+    if (/pan\s*card|form\s*49a|instant\s*pan|epan|link\s*pan|पॅन\s*कार्ड|पैन\s*कार्ड/i.test(lower)) {
+      sources.push({
+        id: 'GOV-PAN-CARD',
+        title: 'PAN Card Services: New PAN (Form 49A), Instant e-PAN & Aadhaar Linking',
+        authority: 'Income Tax Department, Ministry of Finance, Government of India',
+        actOrScheme: 'Income-tax Act, 1961',
+        sectionOrDoc: 'Section 139A & Section 139AA',
+        excerpt: 'Official PAN card application via NSDL/UTIITSL, 100% free instant e-PAN, and mandatory Aadhaar linking.',
+        url: 'https://www.incometax.gov.in',
+        verifiedDate: '15 Aug 2026'
+      });
+      actions.push('Apply Form 49A (tin-nsdl.com)', 'Instant e-PAN (incometax.gov.in)', 'Link PAN with Aadhaar');
+      text = `**Income Tax Department – PAN Card Application, Correction & Aadhaar Linking:**\n\n` +
+        `1. **New PAN Application (Form 49A):** Apply online via Protean (tin-nsdl.com) or UTIITSL (pan.utiitsl.com). Fee: ₹107 for physical delivery in India (₹72 for e-PAN).\n\n` +
+        `2. **Instant e-PAN (100% Free):** Generate a valid digital PAN within 10 minutes using Aadhaar e-KYC on the Income Tax e-filing portal (incometax.gov.in).\n\n` +
+        `3. **Linking PAN with Aadhaar:** Mandatory under Section 139AA of Income-tax Act via incometax.gov.in.\n\n` +
+        `4. **PAN Correction:** Submit 'Changes/Correction in PAN' on NSDL/UTIITSL.\n\n` +
+        `📞 **Income Tax Helpline:** 1800-180-1961 | 🌐 **Portal:** [incometax.gov.in](https://incometax.gov.in)`;
+      return {
+        id: 'MSG-' + Date.now(),
+        sender: 'assistant',
+        text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: lang,
+        confidence,
+        isVerified: true,
+        sources,
+        suggestedActions: actions,
+        feedback: null
+      };
+    }
+
+    // 0.14 Check Driving Licence & Parivahan
+    if (/driving\s*licen[cs]e|learner\s*licen[cs]e|parivahan|sarathi|vahan|rto\b|चालक\s*परवाना|ड्राइविंग\s*लाइसेंस/i.test(lower)) {
+      sources.push({
+        id: 'GOV-DRIVING-LICENCE',
+        title: 'Parivahan Sarathi: Driving Licence, Learner Licence & Vehicle RC Services',
+        authority: 'Ministry of Road Transport and Highways (MoRTH) & State RTOs',
+        actOrScheme: 'Motor Vehicles Act, 1988',
+        sectionOrDoc: 'Sections 3 to 19 & CMVR 1989',
+        excerpt: 'Online portal for contactless Learner Licence, Driving Licence test slot booking, and DL renewal.',
+        url: 'https://sarathi.parivahan.gov.in',
+        verifiedDate: '15 Aug 2026'
+      });
+      actions.push('Apply Learner Licence (sarathi.parivahan.gov.in)', 'Book Driving Test Slot', 'Vehicle RC Services (Vahan)');
+      text = `**Parivahan Sarathi – Driving Licence, Learner Licence & Vehicle RC (MoRTH):**\n\n` +
+        `1. **Learner's Licence (LL):** Apply online on sarathi.parivahan.gov.in with Aadhaar verification; take the online learner test from home without visiting RTO in most states.\n\n` +
+        `2. **Permanent Driving Licence (DL):** Eligible after 30 days of LL; book a driving test slot online and appear at your RTO.\n\n` +
+        `3. **Renewal & Address Change:** Completely online with Form 9 and medical Form 1-A (for age 40+).\n\n` +
+        `4. **Vehicle RC Services (Vahan):** Online ownership transfer, fitness certificate, and hypothecation endorsement on vahan.parivahan.gov.in.\n\n` +
+        `📞 **Parivahan National Helpline:** 0120-4925505 | 🌐 **Portal:** [sarathi.parivahan.gov.in](https://sarathi.parivahan.gov.in)`;
+      return {
+        id: 'MSG-' + Date.now(),
+        sender: 'assistant',
+        text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: lang,
+        confidence,
+        isVerified: true,
+        sources,
+        suggestedActions: actions,
+        feedback: null
+      };
+    }
+
+    // 0.145 Check MSME Udyam Registration
+    if (/msme|udyam|udyog\s*aadhaar|udyog\s*aadhar|उद्यम|सूक्ष्म\s*लघु|लघु\s*उद्योग/i.test(lower)) {
+      sources.push({
+        id: 'GOV-MSME-UDYAM',
+        title: 'MSME Udyam Registration: Free Paperless MSME Certificate & Enterprise Benefits',
+        authority: 'Ministry of Micro, Small and Medium Enterprises (MoMSME), Government of India',
+        actOrScheme: 'Micro, Small and Medium Enterprises Development (MSMED) Act, 2006',
+        sectionOrDoc: 'Udyam Registration Portal & Notification S.O. 2119(E)',
+        excerpt: '100% free paperless registration for Micro, Small & Medium enterprises based on Aadhaar & PAN.',
+        url: 'https://udyamregistration.gov.in',
+        verifiedDate: '15 Aug 2026'
+      });
+      actions.push('Register Udyam (udyamregistration.gov.in)', 'MSME Classification Criteria', 'Delayed Payment Samadhaan Portal');
+      if (isHowToApply) {
+        text = `**Step-by-Step Guide: How to Apply for MSME Udyam Registration (100% Free & Online)**\n\n` +
+          `**Step 1: Access Official Government Udyam Portal**\n` +
+          `• Visit **udyamregistration.gov.in** (The official government portal is **100% Free**; beware of unauthorized paid websites).\n` +
+          `• Click on **"For New Entrepreneurs who are not Registered yet as MSME"**.\n\n` +
+          `**Step 2: Enter Aadhaar Number & Validate OTP**\n` +
+          `• Enter the 12-digit Aadhaar number of the Proprietor (or Managing Partner / Authorized Director).\n` +
+          `• Complete OTP verification sent to your Aadhaar-linked mobile number.\n\n` +
+          `**Step 3: Enter PAN & Organization Details**\n` +
+          `• Select Organization Type (Proprietorship, Partnership, LLP, Pvt Ltd) and enter PAN.\n` +
+          `• The portal automatically validates ITR and GSTIN details via government database integration.\n\n` +
+          `**Step 4: Enter Enterprise Details & NIC Code**\n` +
+          `• Enter Enterprise Name, Plant/Unit address, Bank Account details (Account Number & IFSC), and major activity (Manufacturing or Services).\n` +
+          `• Select the relevant 2/4/5-digit National Industry Classification (NIC) Code.\n\n` +
+          `**Step 5: Final Submit & Download Udyam Certificate**\n` +
+          `• Enter the final OTP received on mobile/email. A unique **Udyam Registration Number (URN)** is instantly generated.\n` +
+          `• The digitally signed **Udyam Registration Certificate** with dynamic QR Code is issued within 24 to 48 hours and can be downloaded anytime free of cost.\n\n` +
+          `📞 **MSME Helpline:** 011-23063288 | 🌐 **Portal:** [udyamregistration.gov.in](https://udyamregistration.gov.in)`;
+      } else {
+        text = `**Ministry of MSME – Udyam Registration & Enterprise Benefits:**\n\n` +
+          `1. **100% Free & Paperless Registration:** Registered exclusively on official portal **udyamregistration.gov.in**. No fees, no middlemen, and zero physical document uploads.\n\n` +
+          `2. **Mandatory Requirements:** Only Aadhaar number of proprietor/partner/director and PAN are required (linked with GSTIN if applicable).\n\n` +
+          `3. **MSME Classification (Composite Criteria):**\n` +
+          `   • **Micro:** Investment ≤ ₹1 Crore & Turnover ≤ ₹5 Crore.\n` +
+          `   • **Small:** Investment ≤ ₹10 Crore & Turnover ≤ ₹50 Crore.\n` +
+          `   • **Medium:** Investment ≤ ₹50 Crore & Turnover ≤ ₹250 Crore.\n\n` +
+          `4. **Key Statutory Benefits:** Collateral-free credit under CGTMSE, priority sector bank lending at lower interest rates, 50% concession on trademark and patent filing fees, statutory protection against delayed commercial payments under Section 15-16 of MSMED Act, and direct onboarding to Government e-Marketplace (GeM).\n\n` +
+          `📞 **MSME Champions Helpline:** 011-23063288 | 🌐 **Portal:** [udyamregistration.gov.in](https://udyamregistration.gov.in)`;
+      }
+      return {
+        id: 'MSG-' + Date.now(),
+        sender: 'assistant',
+        text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: lang,
+        confidence,
+        isVerified: true,
+        sources,
+        suggestedActions: actions,
+        feedback: null
+      };
+    }
+
     // 0.15 Check Patents Act 1970
     if (/patent|patents|acts of patent|patent act|patents act|patent law|patent rights|ip india|पेटंट|पेटेंट/i.test(lower)) {
       sources.push({

@@ -123,9 +123,14 @@ export class GovLlmService {
   }
 
   private isOutOfDomain(query: string, maxScore: number): boolean {
-    if (maxScore > 10) return false;
-    const outOfDomainRegex = /\b(president\s+of|capital\s+of|prime\s+minister\s+of\s+(?!india)|movie|hollywood|bollywood|football|cricket\s+score|fifa|weather\s+in|python\s+code|javascript\s+code|write\s+a\s+poem|solve\s+equation|joke|sing\s+a\s+song)\b/i;
-    return outOfDomainRegex.test(query) || maxScore === 0;
+    const strictlyOutOfDomainRegex = /\b(movie|movies|hollywood|bollywood|actor|actress|football|cricket\s+score|fifa|ipl\s+score|weather\s+in|python\s+code|javascript\s+code|html\s+code|write\s+a\s+poem|sing\s+a\s+song|tell\s+a\s+joke|solve\s+math|solve\s+equation|who\s+won\s+the\s+match)\b/i;
+    if (strictlyOutOfDomainRegex.test(query)) return true;
+
+    // Check if query is clearly governmental / citizen service related
+    const govIntentRegex = /\b(aadhaar|aadhar|adhar|uidai|pan|voter|ration|passport|driving|licence|license|dl|rc|rto|parivahan|epfo|pf|uan|pension|scheme|yojana|subsidy|grant|loan|kcc|pacs|mscs|act|law|court|ombudsman|police|fir|rti|tax|itr|gst|certificate|dakhla|praman\s*patra|birth|death|caste|income|domicile|ration\s+card|cylinder|gas|scholarship|admit\s+card|sarkari|government|gov|portal|apply|registration|form|email|mobile|phone|address|update|change|link|linking|helpline|status|election|vote|sarpanch|panchayat|collector|tehsildar|talathi|patwari)\b|आधार|पॅन|पैन|रेशन|राशन|पासपोर्ट|लायसन्स|लाइसेंस|योजना|अनुदान|कर्ज|दाखला|प्रमाणपत्र|तक्रार|शिकायत|ईमेल|मोबाइल|अपडेट|बदला/i;
+    if (govIntentRegex.test(query)) return false;
+
+    return maxScore === 0;
   }
 
   private getOutOfDomainResponse(language: string): string {
@@ -139,7 +144,7 @@ export class GovLlmService {
   }
 
   private isHowToApply(query: string): boolean {
-    return /how\s+(to|can\s+i|do\s+i|should\s+i|we)?\s*(apply|register|enroll|avail|submit|file|claim|get|obtain|join|take|open|acquire|access)|application\s+(process|steps|procedure|form|guide|method)|registration\s+(process|steps|procedure|form)|enrollment\s+(process|steps|procedure)|procedure\s+(to|for)|steps\s+(to|for)|process\s+(to|of)|form\s+filling|where\s+to\s+apply|eligibility\s+and\s+apply|कसा\s+(करावा|करावे|भरावा|नोंदवावा|मिळवावा|घेता\s+येईल)|कशी\s+(करावी|मिळेल)|कसे\s+(करावे|मिळेल|घ्यावे)|अर्ज\s*(कसा|कशी|प्रक्रिया|नमुना|करणे)?|नोंदणी|पायऱ्या|पायरी|आवेदन\s*(कैसे|प्रक्रिया|प्रपत्र|करना)?|पंजीकरण|चरण|प्रक्रिया|अप्लाई|કેવી\s+રીતે\s*(અરજી|મેળવવું|નોંધણી|લેવું)|અરજી\s*(કેવી\s+રીતે|પ્રક્રિયા|ફોર્મ)?|નોંધણી|પગલાં|કઈ\s+રીતે|વિશે\s+અरજી|વિશે\s+માહિતી|મેળવવી|વિશે\s+અરજી|விண்ணப்பிப்பது|దరఖాస్తు|আবেদন/i.test(query);
+    return /how\s+(to|can\s+i|do\s+i|should\s+i|we)?\s*(apply|register|enroll|avail|submit|file|claim|get|obtain|join|take|open|acquire|access|change|update|link|download)|application\s+(process|steps|procedure|form|guide|method)|registration\s+(process|steps|procedure|form)|enrollment\s+(process|steps|procedure)|procedure\s+(to|for)|steps\s+(to|for)|process\s+(to|of)|form\s+filling|where\s+to\s+apply|eligibility\s+and\s+apply|(change|changing|update|updating|link|linking)\s+(email|mobile|phone|address)|कसा\s+(करावा|करावे|भरावा|नोंदवावा|मिळवावा|घेता\s+येईल|बदलावा)|कशी\s+(करावी|मिळेल|बदलावी)|कसे\s+(करावे|मिळेल|घ्यावे|बदलावे)|अर्ज\s*(कसा|कशी|प्रक्रिया|नमुना|करणे)?|नोंदणी|पायऱ्या|पायरी|आवेदन\s*(कैसे|प्रक्रिया|प्रपत्र|करना)?|पंजीकरण|चरण|प्रक्रिया|अप्लाई|बदलने\s+की\s+प्रक्रिया|अपडेट|केवी\s+રીતે|અરજી\s+પ્રક્રિયા|વિશે\s+અરજી/i.test(query);
   }
 
   /**
@@ -635,10 +640,86 @@ RULES:
 
     // 8. Aadhaar UIDAI
     if (primary.id === 'GOV-AADHAAR-UIDAI') {
-      return `**UIDAI Aadhaar Services & Direct Benefit Transfer (DBT):**\n\n` +
-        `1. **Section 7 Mandate:** Under Section 7 of the Aadhaar Act 2016, Aadhaar authentication is the verified gateway for DBT benefits in PM-KISAN, PMFBY, and PMAY.\n\n` +
-        `2. **NPCI Bank Seeding:** Ensure your active bank account is NPCI-seeded to receive direct subsidy transfers.\n\n` +
-        `📞 **UIDAI 24x7 Helpline:** 1947 | 🌐 **Portal:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      if (language === 'mr') {
+        return `**आधार सेवा (UIDAI) – ईमेल, मोबाईल व पत्ता अपडेट अधिकृत मार्गदर्शक:**\n\n` +
+          `१. **ईमेल व मोबाईल नंबर अपडेट (अनिवार्य बायोमेट्रिक्स):** सुरक्षेच्या कारणास्तव मोबाईल नंबर आणि ईमेल आयडी **पूर्णपणे ऑनलाइन बदलता येत नाही**. नागरिकांनी जवळच्या **आधार सेवा केंद्राला (ASK)**, अधिकृत बँक, टपाल कार्यालय किंवा पोस्टमनच्या (IPPB) घरोघरी सेवेला भेट देणे आवश्यक आहे.\n\n` +
+          `२. **कागदपत्रांची आवश्यकता नाही:** मोबाईल किंवा ईमेल जोडण्यासाठी/बदलण्यासाठी **कोणत्याही कागदपत्रांची गरज नसते**; फक्त हाताचे ठसे किंवा डोळ्यांचे स्कॅन (Biometric) द्यावे लागते.\n\n` +
+          `३. **शासकीय शुल्क:** फक्त **₹५०** (बायोमेट्रिक/डेमोग्राफिक अपडेटसाठी अधिकृत दर).\n\n` +
+          `४. **पत्ता अपडेट (१००% ऑनलाइन):** पत्ता बदलण्यासाठी वैध पत्त्याचा पुरावा अपलोड करून **myaadhaar.uidai.gov.in** पोर्टलवरून घरबसल्या ऑनलाइन अर्ज करता येतो.\n\n` +
+          `५. **पीव्हीसी (PVC) आधार कार्ड व ई-आधार:** पोर्टलवरून ₹५० भरून स्पीड पोस्टने पीव्हीसी कार्ड मागवता येते किंवा तात्काळ डिजिटल ई-आधार डाऊनलोड करता येते.\n\n` +
+          `📞 **UIDAI २४x७ टोल-फ्री हेल्पलाइन:** १९४७ | 🌐 **पोर्टल:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      } else if (language === 'hi') {
+        return `**आधार सेवाएं (UIDAI) – ईमेल, मोबाइल एवं पता अपडेट आधिकारिक निर्देश:**\n\n` +
+          `१. **ईमेल एवं मोबाइल नंबर अपडेट (बायोमेट्रिक अनिवार्य):** सुरक्षा कारणों से मोबाइल नंबर अथवा ईमेल आईडी **पूरी तरह ऑनलाइन नहीं बदला जा सकता**। इसके लिए नागरिक को निकटतम **आधार सेवा केंद्र (ASK)**, अधिकृत बैंक शाखा, डाकघर अथवा डाकिए (IPPB) की डोरस्टेप सेवा का उपयोग करना होता है।\n\n` +
+          `२. **दस्तावेज रहित प्रक्रिया:** मोबाइल या ईमेल अपडेट हेतु **किसी दस्तावेज की आवश्यकता नहीं** होती; केवल फिंगरप्रिंट अथवा आईरिस बायोमेट्रिक प्रमाणीकरण लिया जाता है।\n\n` +
+          `३. **सरकारी शुल्क:** मात्र **₹५०** (सरकार द्वारा निर्धारित आधिकारिक शुल्क)।\n\n` +
+          `४. **पता अपडेट (ऑनलाइन सुविधा):** पते में बदलाव हेतु वैध प्रमाण पत्र अपलोड कर **myaadhaar.uidai.gov.in** से घर बैठे ऑनलाइन आवेदन किया जा सकता है।\n\n` +
+          `५. **पीवीसी कार्ड एवं ई-आधार डाउनलोड:** ₹५० शुल्क में स्पीड पोस्ट द्वारा पीवीसी आधार कार्ड मंगाया जा सकता है तथा डिजिटल ई-आधार तुरंत डाउनलोड हो सकता है।\n\n` +
+          `📞 **UIDAI २४x७ टोल-फ्री हेल्पलाइन:** 1947 | 🌐 **आधिकारिक पोर्टल:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      } else {
+        return `**UIDAI Aadhaar Services – Changing Email/Mobile, Address & Citizen Services:**\n\n` +
+          `1. **Updating/Changing Email ID & Mobile Number (Biometrics Mandatory):** For cybersecurity reasons, mobile number and email **CANNOT be updated purely online without biometrics**. Residents must visit an **Aadhaar Seva Kendra (ASK)**, designated Bank/Post Office branch, or avail the India Post Payments Bank (IPPB) doorstep postman service.\n\n` +
+          `2. **Zero Documents Required:** No documentary proof is needed to update email or mobile; only biometric authentication (fingerprints or iris scan) is taken.\n\n` +
+          `3. **Statutory Fee:** Capped at **₹50** (government notified rate for demographic updates).\n\n` +
+          `4. **Address Update (100% Online):** Address can be updated from home via **myaadhaar.uidai.gov.in** by uploading a valid Proof of Address (POA) or Head of Family (HoF) consent.\n\n` +
+          `5. **PVC Card & e-Aadhaar:** Order a durable laminated PVC Aadhaar card for ₹50 delivered via Speed Post, or download password-protected e-Aadhaar PDF instantly.\n\n` +
+          `📞 **UIDAI 24x7 Toll-Free Helpline:** 1947 | 🌐 **Official Portal:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      }
+    }
+
+    // 8.1 PAN Card Services
+    if (primary.id === 'GOV-PAN-CARD') {
+      return `**Income Tax Department – PAN Card Application, Correction & Aadhaar Linking:**\n\n` +
+        `1. **New PAN Application (Form 49A):** Apply online via Protean (tin-nsdl.com) or UTIITSL (pan.utiitsl.com). Fee: ₹107 for physical delivery in India (₹72 for e-PAN).\n\n` +
+        `2. **Instant e-PAN (100% Free):** Generate a valid digital PAN within 10 minutes using Aadhaar e-KYC on the Income Tax e-filing portal (incometax.gov.in).\n\n` +
+        `3. **Linking PAN with Aadhaar:** Mandatory under Section 139AA of Income-tax Act via incometax.gov.in.\n\n` +
+        `4. **PAN Correction:** Submit 'Changes/Correction in PAN' on NSDL/UTIITSL.\n\n` +
+        `📞 **Income Tax Helpline:** 1800-180-1961 | 🌐 **Portal:** [incometax.gov.in](https://incometax.gov.in)`;
+    }
+
+    // 8.2 Driving Licence & Parivahan Services
+    if (primary.id === 'GOV-DRIVING-LICENCE') {
+      return `**Parivahan Sarathi – Driving Licence, Learner Licence & Vehicle RC (MoRTH):**\n\n` +
+        `1. **Learner's Licence (LL):** Apply online on sarathi.parivahan.gov.in with Aadhaar verification; take the online learner test from home without visiting RTO.\n\n` +
+        `2. **Permanent Driving Licence (DL):** Eligible after 30 days of LL; book a driving test slot online and appear at your RTO.\n\n` +
+        `3. **Renewal & Address Change:** Completely online with Form 9 and medical Form 1-A (for age 40+).\n\n` +
+        `4. **Vehicle RC Services (Vahan):** Online ownership transfer, fitness certificate, and hypothecation endorsement on vahan.parivahan.gov.in.\n\n` +
+        `📞 **Parivahan National Helpline:** 0120-4925505 | 🌐 **Portal:** [sarathi.parivahan.gov.in](https://sarathi.parivahan.gov.in)`;
+    }
+
+    // 8.3 Citizen Certificates (Birth, Death, Caste, Income, Domicile)
+    if (primary.id === 'GOV-CITIZEN-CERTIFICATES') {
+      return `**Citizen Certificates: Birth, Death, Caste, Income & Domicile (CRS & e-District):**\n\n` +
+        `1. **Birth & Death Certificates:** Register within 21 days free of cost at municipal ward or Gram Panchayat; download digitally signed certificates from crsorgi.gov.in.\n\n` +
+        `2. **Income Certificate:** Apply on State e-District portal (e.g. Aaple Sarkar in Maharashtra, e-District in UP/Delhi/Bihar); issued by Tehsildar with Talathi report / ITR / salary slip.\n\n` +
+        `3. **Caste & Non-Creamy Layer (NCL) Certificate:** Apply on State e-District portal with ancestral lineage and residential proof.\n\n` +
+        `4. **Domicile / Residence Certificate:** Continuous 15-year residency proof issued by Sub-Divisional Magistrate (SDM).\n\n` +
+        `🌐 **National CRS Portal:** [crsorgi.gov.in](https://crsorgi.gov.in)`;
+    }
+
+    // 8.4 EPFO & Provident Fund Services
+    if (primary.id === 'GOV-EPFO-PF') {
+      return `**EPFO Member Portal – Check PF Balance, UAN & Online Withdrawal Claims:**\n\n` +
+        `1. **Check PF Balance (Instant):** Give missed call to 9966044425 or send SMS 'EPFOHO UAN' to 7738299899 or view passbook at passbook.epfindia.gov.in.\n\n` +
+        `2. **Online Claim & Withdrawal:** Login with UAN and password on unifiedportal-mem.epfindia.gov.in:\n` +
+        `   • **Form 19:** Full & final PF settlement after employment exit.\n` +
+        `   • **Form 10C:** Pension scheme EPS withdrawal benefit.\n` +
+        `   • **Form 31:** Non-refundable advance for illness, house purchase, or marriage.\n\n` +
+        `3. **Direct Benefit Transfer (DBT):** Amount credited to Aadhaar-linked bank account within 7 to 14 working days.\n\n` +
+        `📞 **EPFO National Toll-Free Helpline:** 1800-118-005 | 🌐 **Portal:** [epfindia.gov.in](https://epfindia.gov.in)`;
+    }
+
+    // 8.5 MSME Udyam Registration
+    if (primary.id === 'GOV-MSME-UDYAM') {
+      return `**Ministry of MSME – Udyam Registration & Enterprise Benefits:**\n\n` +
+        `1. **100% Free & Paperless Registration:** Registered exclusively on official portal **udyamregistration.gov.in**. No fees, no middlemen, and zero physical document uploads.\n\n` +
+        `2. **Mandatory Requirements:** Only Aadhaar number of proprietor/partner/director and PAN are required (linked with GSTIN if applicable).\n\n` +
+        `3. **MSME Classification (Composite Criteria):**\n` +
+        `   • **Micro:** Investment ≤ ₹1 Crore & Turnover ≤ ₹5 Crore.\n` +
+        `   • **Small:** Investment ≤ ₹10 Crore & Turnover ≤ ₹50 Crore.\n` +
+        `   • **Medium:** Investment ≤ ₹50 Crore & Turnover ≤ ₹250 Crore.\n\n` +
+        `4. **Key Statutory Benefits:** Collateral-free credit under CGTMSE, priority sector bank lending at lower interest rates, 50% concession on trademark and patent filing fees, statutory protection against delayed commercial payments under Section 15-16 of MSMED Act, and direct onboarding to Government e-Marketplace (GeM).\n\n` +
+        `📞 **MSME Champions Helpline:** 011-23063288 | 🌐 **Portal:** [udyamregistration.gov.in](https://udyamregistration.gov.in)`;
     }
 
     // 9. The Patents Act, 1970
@@ -950,7 +1031,22 @@ RULES:
       return ['Open DigiLocker (digilocker.gov.in)', 'Issued Documents Legal Status (Rule 9A)', 'Link Aadhaar to DigiLocker'];
     }
     if (id === 'GOV-AADHAAR-UIDAI') {
-      return ['Book Appointment at Ask Kendra', 'Update Mobile Number in Aadhaar', 'Check Aadhaar-Bank DBT Status'];
+      return ['Book ASK Appointment (uidai.gov.in)', 'Verify Email & Mobile on myaadhaar', 'Call 1947 Aadhaar Helpline'];
+    }
+    if (id === 'GOV-PAN-CARD') {
+      return ['Apply Form 49A (tin-nsdl.com)', 'Instant e-PAN (incometax.gov.in)', 'Link PAN with Aadhaar'];
+    }
+    if (id === 'GOV-DRIVING-LICENCE') {
+      return ['Apply Learner Licence (sarathi.parivahan.gov.in)', 'Book Driving Test Slot', 'Vehicle RC Services (Vahan)'];
+    }
+    if (id === 'GOV-CITIZEN-CERTIFICATES') {
+      return ['CRS Portal (crsorgi.gov.in)', 'Apply on State e-District Portal', 'Income / Caste Certificate Checklist'];
+    }
+    if (id === 'GOV-EPFO-PF') {
+      return ['Member e-Sewa (epfindia.gov.in)', 'Check PF Balance (Missed call 9966044425)', 'File Online Claim (Form 19/10C/31)'];
+    }
+    if (id === 'GOV-MSME-UDYAM') {
+      return ['Register Udyam (udyamregistration.gov.in)', 'MSME Classification Criteria', 'Delayed Payment Samadhaan Portal'];
     }
     if (id === 'GOV-PASSPORT-SEVA') {
       return ['Apply on passportindia.gov.in', 'Tatkaal vs Normal Passport', 'Track Dispatch Status'];
@@ -1171,6 +1267,159 @@ RULES:
     }
 
     const primaryId = primary.id;
+
+    // 0.25 Aadhaar Update (Changing Email, Mobile, Address, PVC Card)
+    if (primaryId === 'GOV-AADHAAR-UIDAI' || /aadhar|aadhaar|adhar|uidai|आधार/i.test(query)) {
+      if (language === 'mr') {
+        return `**पायरी-दर-पायरी मार्गदर्शक: आधार कार्डमध्ये ईमेल / मोबाईल नंबर कसा बदलायचा (UIDAI)**\n\n` +
+          `**पायरी १: ऑनलाइन अपॉइंटमेंट बुक करा (पर्यायी पण सोयीस्कर)**\n` +
+          `• **myaadhaar.uidai.gov.in** किंवा **appointments.uidai.gov.in** पोर्टलवर जा.\n` +
+          `• "Book an Appointment" निवडून आपले शहर व जवळचे आधार सेवा केंद्र निवडा.\n` +
+          `• मोबाईल नंबर टाकून OTP मिळवा आणि "Email/Mobile Update" निवडून सोयीस्कर वेळ निवडा. (अपॉइंटमेंट न घेता थेट केंद्रावर गेलात तरी चालते).\n\n` +
+          `**पायरी २: आधार सेवा केंद्र (ASK), बँक किंवा टपाल कार्यालयाला भेट द्या**\n` +
+          `• निवडलेल्या दिवशी केंद्रावर जा. अनेक भागात IPPB पोस्टमन घरोघरी येऊनही मोबाईल अपडेट करतात.\n\n` +
+          `**पायरी ३: आधार सुधारणा अर्ज (Update Form) भरा**\n` +
+          `• केंद्रावर उपलब्ध फॉर्म भरा आणि आपला १२ अंकी आधार क्रमांक व नवीन ईमेल आयडी / मोबाईल नंबर लिहा.\n\n` +
+          `**पायरी ४: बायोमेट्रिक पडताळणी द्या व ₹५० शासकीय फी भरा**\n` +
+          `• ईमेल किंवा मोबाईल जोडण्यासाठी **कोणत्याही कागदपत्रांची आवश्यकता नाही**.\n` +
+          `• फक्त बोटांचे ठसे (Fingerprint) किंवा डोळ्यांचे स्कॅन (Iris) द्या आणि विहित **₹५०** फी भरा.\n\n` +
+          `**पायरी ५: पावती (URN) मिळवा व ऑनलाइन पडताळणी करा**\n` +
+          `• १४ अंकी **Update Request Number (URN)** असलेली पावती मिळवा.\n` +
+          `• साधारण ५ ते १५ दिवसांत ईमेल अपडेट होतो. myaadhaar पोर्टलवर "Verify Email/Mobile" द्वारे खात्री करू शकता.\n\n` +
+          `📞 **UIDAI २४x७ टोल-फ्री हेल्पलाइन:** १९४७ | 🌐 **पोर्टल:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      } else if (language === 'hi') {
+        return `**चरण-दर-चरण मार्गदर्शिका: आधार कार्ड में ईमेल / मोबाइल नंबर कैसे अपडेट करें (UIDAI)**\n\n` +
+          `**चरण १: ऑनलाइन अपॉइंटमेंट बुक करें (सुविधाजनक विकल्प)**\n` +
+          `• **myaadhaar.uidai.gov.in** पर जाकर "Book an Appointment" पर क्लिक करें।\n` +
+          `• अपना शहर/केंद्र चुनें, मोबाइल नंबर दर्ज कर OTP सत्यापित करें।\n` +
+          `• सेवा में "Email Update" अथवा "Mobile Update" चुनकर अपनी सुविधानुसार समय स्लॉट बुक करें (अथवा सीधे वॉक-इन करें)।\n\n` +
+          `**चरण २: निकटतम आधार सेवा केंद्र (ASK), बैंक अथवा डाकघर जाएं**\n` +
+          `• निर्धारित तिथि पर केंद्र जाएं। ग्रामीण क्षेत्रों में डाकिया (IPPB) घर आकर भी मोबाइल अपडेट करता है।\n\n` +
+          `**चरण ३: आधार सुधार प्रपत्र (Update Form) भरें**\n` +
+          `• केंद्र पर उपलब्ध प्रपत्र में अपना १२ अंकों का आधार नंबर एवं नया ईमेल आईडी/मोबाइल नंबर भरें।\n\n` +
+          `**चरण ४: बायोमेट्रिक सत्यापन एवं ₹५० सरकारी शुल्क**\n` +
+          `• ईमेल या मोबाइल अपडेट हेतु **किसी दस्तावेज की आवश्यकता नहीं** होती।\n` +
+          `• फिंगरप्रिंट या आईरिस बायोमेट्रिक सत्यापन कराएं एवं मात्र **₹५०** निर्धारित शुल्क जमा करें।\n\n` +
+          `**चरण ५: पावती रसीद (URN) प्राप्त करें एवं स्थिति जांचें**\n` +
+          `• १४ अंकों के **URN (Update Request Number)** वाली रसीद प्राप्त करें।\n` +
+          `• ५ से १५ दिनों में ईमेल अपडेट हो जाता है। myaadhaar पोर्टल पर "Verify Email/Mobile" से पुष्टि कर सकते हैं।\n\n` +
+          `📞 **UIDAI २४x७ राष्ट्रीय हेल्पलाइन:** 1947 | 🌐 **पोर्टल:** [myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)`;
+      } else {
+        return `**Step-by-Step Guide: How to Change / Update Email ID or Mobile Number in Aadhaar**\n\n` +
+          `**Step 1: Book an Appointment Online (Recommended)**\n` +
+          `• Visit **myaadhaar.uidai.gov.in** or **appointments.uidai.gov.in** and click on "Book an Appointment".\n` +
+          `• Select your City/Location, enter your mobile number to receive an OTP.\n` +
+          `• Select the service: **"Email ID Update"** (or Mobile Number Update) and choose your preferred date and time slot. (Walk-in without prior appointment is also accepted at all Aadhaar centres).\n\n` +
+          `**Step 2: Visit the Designated Aadhaar Seva Kendra (ASK), Post Office, or Bank**\n` +
+          `• Visit your nearest Aadhaar Seva Kendra, designated Post Office, or Bank branch. In many regions, India Post Payments Bank (IPPB) postmen provide doorstep mobile/email update service.\n\n` +
+          `**Step 3: Fill Out the Aadhaar Enrolment / Update Form**\n` +
+          `• Fill in the standard form mentioning your 12-digit Aadhaar number and clearly write the new Email ID to be linked.\n\n` +
+          `**Step 4: Biometric Authentication & ₹50 Statutory Fee**\n` +
+          `• **Zero Documents Required:** You do NOT need any documentary proof for updating an email address or mobile number.\n` +
+          `• Provide your biometric authentication (fingerprints or iris scan) to verify your identity and pay the standard fee of **₹50**.\n\n` +
+          `**Step 5: Collect URN Receipt & Verify Online**\n` +
+          `• Collect the stamped acknowledgment slip containing the 14-digit **Update Request Number (URN)**.\n` +
+          `• Track update status at **myaadhaar.uidai.gov.in/check-aadhaar-status** (typically updated within 5 to 15 working days).\n` +
+          `• Once completed, you can verify your registered email anytime at **myaadhaar.uidai.gov.in/verify-email-mobile**.\n\n` +
+          `📞 **UIDAI 24x7 Toll-Free Helpline:** 1947 | 📧 **Email:** help@uidai.gov.in`;
+      }
+    }
+
+    // 0.26 PAN Card Application & Aadhaar Linking
+    if (primaryId === 'GOV-PAN-CARD' || /pan\s*card|पॅन\s*कार्ड|पैन\s*कार्ड/i.test(query)) {
+      return `**Step-by-Step Guide: How to Apply for PAN Card & Link with Aadhaar**\n\n` +
+        `**Step 1: Choose Application Channel (Instant e-PAN vs Physical PAN)**\n` +
+        `• **Option A (Instant e-PAN - 100% Free):** If your Aadhaar has an active mobile number linked, visit **incometax.gov.in** -> "Instant e-PAN" to generate a digitally signed PAN in 10 minutes.\n` +
+        `• **Option B (Physical Plastic PAN):** Visit Protean (**tin-nsdl.com**) or UTIITSL (**pan.utiitsl.com**) -> Form 49A.\n\n` +
+        `**Step 2: Fill Out Form 49A**\n` +
+        `• Select 'Individual', enter name matching Aadhaar, date of birth, father's name, and contact details.\n\n` +
+        `**Step 3: Aadhaar Paperless e-KYC**\n` +
+        `• Choose 'Submit digitally through e-KYC & e-Sign (Paperless)' for zero physical paperwork.\n\n` +
+        `**Step 4: Pay Statutory Fee (₹107 for Physical Card)**\n` +
+        `• Pay ₹107 (inclusive of taxes and Speed Post dispatch across India) via UPI, Debit Card, or Net Banking.\n\n` +
+        `**Step 5: Receive Acknowledgment & Track Dispatch**\n` +
+        `• Save your 15-digit Acknowledgment Number. Track status on tin-nsdl.com. Physical card arrives within 10 to 14 working days.\n\n` +
+        `📞 **Income Tax Helpline:** 1800-180-1961 | 🌐 **Portal:** [incometax.gov.in](https://incometax.gov.in)`;
+    }
+
+    // 0.27 Driving Licence / Parivahan Application
+    if (primaryId === 'GOV-DRIVING-LICENCE' || /driving\s*licen[cs]e|learner\s*licen[cs]e|चालक\s*परवाना|ड्राइविंग\s*लाइसेंस/i.test(query)) {
+      return `**Step-by-Step Guide: How to Apply for Driving Licence (Parivahan Sarathi)**\n\n` +
+        `**Step 1: Apply for Learner's Licence (LL) Online**\n` +
+        `• Visit **sarathi.parivahan.gov.in**, select your State, and click on "Apply for Learner Licence".\n` +
+        `• Choose "Submit via Aadhaar Authentication" to take the test from home without visiting RTO.\n\n` +
+        `**Step 2: Fill Applicant Details & Upload Documents**\n` +
+        `• Upload Age Proof, Address Proof, and Medical Fitness Self-Declaration (Form 1). Pay LL fee (~₹150 to ₹200).\n\n` +
+        `**Step 3: Take Online LL Computer Test & Download Learner Licence**\n` +
+        `• Watch the mandatory road safety tutorial video and take the 15-question traffic sign test online. Upon passing, download your LL PDF immediately (valid for 6 months).\n\n` +
+        `**Step 4: Apply for Permanent Driving Licence (After 30 Days)**\n` +
+        `• After 30 days of LL issuance, click "Apply for Driving Licence" on Sarathi. Enter LL number and book an appointment slot for the driving track test.\n\n` +
+        `**Step 5: Appear for RTO Driving Test & Receive Smart Card DL**\n` +
+        `• Appear at the designated RTO test track with vehicle. Upon clearing the test, your Smart Card Driving Licence is dispatched via Speed Post within 7 to 15 days.\n\n` +
+        `📞 **Parivahan Helpline:** 0120-4925505 | 🌐 **Portal:** [sarathi.parivahan.gov.in](https://sarathi.parivahan.gov.in)`;
+    }
+
+    // 0.28 Citizen Certificates (Income, Caste, Domicile, Birth)
+    if (primaryId === 'GOV-CITIZEN-CERTIFICATES' || /income\s*certificate|caste\s*certificate|domicile\s*certificate|birth\s*certificate|दाखला|प्रमाण\s*पत्र/i.test(query)) {
+      return `**Step-by-Step Guide: How to Apply for Government Certificates (e-District / CRS)**\n\n` +
+        `**Step 1: Identify Required Certificate & Access Official Portal**\n` +
+        `• **Birth / Death Certificate:** Visit National Civil Registration System at **crsorgi.gov.in**.\n` +
+        `• **Income / Caste / Domicile Certificate:** Access your State e-District portal (e.g. Aaple Sarkar in Maharashtra, e-District Delhi/UP/Bihar/MP, Seva Sindhu in Karnataka).\n\n` +
+        `**Step 2: Create Citizen Profile & Verify Mobile via OTP**\n` +
+        `• Register on the portal using Aadhaar and mobile number to create your citizen login credentials.\n\n` +
+        `**Step 3: Select Service & Fill Application Form**\n` +
+        `• Select the relevant department (Revenue / Social Welfare) and enter applicant details, family income/lineage, and purpose.\n\n` +
+        `**Step 4: Upload Verified Documents & Pay Nominal Fee (~₹20 to ₹50)**\n` +
+        `• **Income Certificate:** Upload Aadhaar, Ration Card, and Talathi Income Verification Report / Salary slip / ITR.\n` +
+        `• **Caste Certificate:** Upload School Leaving Certificate (TC), father/grandfather's pre-1961/1967 caste records.\n` +
+        `• **Domicile:** Upload continuous 15-year residence proof (Ration card / Electricity bills / School TC).\n\n` +
+        `**Step 5: Inquiry & Download Digitally Signed Certificate**\n` +
+        `• The application is verified by the Revenue Circle Officer / Tehsildar within statutory SLA (typically 7 to 15 working days). Download the QR-code verified digital certificate online.\n\n` +
+        `🌐 **Portals:** [crsorgi.gov.in](https://crsorgi.gov.in) | State e-District Portals`;
+    }
+
+    // 0.29 EPFO Online PF Withdrawal & Balance Check
+    if (primaryId === 'GOV-EPFO-PF' || /epfo|provident\s*fund|\bpf\b|uan|ईपीएफओ|पीएफ/i.test(query)) {
+      return `**Step-by-Step Guide: How to Check PF Balance & File Online PF Withdrawal (EPFO)**\n\n` +
+        `**Step 1: Check PF Balance (Instant Options)**\n` +
+        `• **Missed Call:** Give a missed call from registered mobile to **9966044425** (Free).\n` +
+        `• **SMS Service:** Send SMS **"EPFOHO UAN ENG"** to **7738299899**.\n` +
+        `• **Passbook Portal:** Visit **passbook.epfindia.gov.in** and login with UAN and password.\n\n` +
+        `**Step 2: Login to EPFO Member Unified Portal**\n` +
+        `• Access **unifiedportal-mem.epfindia.gov.in** using your 12-digit UAN and password.\n\n` +
+        `**Step 3: Verify KYC Details**\n` +
+        `• Under "Manage" -> "KYC", ensure Aadhaar, PAN, and active Bank Account (with IFSC) are verified and digitally approved by your employer.\n\n` +
+        `**Step 4: Select Online Claim Form**\n` +
+        `• Go to "Online Services" -> "Claim (Form-31, 19, 10C & 10D)". Verify bank account last 4 digits.\n` +
+        `• **Form 19:** Full & Final Settlement (requires employment exit date).\n` +
+        `• **Form 10C:** EPS Pension withdrawal.\n` +
+        `• **Form 31:** PF Advance for medical illness, marriage, or housing.\n\n` +
+        `**Step 5: Authenticate via Aadhaar OTP & Direct Bank Credit**\n` +
+        `• Upload clear image of cheque leaf or bank passbook. Verify with Aadhaar OTP.\n` +
+        `• Amount is directly credited to your bank account via DBT within **7 to 14 working days**.\n\n` +
+        `📞 **EPFO Toll-Free Helpline:** 1800-118-005 | 🌐 **Portal:** [epfindia.gov.in](https://epfindia.gov.in)`;
+    }
+
+    // 0.295 MSME Udyam Registration
+    if (primaryId === 'GOV-MSME-UDYAM' || /msme|udyam|udyog\s*aadhaar|udyog\s*aadhar|उद्यम/i.test(query)) {
+      return `**Step-by-Step Guide: How to Apply for MSME Udyam Registration (100% Free & Online)**\n\n` +
+        `**Step 1: Access Official Government Udyam Portal**\n` +
+        `• Visit **udyamregistration.gov.in** (The official government portal is **100% Free**; beware of unauthorized fake fee-charging portals).\n` +
+        `• Click on **"For New Entrepreneurs who are not Registered yet as MSME"**.\n\n` +
+        `**Step 2: Enter Aadhaar Number & Validate OTP**\n` +
+        `• Enter the 12-digit Aadhaar number of the Proprietor (or Managing Partner / Karta / Authorized Director).\n` +
+        `• Complete OTP verification sent to your Aadhaar-linked mobile number.\n\n` +
+        `**Step 3: Enter PAN & Organization Details**\n` +
+        `• Select Organization Type (Proprietorship, Partnership, LLP, Pvt Ltd) and enter PAN.\n` +
+        `• The portal automatically fetches ITR and GSTIN data via government API integration.\n\n` +
+        `**Step 4: Enter Enterprise Details & NIC Code**\n` +
+        `• Enter Enterprise Name, Plant/Unit address, Bank Account details (Account Number & IFSC), and major activity (Manufacturing or Services).\n` +
+        `• Select the relevant 2/4/5-digit National Industry Classification (NIC) Code describing your business operations.\n\n` +
+        `**Step 5: Final Submit & Download Udyam Certificate**\n` +
+        `• Enter the final OTP received on mobile/email. A unique **Udyam Registration Number (URN)** is instantly generated.\n` +
+        `• The digitally signed **Udyam Registration Certificate** with dynamic QR Code is issued within 24 to 48 hours and can be downloaded anytime free of cost.\n\n` +
+        `📞 **MSME Helpline:** 011-23063288 | 🌐 **Portal:** [udyamregistration.gov.in](https://udyamregistration.gov.in)`;
+    }
 
     // 0.3 Patent Filing Application (The Patents Act, 1970)
     if (primaryId === 'GOV-PATENTS-ACT-1970' || /patent|patents|पेटंट|पेटेंट/i.test(query)) {
