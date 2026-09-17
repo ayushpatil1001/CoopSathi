@@ -233,27 +233,27 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Floating Action Button */}
+      {/* Floating Action Button - Positioned above bottom nav on mobile */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-emerald-700 hover:bg-emerald-800 text-white rounded-full flex items-center justify-center shadow-2xl transition-all transform hover:scale-105 active:scale-95 z-50 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+        className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-emerald-700 hover:bg-emerald-800 text-white rounded-full flex items-center justify-center shadow-2xl transition-all transform hover:scale-105 active:scale-95 z-40 sm:z-50 focus:outline-none focus:ring-4 focus:ring-emerald-300"
         aria-label={isOpen ? 'Close CoopSathi AI Assistant' : 'Open CoopSathi AI Assistant'}
         title="CoopSathi AI — Official Voice & Chat Assistant"
       >
-        <span className="material-symbols-outlined text-3xl">
+        <span className="material-symbols-outlined text-2xl sm:text-3xl">
           {isOpen ? 'close' : 'smart_toy'}
         </span>
       </button>
 
-      {/* Floating Chat Container */}
+      {/* Chat Container - Fullscreen edge-to-edge on mobile, floating dialog on desktop */}
       {isOpen && (
         <div
-          className="fixed bottom-24 right-3 sm:right-6 w-[94vw] sm:w-[430px] h-[580px] max-h-[84vh] bg-white rounded-2xl shadow-2xl border border-ink-200 flex flex-col z-50 overflow-hidden animate-fadeIn"
+          className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 w-full sm:w-[430px] h-full sm:h-[580px] sm:max-h-[84vh] bg-white rounded-none sm:rounded-2xl shadow-2xl border-0 sm:border sm:border-ink-200 flex flex-col z-50 overflow-hidden animate-fadeIn"
           role="dialog"
           aria-label="CoopSathi AI Chat Assistant"
         >
           {/* Header */}
-          <div className="bg-emerald-900 text-white p-3.5 flex items-center justify-between border-b border-emerald-800">
+          <div className="bg-emerald-900 text-white p-3 sm:p-3.5 pt-[max(0.75rem,env(safe-area-inset-top))] flex items-center justify-between border-b border-emerald-800 shrink-0">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-emerald-800 border border-emerald-700 flex items-center justify-center">
                 <span className="material-symbols-outlined text-lg">smart_toy</span>
@@ -546,14 +546,14 @@ export default function ChatWidget() {
               )}
 
               {/* Input Bar */}
-              <div className="p-2.5 bg-white border-t border-ink-100 flex items-center gap-1.5">
+              <div className="p-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-2.5 bg-white border-t border-ink-100 flex items-center gap-2 shrink-0">
                 <button
                   onClick={startVoiceChatSession}
-                  className="w-9 h-9 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center justify-center transition"
+                  className="w-10 h-10 sm:w-9 sm:h-9 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center justify-center transition shrink-0"
                   title="Speak via Voice Chat"
                   aria-label="Voice input"
                 >
-                  <span className="material-symbols-outlined text-lg">mic</span>
+                  <span className="material-symbols-outlined text-xl sm:text-lg">mic</span>
                 </button>
 
                 <input
@@ -562,17 +562,17 @@ export default function ChatWidget() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask about PACS, PMFBY, KCC, laws..."
-                  className="flex-1 bg-ink-50 border border-ink-200 rounded-full px-3.5 py-2 text-xs focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 text-ink-900"
+                  className="flex-1 bg-ink-50 border border-ink-200 rounded-full px-4 py-2.5 sm:py-2 text-base sm:text-xs focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 text-ink-900"
                   aria-label="Type your cooperative query"
                 />
 
                 <button
                   onClick={() => handleSend()}
                   disabled={!input.trim() || loading}
-                  className="w-9 h-9 bg-emerald-700 hover:bg-emerald-800 disabled:bg-ink-200 text-white rounded-full flex items-center justify-center transition"
+                  className="w-10 h-10 sm:w-9 sm:h-9 bg-emerald-700 hover:bg-emerald-800 disabled:bg-ink-200 text-white rounded-full flex items-center justify-center transition shrink-0 shadow-sm"
                   aria-label="Send message"
                 >
-                  <span className="material-symbols-outlined text-base">send</span>
+                  <span className="material-symbols-outlined text-lg sm:text-base">send</span>
                 </button>
               </div>
             </>

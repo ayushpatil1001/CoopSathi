@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useLanguage } from './context/LanguageContext';
 import { LanguageCode } from './types';
 import ChatWidget from './components/ChatWidget';
+import MobileBottomNav from './components/common/MobileBottomNav';
 
 export default function Layout() {
   const { language, setLanguage, t, supportedLanguages } = useLanguage();
@@ -178,27 +179,105 @@ export default function Layout() {
             </div>
           </div>
 
-          {/* Mobile Menu Dropdown */}
+          {/* Mobile Drawer Overlay */}
           {mobileOpen && (
-            <div id="mobile-menu" className="md:hidden border-t border-ink-700" style={{ backgroundColor: 'rgb(22, 42, 30)' }}>
-              <ul className="flex flex-col py-2" role="list">
-                {navLinks.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      className={`flex items-center justify-between px-6 py-3 text-sm transition-colors ${isActive(link.to) ? 'text-white font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'}`}
-                      to={link.to}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      <span>{link.label}</span>
-                      {(link as any).badge && (
-                        <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full">
-                          {(link as any).badge}
-                        </span>
-                      )}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <div className="fixed inset-0 z-50 md:hidden flex animate-fadeIn">
+              {/* Backdrop */}
+              <div 
+                className="fixed inset-0 bg-ink-950/60 backdrop-blur-xs transition-opacity"
+                onClick={() => setMobileOpen(false)}
+                aria-hidden="true"
+              />
+
+              {/* Drawer Container */}
+              <div 
+                id="mobile-menu"
+                className="relative w-[85vw] max-w-sm bg-ink-900 text-white z-50 flex flex-col h-full shadow-2xl overflow-y-auto"
+                style={{ backgroundColor: 'rgb(20, 38, 27)' }}
+              >
+                {/* Drawer Header */}
+                <div className="p-4 border-b border-white/10 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-full bg-emerald-800 flex items-center justify-center text-white border border-emerald-700">
+                      <span className="material-symbols-outlined text-lg">account_balance</span>
+                    </div>
+                    <div>
+                      <div className="font-bold text-xs leading-none text-white">{t('ministryName', 'Ministry of Cooperation')}</div>
+                      <div className="text-[10px] text-emerald-300 mt-0.5">Government of India</div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setMobileOpen(false)}
+                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition"
+                    aria-label="Close menu"
+                  >
+                    <span className="material-symbols-outlined text-lg">close</span>
+                  </button>
+                </div>
+
+                {/* Language Switcher in Drawer */}
+                <div className="p-4 border-b border-white/10 bg-white/5">
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-emerald-300 block mb-1.5 flex items-center gap-1">
+                    <span className="material-symbols-outlined text-xs">translate</span>
+                    <span>Portal Language</span>
+                  </label>
+                  <select
+                    className="w-full bg-ink-950/70 text-white font-medium text-xs rounded-lg p-2.5 border border-white/20 focus:outline-none focus:border-emerald-400 cursor-pointer"
+                    value={language}
+                    onChange={(e) => {
+                      setLanguage(e.target.value as LanguageCode);
+                    }}
+                  >
+                    {supportedLanguages.map((l) => (
+                      <option key={l.code} value={l.code} className="bg-ink-900 text-white">
+                        {l.nativeName} ({l.name})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Navigation Links */}
+                <ul className="flex-1 py-3 px-2 space-y-1 overflow-y-auto" role="list">
+                  {navLinks.map((link) => (
+                    <li key={link.to}>
+                      <Link
+                        className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm transition-colors ${
+                          isActive(link.to)
+                            ? 'text-white font-bold bg-white/15 border-l-4 border-amber-400'
+                            : 'text-white/80 hover:text-white hover:bg-white/5'
+                        }`}
+                        to={link.to}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <span>{link.label}</span>
+                        {(link as any).badge && (
+                          <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full">
+                            {(link as any).badge}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Drawer Footer Actions & Helplines */}
+                <div className="p-4 border-t border-white/10 bg-white/5 space-y-2 text-xs">
+                  <Link
+                    to="/chat"
+                    onClick={() => setMobileOpen(false)}
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-bold text-white shadow-sm transition"
+                  >
+                    <span className="material-symbols-outlined text-sm">smart_toy</span>
+                    <span>Open CoopSathi AI</span>
+                  </Link>
+
+                  <div className="pt-2 text-[11px] text-white/60 space-y-1">
+                    <div>PMFBY Desk: <strong className="text-white font-mono">14447</strong></div>
+                    <div>Kisan Call Centre: <strong className="text-white font-mono">1800-180-1551</strong></div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </nav>
@@ -225,8 +304,10 @@ export default function Layout() {
           </div>
         </section>
 
-        {/* MAIN CONTENT AREA */}
-        <Outlet />
+        {/* MAIN CONTENT AREA WITH MOBILE SAFE BOTTOM PADDING */}
+        <main className="flex-1 pb-20 md:pb-0" id="main-content">
+          <Outlet />
+        </main>
 
         {/* 5. ULTRA-PROFESSIONAL MINIMALIST MONOCHROME FOOTER */}
         <footer className="bg-ink-900 text-ink-400 text-xs border-t border-ink-800 mt-auto" style={{ backgroundColor: 'rgb(23, 42, 30)', borderTopColor: 'rgb(36, 62, 45)', color: 'rgb(155, 179, 162)' }}>
@@ -319,6 +400,9 @@ export default function Layout() {
             </div>
           </div>
         </footer>
+
+        {/* Mobile Persistent Bottom Navigation Bar */}
+        <MobileBottomNav onToggleMenu={() => setMobileOpen(prev => !prev)} isMenuOpen={mobileOpen} />
 
         {/* Global Floating AI Assistant Widget with Voice Chat Option */}
         <ChatWidget />

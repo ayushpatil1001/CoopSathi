@@ -200,43 +200,46 @@ export default function Schemes() {
             )}
           </div>
 
-          {/* Level Filter (Central vs State) with Green Accent */}
-          <div className="flex items-center gap-1 border border-ink-200 p-0.5 rounded bg-ink-50 text-xs">
-            <button
-              onClick={() => setSelectedLevel('ALL')}
-              className={`px-3 py-1 rounded transition ${selectedLevel === 'ALL' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
-            >
-              All (93)
-            </button>
-            <button
-              onClick={() => setSelectedLevel('CENTRAL')}
-              className={`px-3 py-1 rounded transition ${selectedLevel === 'CENTRAL' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
-            >
-              Central (81)
-            </button>
-            <button
-              onClick={() => setSelectedLevel('STATE')}
-              className={`px-3 py-1 rounded transition ${selectedLevel === 'STATE' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
-            >
-              State (12)
-            </button>
-          </div>
+          {/* Level Filter & Sort Dropdown */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+            {/* Level Filter (Central vs State) with Green Accent */}
+            <div className="flex items-center justify-between sm:justify-start gap-1 border border-ink-200 p-0.5 rounded bg-ink-50 text-xs shrink-0">
+              <button
+                onClick={() => setSelectedLevel('ALL')}
+                className={`flex-1 sm:flex-none px-3 py-1 rounded transition text-center ${selectedLevel === 'ALL' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
+              >
+                All (93)
+              </button>
+              <button
+                onClick={() => setSelectedLevel('CENTRAL')}
+                className={`flex-1 sm:flex-none px-3 py-1 rounded transition text-center ${selectedLevel === 'CENTRAL' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
+              >
+                Central (81)
+              </button>
+              <button
+                onClick={() => setSelectedLevel('STATE')}
+                className={`flex-1 sm:flex-none px-3 py-1 rounded transition text-center ${selectedLevel === 'STATE' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
+              >
+                State (12)
+              </button>
+            </div>
 
-          {/* Sort Dropdown */}
-          <div className="flex items-center gap-1.5 min-w-[190px]">
-            <ArrowUpDown className="w-3.5 h-3.5 text-ink-400 flex-shrink-0" />
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full py-1.5 px-2.5 text-xs bg-ink-50/60 border border-ink-200 rounded text-ink-800 font-medium focus:outline-none focus:ring-1 focus:ring-emerald-700 cursor-pointer"
-              aria-label="Sort schemes by"
-            >
-              <option value="year-desc">Launch Year (Newest)</option>
-              <option value="year-asc">Launch Year (Oldest)</option>
-              <option value="name-asc">Scheme Name (A to Z)</option>
-              <option value="name-desc">Scheme Name (Z to A)</option>
-              <option value="sector">Sector &amp; Category</option>
-            </select>
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-1.5 min-w-[180px]">
+              <ArrowUpDown className="w-3.5 h-3.5 text-ink-400 flex-shrink-0" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="w-full py-1.5 px-2.5 text-xs bg-ink-50/60 border border-ink-200 rounded text-ink-800 font-medium focus:outline-none focus:ring-1 focus:ring-emerald-700 cursor-pointer"
+                aria-label="Sort schemes by"
+              >
+                <option value="year-desc">Launch Year (Newest)</option>
+                <option value="year-asc">Launch Year (Oldest)</option>
+                <option value="name-asc">Scheme Name (A to Z)</option>
+                <option value="name-desc">Scheme Name (Z to A)</option>
+                <option value="sector">Sector &amp; Category</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -258,10 +261,10 @@ export default function Schemes() {
             )}
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none touch-scroll -mx-4 px-4 sm:mx-0 sm:px-0">
             <button
               onClick={() => setSelectedSector('ALL')}
-              className={`px-3 py-1 rounded text-xs font-medium whitespace-nowrap transition border ${
+              className={`px-3 py-1 rounded text-xs font-medium whitespace-nowrap transition border shrink-0 ${
                 selectedSector === 'ALL'
                   ? 'bg-emerald-800 text-white border-emerald-800 font-semibold shadow-xs'
                   : 'bg-white text-ink-600 border-ink-200 hover:bg-emerald-50/50 hover:border-emerald-200'
@@ -276,7 +279,7 @@ export default function Schemes() {
                 <button
                   key={sec}
                   onClick={() => setSelectedSector(sec)}
-                  className={`px-3 py-1 rounded text-xs font-medium whitespace-nowrap transition border ${
+                  className={`px-3 py-1 rounded text-xs font-medium whitespace-nowrap transition border shrink-0 ${
                     isSelected
                       ? 'bg-emerald-800 text-white border-emerald-800 font-semibold shadow-xs'
                       : 'bg-white text-ink-600 border-ink-200 hover:bg-emerald-50/50 hover:border-emerald-200'
@@ -290,16 +293,16 @@ export default function Schemes() {
         </div>
 
         {/* Row 3: Target Beneficiaries */}
-        <div className="pt-2.5 border-t border-ink-100 flex items-center gap-1.5 overflow-x-auto text-xs">
+        <div className="pt-2.5 border-t border-ink-100 flex items-center gap-1.5 overflow-x-auto text-xs scrollbar-none touch-scroll -mx-4 px-4 sm:mx-0 sm:px-0">
           <span className="text-ink-400 font-medium flex items-center gap-1 flex-shrink-0 text-[11px]">
             <Users className="w-3 h-3" />
-            <span>Target Group:</span>
+            <span>Target:</span>
           </span>
           {beneficiaryFilters.map((b) => (
             <button
               key={b.id}
               onClick={() => setSelectedBeneficiary(b.id)}
-              className={`px-2 py-0.5 rounded text-[11px] whitespace-nowrap font-medium transition border ${
+              className={`px-2 py-0.5 rounded text-[11px] whitespace-nowrap font-medium transition border shrink-0 ${
                 selectedBeneficiary === b.id
                   ? 'bg-emerald-800 text-white border-emerald-800 font-semibold'
                   : 'bg-ink-50/60 text-ink-600 border-ink-200 hover:bg-emerald-50/40 hover:border-emerald-200'
