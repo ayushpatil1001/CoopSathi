@@ -10,8 +10,11 @@ import { SCHEMES_CATALOG, SchemeItem } from '../data/schemesCatalog';
 import { DailySyncBanner } from '../components/schemes/DailySyncBanner';
 import { SchemeCard } from '../components/schemes/SchemeCard';
 import { SchemeDetailModal } from '../components/schemes/SchemeDetailModal';
+import { useLanguage } from '../context/LanguageContext';
+import { getLocalizedSector, getLocalizedBeneficiary } from '../utils/schemeLocalization';
 
 export default function Schemes() {
+  const { language, t } = useLanguage();
   const [schemesData, setSchemesData] = useState<SchemeItem[]>(SCHEMES_CATALOG);
   const [selectedScheme, setSelectedScheme] = useState<SchemeItem | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -50,17 +53,21 @@ export default function Schemes() {
     return Array.from(set);
   }, [schemesData]);
 
+  // Compute central and state counts
+  const centralCount = useMemo(() => schemesData.filter((s) => s.level === 'Central').length, [schemesData]);
+  const stateCount = useMemo(() => schemesData.filter((s) => s.level === 'State').length, [schemesData]);
+
   // Common target beneficiaries for pill filters
-  const beneficiaryFilters = [
-    { id: 'ALL', label: 'All Beneficiaries' },
-    { id: 'Farmers', label: 'Farmers & Agri' },
-    { id: 'Women', label: 'Women & Mothers' },
-    { id: 'Students', label: 'Students & Youth' },
-    { id: 'MSME', label: 'MSME & Business' },
-    { id: 'Senior Citizens', label: 'Senior Citizens' },
-    { id: 'BPL', label: 'Low Income / BPL' },
-    { id: 'Cooperative', label: 'Cooperative Societies' },
-  ];
+  const beneficiaryFilters = useMemo(() => [
+    { id: 'ALL', label: getLocalizedBeneficiary('ALL', 'All Beneficiaries', t) },
+    { id: 'Farmers', label: getLocalizedBeneficiary('Farmers', 'Farmers & Agri', t) },
+    { id: 'Women', label: getLocalizedBeneficiary('Women', 'Women & Mothers', t) },
+    { id: 'Students', label: getLocalizedBeneficiary('Students', 'Students & Youth', t) },
+    { id: 'MSME', label: getLocalizedBeneficiary('MSME', 'MSME & Business', t) },
+    { id: 'Senior Citizens', label: getLocalizedBeneficiary('Senior Citizens', 'Senior Citizens', t) },
+    { id: 'BPL', label: getLocalizedBeneficiary('BPL', 'Low Income / BPL', t) },
+    { id: 'Cooperative', label: getLocalizedBeneficiary('Cooperative', 'Cooperative Societies', t) },
+  ], [t]);
 
   // Filtering & Sorting Logic
   const filteredSchemes = useMemo(() => {
@@ -134,14 +141,14 @@ export default function Schemes() {
       <nav aria-label="Breadcrumb" className="mb-4 text-xs text-ink-500">
         <ol className="flex items-center gap-1.5">
           <li>
-            <Link to="/" className="hover:text-emerald-800 transition">Home</Link>
+            <Link to="/" className="hover:text-emerald-800 transition">{t('navHome', 'Home')}</Link>
           </li>
           <li><span className="text-ink-300">/</span></li>
           <li>
-            <span className="text-ink-500">Priority Services</span>
+            <span className="text-ink-500">{t('navPriorityServices', 'Priority Services')}</span>
           </li>
           <li><span className="text-ink-300">/</span></li>
-          <li className="text-ink-800 font-semibold">Government Schemes &amp; Welfare Programs</li>
+          <li className="text-ink-800 font-semibold">{t('schemesPageTitle', 'Government Schemes & Welfare Programs')}</li>
         </ol>
       </nav>
 
@@ -150,22 +157,22 @@ export default function Schemes() {
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded border border-emerald-200 text-[11px] font-medium bg-emerald-50 text-emerald-800">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-            <span>93 Verified Programs</span>
+            <span>{schemesData.length} {t('schemesVerifiedPrograms', 'Verified Programs')}</span>
           </span>
           <span className="text-[11px] font-mono text-ink-500 px-2 py-0.5 rounded border border-ink-200 bg-white">
-            Official CRCS &amp; MoC Directory
+            {t('schemesDirectoryBadge', 'Official CRCS & MoC Directory')}
           </span>
         </div>
 
         <h1 className="text-2xl sm:text-3xl font-extrabold text-ink-900 tracking-tight leading-tight">
-          Government Schemes &amp; Welfare Programs
+          {t('schemesPageTitle', 'Government Schemes & Welfare Programs')}
           <span className="text-ink-500 font-devanagari text-lg sm:text-xl font-normal block sm:inline sm:ml-2">
-            (सरकारी योजनाएं एवं कल्याणकारी कार्यक्रम)
+            {t('schemesPageSubtitle', '(Central & State Cooperative Welfare Directory)')}
           </span>
         </h1>
 
         <p className="mt-2 text-xs sm:text-sm text-ink-500 leading-relaxed max-w-3xl font-normal">
-          Central sector schemes, financial subventions, and infrastructure subsidies directly supporting PACS, dairy, fishery, and multi-state cooperative societies across India.
+          {t('schemesPageDesc', 'Central sector schemes, financial subventions, and infrastructure subsidies directly supporting PACS, dairy, fishery, and multi-state cooperative societies across India.')}
         </p>
       </section>
 
@@ -185,7 +192,7 @@ export default function Schemes() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by scheme name, keyword (e.g. PACS, cold storage, loan subvention), or DBT code..."
+              placeholder={t('schemesSearchPlaceholder', 'Search by scheme name, keyword (e.g. PACS, cold storage, loan subvention), or DBT code...')}
               className="w-full pl-9 pr-8 py-2 text-xs sm:text-sm bg-ink-50/60 hover:bg-ink-50 focus:bg-white border border-ink-200 rounded text-ink-900 placeholder-ink-400 focus:outline-none focus:ring-1 focus:ring-emerald-700 transition"
             />
             <Search className="w-4 h-4 text-ink-400 absolute left-3 top-2.5" />
@@ -208,19 +215,19 @@ export default function Schemes() {
                 onClick={() => setSelectedLevel('ALL')}
                 className={`flex-1 sm:flex-none px-3 py-1 rounded transition text-center ${selectedLevel === 'ALL' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
               >
-                All (93)
+                {t('schemesLevelAll', 'All')} ({schemesData.length})
               </button>
               <button
                 onClick={() => setSelectedLevel('CENTRAL')}
                 className={`flex-1 sm:flex-none px-3 py-1 rounded transition text-center ${selectedLevel === 'CENTRAL' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
               >
-                Central (81)
+                {t('schemesLevelCentral', 'Central')} ({centralCount})
               </button>
               <button
                 onClick={() => setSelectedLevel('STATE')}
                 className={`flex-1 sm:flex-none px-3 py-1 rounded transition text-center ${selectedLevel === 'STATE' ? 'bg-emerald-800 text-white font-semibold shadow-xs' : 'text-ink-600 hover:text-ink-900'}`}
               >
-                State (12)
+                {t('schemesLevelState', 'State')} ({stateCount})
               </button>
             </div>
 
@@ -231,13 +238,13 @@ export default function Schemes() {
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="w-full py-1.5 px-2.5 text-xs bg-ink-50/60 border border-ink-200 rounded text-ink-800 font-medium focus:outline-none focus:ring-1 focus:ring-emerald-700 cursor-pointer"
-                aria-label="Sort schemes by"
+                aria-label={t('schemesSortBy', 'Sort schemes by')}
               >
-                <option value="year-desc">Launch Year (Newest)</option>
-                <option value="year-asc">Launch Year (Oldest)</option>
-                <option value="name-asc">Scheme Name (A to Z)</option>
-                <option value="name-desc">Scheme Name (Z to A)</option>
-                <option value="sector">Sector &amp; Category</option>
+                <option value="year-desc">{t('schemesSortYearDesc', 'Launch Year (Newest)')}</option>
+                <option value="year-asc">{t('schemesSortYearAsc', 'Launch Year (Oldest)')}</option>
+                <option value="name-asc">{t('schemesSortNameAsc', 'Scheme Name (A to Z)')}</option>
+                <option value="name-desc">{t('schemesSortNameDesc', 'Scheme Name (Z to A)')}</option>
+                <option value="sector">{t('schemesSortSector', 'Sector & Category')}</option>
               </select>
             </div>
           </div>
@@ -248,7 +255,7 @@ export default function Schemes() {
           <div className="flex items-center justify-between text-[11px] text-ink-500 font-semibold uppercase tracking-wider">
             <span className="flex items-center gap-1">
               <Layers className="w-3.5 h-3.5 text-emerald-700" />
-              <span>Sector &amp; Program Category</span>
+              <span>{t('schemesSectorHeading', 'Sector & Program Category')}</span>
             </span>
             {hasActiveFilters && (
               <button
@@ -256,7 +263,7 @@ export default function Schemes() {
                 className="text-emerald-700 hover:text-emerald-800 normal-case font-medium text-xs flex items-center gap-1"
               >
                 <RefreshCw className="w-3 h-3" />
-                <span>Reset filters</span>
+                <span>{t('schemesResetFilters', 'Reset filters')}</span>
               </button>
             )}
           </div>
@@ -270,7 +277,7 @@ export default function Schemes() {
                   : 'bg-white text-ink-600 border-ink-200 hover:bg-emerald-50/50 hover:border-emerald-200'
               }`}
             >
-              All Sectors ({schemesData.length})
+              {t('schemesAllSectors', 'All Sectors')} ({schemesData.length})
             </button>
             {sectorList.map((sec) => {
               const count = schemesData.filter((s) => s.sector === sec).length;
@@ -285,7 +292,7 @@ export default function Schemes() {
                       : 'bg-white text-ink-600 border-ink-200 hover:bg-emerald-50/50 hover:border-emerald-200'
                   }`}
                 >
-                  {sec} ({count})
+                  {getLocalizedSector(sec, language)} ({count})
                 </button>
               );
             })}
@@ -296,7 +303,7 @@ export default function Schemes() {
         <div className="pt-2.5 border-t border-ink-100 flex items-center gap-1.5 overflow-x-auto text-xs scrollbar-none touch-scroll -mx-4 px-4 sm:mx-0 sm:px-0">
           <span className="text-ink-400 font-medium flex items-center gap-1 flex-shrink-0 text-[11px]">
             <Users className="w-3 h-3" />
-            <span>Target:</span>
+            <span>{t('schemesTargetLabel', 'Target:')}</span>
           </span>
           {beneficiaryFilters.map((b) => (
             <button
@@ -317,17 +324,17 @@ export default function Schemes() {
       {/* Results Count Line */}
       <div className="flex items-center justify-between mb-4 px-0.5">
         <div className="text-xs text-ink-500 font-normal">
-          Showing <strong className="text-ink-900 font-semibold">{filteredSchemes.length}</strong> of{' '}
-          <strong className="text-ink-900 font-semibold">{schemesData.length}</strong> verified government programs
-          {selectedSector !== 'ALL' && <span> in <strong className="text-emerald-800">{selectedSector}</strong></span>}
-          {selectedLevel !== 'ALL' && <span> ({selectedLevel.toLowerCase()} level)</span>}
+          {t('schemesShowing', 'Showing')} <strong className="text-ink-900 font-semibold">{filteredSchemes.length}</strong> {t('schemesOf', 'of')}{' '}
+          <strong className="text-ink-900 font-semibold">{schemesData.length}</strong> {t('schemesVerifiedProgramsCount', 'verified government programs')}
+          {selectedSector !== 'ALL' && <span> {t('schemesIn', 'in')} <strong className="text-emerald-800">{getLocalizedSector(selectedSector, language)}</strong></span>}
+          {selectedLevel !== 'ALL' && <span> ({selectedLevel === 'CENTRAL' ? t('schemesLevelCentral', 'Central') : t('schemesLevelState', 'State')} {t('schemesLevel', 'level')})</span>}
         </div>
         {hasActiveFilters && (
           <button
             onClick={clearAllFilters}
             className="text-xs text-emerald-700 hover:text-emerald-800 underline"
           >
-            Clear all
+            {t('schemesClearAll', 'Clear all')}
           </button>
         )}
       </div>
@@ -348,16 +355,16 @@ export default function Schemes() {
           <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mx-auto">
             <Filter className="w-5 h-5" />
           </div>
-          <h3 className="text-sm font-bold text-ink-900">No schemes found matching search criteria</h3>
+          <h3 className="text-sm font-bold text-ink-900">{t('schemesNoFound', 'No schemes found matching search criteria')}</h3>
           <p className="text-xs text-ink-500 max-w-sm mx-auto">
-            Please adjust your search keywords or reset active filters to browse the complete directory.
+            {t('schemesNoFoundDesc', 'Please adjust your search keywords or reset active filters to browse the complete directory.')}
           </p>
           <button
             onClick={clearAllFilters}
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-semibold transition"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span>Reset All Filters</span>
+            <span>{t('schemesResetAllBtn', 'Reset All Filters')}</span>
           </button>
         </div>
       )}
@@ -377,15 +384,15 @@ export default function Schemes() {
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800">Citizen Assistance</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800">{t('citizenAssistance', 'Citizen Assistance')}</span>
                 <span className="text-ink-300">•</span>
-                <span className="text-[10px] font-medium text-ink-500">Multilingual AI Helpdesk</span>
+                <span className="text-[10px] font-medium text-ink-500">{t('multilingualHelpdesk', 'Multilingual AI Helpdesk')}</span>
               </div>
               <h2 className="text-base sm:text-lg font-bold text-ink-900">
-                Need personalized guidance for scheme selection or eligibility?
+                {t('schemesAiTitle', 'Need personalized guidance for scheme selection or eligibility?')}
               </h2>
               <p className="text-xs text-ink-500 max-w-2xl leading-relaxed">
-                CoopSathi AI analyzes eligibility requirements, verifies document checklists, and explains how to apply in 12+ Indian regional languages.
+                {t('schemesAiDesc', 'CoopSathi AI analyzes eligibility requirements, verifies document checklists, and explains how to apply in 12+ Indian regional languages.')}
               </p>
             </div>
           </div>
@@ -393,7 +400,7 @@ export default function Schemes() {
             to="/chat"
             className="inline-flex items-center gap-1.5 bg-emerald-800 hover:bg-emerald-700 text-white px-4 py-2 rounded text-xs font-semibold transition shadow-xs flex-shrink-0"
           >
-            <span>Ask CoopSathi AI</span>
+            <span>{t('askCoopSathiAi', 'Ask CoopSathi AI')}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -403,7 +410,7 @@ export default function Schemes() {
       <section className="bg-white rounded-lg border border-ink-200 p-6 mb-8 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
         <h2 className="text-sm font-bold uppercase tracking-wider text-ink-900 mb-4 flex items-center gap-2">
           <HelpCircle className="w-4 h-4 text-emerald-700" />
-          <span>Government Schemes &amp; Direct Benefit Transfer FAQ</span>
+          <span>{t('schemesFaqHeading', 'Government Schemes & Direct Benefit Transfer FAQ')}</span>
         </h2>
         <div className="space-y-2.5">
           {SEO_PAGES.schemes.faqItems?.map((faq) => (
@@ -422,22 +429,22 @@ export default function Schemes() {
 
       {/* Related Departmental Pages */}
       <div className="pt-5 border-t border-ink-100">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-ink-400 mb-3">Related Portals &amp; Statutory Acts</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-ink-400 mb-3">{t('schemesRelatedPortals', 'Related Portals & Statutory Acts')}</h3>
         <div className="flex flex-wrap gap-2">
           <Link to="/pacs" className="text-xs bg-white border border-ink-200 hover:border-emerald-500 hover:text-emerald-800 text-ink-700 px-3 py-1.5 rounded transition font-medium">
-            PACS Modernization ERP
+            {t('portalPacs', 'PACS Modernization ERP')}
           </Link>
           <Link to="/pmfby" className="text-xs bg-white border border-ink-200 hover:border-emerald-500 hover:text-emerald-800 text-ink-700 px-3 py-1.5 rounded transition font-medium">
-            PMFBY Crop Insurance
+            {t('portalPmfby', 'PMFBY Crop Insurance')}
           </Link>
           <Link to="/laws" className="text-xs bg-white border border-ink-200 hover:border-emerald-500 hover:text-emerald-800 text-ink-700 px-3 py-1.5 rounded transition font-medium">
-            MSCS Act 2023 &amp; Rules
+            {t('portalLaws', 'MSCS Act 2023 & Rules')}
           </Link>
           <Link to="/ombudsman" className="text-xs bg-white border border-ink-200 hover:border-emerald-500 hover:text-emerald-800 text-ink-700 px-3 py-1.5 rounded transition font-medium">
-            Cooperative Ombudsman
+            {t('portalOmbudsman', 'Cooperative Ombudsman')}
           </Link>
           <Link to="/ncct" className="text-xs bg-white border border-ink-200 hover:border-emerald-500 hover:text-emerald-800 text-ink-700 px-3 py-1.5 rounded transition font-medium">
-            NCCT Cooperative Training
+            {t('portalNcct', 'NCCT Cooperative Training')}
           </Link>
         </div>
       </div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useLanguage } from './context/LanguageContext';
 import { LanguageCode } from './types';
-import ChatWidget from './components/ChatWidget';
 import MobileBottomNav from './components/common/MobileBottomNav';
 
 export default function Layout() {
@@ -15,7 +14,7 @@ export default function Layout() {
   const navLinks = [
     { to: '/', label: t('navHome', 'Home') },
     { to: '/about', label: t('navAbout', 'About Ministry') },
-    { to: '/schemes', label: t('navSchemes', 'All Schemes'), badge: '93 LIVE', highlight: true },
+    { to: '/schemes', label: t('navSchemes', 'All Schemes'), badge: t('schemesLiveBadge', '93 LIVE'), highlight: true },
     { to: '/laws', label: t('navLaws', 'MSCS Act 2023') },
     { to: '/pacs', label: t('navPacs', 'PACS Services') },
     { to: '/pmfby', label: t('navPmfby', 'PMFBY') },
@@ -403,9 +402,6 @@ export default function Layout() {
 
         {/* Mobile Persistent Bottom Navigation Bar */}
         <MobileBottomNav onToggleMenu={() => setMobileOpen(prev => !prev)} isMenuOpen={mobileOpen} />
-
-        {/* Global Floating AI Assistant Widget with Voice Chat Option */}
-        <ChatWidget />
       </div>
     </>
   );

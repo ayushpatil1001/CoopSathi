@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshCw, CheckCircle2, ShieldCheck, Database, Calendar, Info, X } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface SyncStatusData {
   lastSyncTimestamp: string;
@@ -26,6 +27,7 @@ interface DailySyncBannerProps {
 }
 
 export const DailySyncBanner: React.FC<DailySyncBannerProps> = ({ totalSchemes, onSyncComplete }) => {
+  const { language, t } = useLanguage();
   const [syncStatus, setSyncStatus] = useState<SyncStatusData | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
   const [showChangelog, setShowChangelog] = useState(false);
@@ -78,13 +80,13 @@ export const DailySyncBanner: React.FC<DailySyncBannerProps> = ({ totalSchemes, 
       if (res.ok) {
         const data = await res.json();
         setSyncStatus(data.status);
-        setSyncMessage('Daily scheme registry verified & synchronized with official portals!');
+        setSyncMessage(t('syncSuccessMsg', 'Daily scheme registry verified & synchronized with official portals!'));
         if (onSyncComplete) onSyncComplete();
       } else {
-        setSyncMessage('Daily synchronization active. Catalog is up to date.');
+        setSyncMessage(t('syncActiveMsg', 'Daily synchronization active. Catalog is up to date.'));
       }
     } catch {
-      setSyncMessage('Daily synchronization verified locally.');
+      setSyncMessage(t('syncVerifiedLocalMsg', 'Daily synchronization verified locally.'));
     } finally {
       setTimeout(() => {
         setIsSyncing(false);
@@ -95,15 +97,26 @@ export const DailySyncBanner: React.FC<DailySyncBannerProps> = ({ totalSchemes, 
     }
   };
 
+  const localeMap: Record<string, string> = {
+    en: 'en-IN',
+    hi: 'hi-IN',
+    mr: 'mr-IN',
+    gu: 'gu-IN',
+    ta: 'ta-IN',
+    te: 'te-IN',
+    bn: 'bn-IN',
+  };
+  const activeLocale = localeMap[language] || 'en-IN';
+
   const formattedTime = syncStatus
-    ? new Date(syncStatus.lastSyncTimestamp).toLocaleDateString('en-IN', {
+    ? new Date(syncStatus.lastSyncTimestamp).toLocaleString(activeLocale, {
         day: 'numeric',
         month: 'short',
         year: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
       })
-    : 'Today, 06:00 AM IST';
+    : t('syncTodayTime', 'Today, 06:00 AM IST');
 
   return (
     <div className="bg-white rounded-lg border border-ink-200 p-3.5 sm:p-4 mb-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
@@ -116,10 +129,10 @@ export const DailySyncBanner: React.FC<DailySyncBannerProps> = ({ totalSchemes, 
           </span>
 
           <div className="text-xs text-ink-700 leading-normal">
-            <strong className="text-ink-900 font-semibold">Live Telemetry:</strong> Synchronized daily with <strong className="text-ink-800">myScheme.gov.in</strong> &amp; <strong className="text-ink-800">PIB Gazette</strong>
+            <strong className="text-ink-900 font-semibold">{t('syncLiveTelemetry', 'Live Telemetry:')}</strong> {t('syncSynchronizedWith', 'Synchronized daily with')} <strong className="text-ink-800">{t('syncOfficialSources', 'myScheme.gov.in & PIB Gazette')}</strong>
             <span className="text-ink-300 mx-2 hidden sm:inline">•</span>
             <span className="text-ink-500 block sm:inline mt-0.5 sm:mt-0">
-              Last Verified: {formattedTime} • Active Database: <strong className="text-ink-800">{syncStatus?.totalActiveSchemes || totalSchemes || 93} Schemes</strong>
+              {t('syncLastVerified', 'Last Verified:')} {formattedTime} • {t('syncActiveDatabase', 'Active Database:')} <strong className="text-ink-800">{syncStatus?.totalActiveSchemes || totalSchemes || 93} {t('schemesCountWord', 'Schemes')}</strong>
             </span>
           </div>
         </div>
@@ -129,20 +142,20 @@ export const DailySyncBanner: React.FC<DailySyncBannerProps> = ({ totalSchemes, 
           <button
             onClick={() => setShowChangelog(true)}
             className="inline-flex items-center gap-1 px-2.5 py-1 rounded border border-ink-200 bg-ink-50 hover:bg-emerald-50/50 hover:border-emerald-200 text-xs font-medium text-ink-700 transition"
-            title="View daily modification changelog"
+            title={t('syncChangelogTooltip', 'View daily modification changelog')}
           >
             <Info className="w-3.5 h-3.5 text-emerald-700" />
-            <span>Changelog</span>
+            <span>{t('syncChangelog', 'Changelog')}</span>
           </button>
 
           <button
             onClick={handleManualSync}
             disabled={isSyncing}
             className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-800 hover:bg-emerald-700 disabled:opacity-60 text-xs font-semibold text-white shadow-xs transition active:scale-95"
-            title="Check official government portals for daily updates"
+            title={t('syncNowTooltip', 'Check official government portals for daily updates')}
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-            <span>{isSyncing ? 'Verifying...' : 'Sync Now'}</span>
+            <span>{isSyncing ? t('syncVerifying', 'Verifying...') : t('syncNow', 'Sync Now')}</span>
           </button>
         </div>
       </div>
@@ -164,8 +177,8 @@ export const DailySyncBanner: React.FC<DailySyncBannerProps> = ({ totalSchemes, 
               <div className="flex items-center gap-2">
                 <Database className="w-4 h-4 text-ink-700" />
                 <div>
-                  <h3 className="text-xs font-bold text-ink-900 uppercase tracking-wider">Government Schemes Daily Changelog</h3>
-                  <p className="text-[11px] text-ink-500">Continuous 24-hour verification against official portals</p>
+                  <h3 className="text-xs font-bold text-ink-900 uppercase tracking-wider">{t('syncModalTitle', 'Government Schemes Daily Changelog')}</h3>
+                  <p className="text-[11px] text-ink-500">{t('syncModalSubtitle', 'Continuous 24-hour verification against official portals')}</p>
                 </div>
               </div>
               <button
@@ -181,43 +194,56 @@ export const DailySyncBanner: React.FC<DailySyncBannerProps> = ({ totalSchemes, 
               <div className="p-3 bg-ink-50 border border-ink-200 rounded text-ink-700 space-y-1">
                 <div className="font-bold flex items-center gap-1.5 text-ink-900">
                   <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                  <span>Continuous Daily Verification Protocol</span>
+                  <span>{t('syncProtocolTitle', 'Continuous Daily Verification Protocol')}</span>
                 </div>
                 <p className="text-[11px] leading-relaxed text-ink-600">
-                  The CoopSathi database is refreshed every 24 hours against <strong>myScheme.gov.in</strong> (MeitY), Press Information Bureau (PIB) releases, and the Union Budget scheme allocation registry.
+                  {t('syncProtocolDesc', 'The CoopSathi database is refreshed every 24 hours against myScheme.gov.in (MeitY), Press Information Bureau (PIB) releases, and the Union Budget scheme allocation registry.')}
                 </p>
               </div>
 
               <div>
-                <h4 className="font-bold text-ink-800 uppercase text-[10px] tracking-wider mb-2">Connected Official Data Sources</h4>
+                <h4 className="font-bold text-ink-800 uppercase text-[10px] tracking-wider mb-2">{t('syncConnectedSources', 'Connected Official Data Sources')}</h4>
                 <ul className="space-y-1 text-ink-600">
-                  {syncStatus?.officialDataSources?.map((src, idx) => (
-                    <li key={idx} className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" />
-                      <span>{src}</span>
-                    </li>
-                  ))}
+                  {syncStatus?.officialDataSources?.map((src, idx) => {
+                    let localizedSource = src;
+                    if (src.includes('myScheme.gov.in')) localizedSource = t('sourceMyScheme', src);
+                    else if (src.includes('indiabudget.gov.in')) localizedSource = t('sourceBudget', src);
+                    else if (src.includes('pib.gov.in')) localizedSource = t('sourcePib', src);
+
+                    return (
+                      <li key={idx} className="flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" />
+                        <span>{localizedSource}</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
               <div>
-                <h4 className="font-bold text-ink-800 uppercase text-[10px] tracking-wider mb-2">Audit Logs</h4>
+                <h4 className="font-bold text-ink-800 uppercase text-[10px] tracking-wider mb-2">{t('syncAuditLogs', 'Audit Logs')}</h4>
                 <div className="space-y-2">
                   {syncStatus?.recentChangelog && syncStatus.recentChangelog.length > 0 ? (
-                    syncStatus.recentChangelog.map((log) => (
-                      <div key={log.id} className="p-2.5 rounded border border-ink-100 bg-ink-50/50 text-[11px] space-y-0.5">
-                        <div className="flex items-center justify-between text-[10px] text-ink-500 font-mono">
-                          <span className="font-bold text-ink-800">{log.type}</span>
-                          <span>{new Date(log.timestamp).toLocaleString()}</span>
+                    syncStatus.recentChangelog.map((log) => {
+                      const localizedDesc = log.description.includes('Automated daily synchronization')
+                        ? t('syncDefaultLogDesc', log.description)
+                        : log.description;
+
+                      return (
+                        <div key={log.id} className="p-2.5 rounded border border-ink-100 bg-ink-50/50 text-[11px] space-y-0.5">
+                          <div className="flex items-center justify-between text-[10px] text-ink-500 font-mono">
+                            <span className="font-bold text-ink-800">{log.type}</span>
+                            <span>{new Date(log.timestamp).toLocaleString(activeLocale)}</span>
+                          </div>
+                          <p className="text-ink-800 font-medium">{localizedDesc}</p>
+                          <div className="text-[10px] text-ink-500">
+                            {t('syncActiveSchemesCount', 'Active schemes:')} <strong>{log.schemesTotal}</strong>
+                          </div>
                         </div>
-                        <p className="text-ink-800 font-medium">{log.description}</p>
-                        <div className="text-[10px] text-ink-500">
-                          Active schemes: <strong>{log.schemesTotal}</strong>
-                        </div>
-                      </div>
-                    ))
+                      );
+                    })
                   ) : (
-                    <p className="text-ink-500 italic">No revisions recorded today. All 93 schemes are currently synchronized.</p>
+                    <p className="text-ink-500 italic">{t('syncNoRevisions', 'No revisions recorded today. All schemes are currently synchronized.')}</p>
                   )}
                 </div>
               </div>
@@ -229,7 +255,7 @@ export const DailySyncBanner: React.FC<DailySyncBannerProps> = ({ totalSchemes, 
                 onClick={() => setShowChangelog(false)}
                 className="px-3.5 py-1 rounded bg-ink-900 hover:bg-ink-800 text-white text-xs font-semibold"
               >
-                Close
+                {t('closeBtn', 'Close')}
               </button>
             </div>
           </div>
