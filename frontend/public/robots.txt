@@ -6,7 +6,7 @@ Disallow: /.env
 Disallow: /src/
 
 # Sitemap
-Sitemap: https://coopsathi.gov.in/sitemap.xml
+Sitemap: https://coopsathi.vercel.app/sitemap.xml
 
 # Crawl-delay for bots
 Crawl-delay: 10

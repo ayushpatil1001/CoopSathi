@@ -61,7 +61,7 @@ export default function SEOHead({
       isPartOf: {
         '@type': 'WebSite',
         name: BASE_SITE_NAME,
-        url: 'https://coopsathi.gov.in',
+        url: 'https://coopsathi.vercel.app',
       },
       publisher: {
         '@type': 'GovernmentOrganization',
@@ -80,6 +80,7 @@ export default function SEOHead({
       <title>{title}</title>
       <meta name="title" content={title} />
       <meta name="description" content={description} />
+      <meta name="author" content="CoopSathi AI" />
       <meta name="robots" content="index, follow" />
 
       {/* Canonical */}

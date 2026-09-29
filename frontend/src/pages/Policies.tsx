@@ -44,7 +44,7 @@ export default function Policies() {
       <SEOHead
         title={`${current.title} — Ministry of Cooperation, Government of India`}
         description={current.desc}
-        canonical={`https://coopsathi.gov.in/${path}`}
+        canonical={`https://coopsathi.vercel.app/${path}`}
         schemaType="WebPage"
       />
 

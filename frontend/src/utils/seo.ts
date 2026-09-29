@@ -1,5 +1,5 @@
 // Centralized SEO configuration for all pages
-// Domain: https://coopsathi.gov.in
+// Domain: https://coopsathi.vercel.app
 
 export interface SEOConfig {
   title: string;
@@ -11,14 +11,14 @@ export interface SEOConfig {
   faqItems?: { question: string; answer: string }[];
 }
 
-const BASE_DOMAIN = 'https://coopsathi.gov.in';
+const BASE_DOMAIN = 'https://coopsathi.vercel.app';
 const OG_IMAGE = `${BASE_DOMAIN}/og-image.svg`;
-const SITE_NAME = 'CoopSathi AI — Ministry of Cooperation, Government of India';
+const SITE_NAME = 'CoopSathi AI - Team HexYZ';
 
 export const SEO_PAGES: Record<string, SEOConfig> = {
   home: {
     title: 'CoopSathi AI — Ministry of Cooperation, Government of India',
-    description: 'Official AI-powered portal of the Ministry of Cooperation, Government of India. Access PACS services, PMFBY crop insurance, MSCS Act 2023, cooperative schemes, and the CoopSathi AI chatbot.',
+    description: 'SIH 2026 Prototype - Team HexYZ',
     canonical: `${BASE_DOMAIN}/`,
     schemaType: 'WebPage',
   },

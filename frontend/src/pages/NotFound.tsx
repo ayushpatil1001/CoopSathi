@@ -8,7 +8,7 @@ export default function NotFound() {
       <SEOHead
         title="404 — Page Not Found | CoopSathi AI"
         description="The requested page could not be located on the Ministry of Cooperation CoopSathi AI platform."
-        canonical="https://coopsathi.gov.in/404"
+        canonical="https://coopsathi.vercel.app/404"
       />
 
       <div className="w-16 h-16 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 mb-6">

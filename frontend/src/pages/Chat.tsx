@@ -272,7 +272,7 @@ export default function Chat() {
       <SEOHead
         title="CoopSathi AI Voice & Chat Terminal — Ministry of Cooperation, GoI"
         description="Interact with the official Government LLM chatbot for Ministry of Cooperation. Voice chat and text assistance in Hindi, Marathi, Gujarati, English, and other regional languages."
-        canonical="https://coopsathi.gov.in/chat"
+        canonical="https://coopsathi.vercel.app/chat"
         schemaType="WebPage"
       />
 

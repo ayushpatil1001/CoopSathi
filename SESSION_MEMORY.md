@@ -23,3 +23,9 @@
 - Verified production build: `npm run build` in `frontend` completed with exit code 0.
 - Verified backend build: `npm run build` in `backend` completed with exit code 0.
 - Removed the floating chatbot button from the bottom-right corner in `frontend/src/Layout.tsx` (`<ChatWidget />`) per user request. Verified build and tests pass.
+- Updated SEO & Meta tags in `frontend/index.html`, `frontend/src/utils/seo.ts`, `frontend/src/components/SEOHead.tsx`, `Chat.tsx`, `NotFound.tsx`, `Policies.tsx`, `robots.txt`, and `sitemap.xml`:
+  - Canonical domain changed from `https://coopsathi.gov.in` to `https://coopsathi.vercel.app`.
+  - Removed Twitter handle (`<meta name="twitter:site" ... />`).
+  - Replaced meta description with `SIH 2026 Prototype - Team HexYZ`.
+  - Replaced `og:site_name` with `CoopSathi AI - Team HexYZ`.
+  - Replaced `meta name="author"` with `CoopSathi AI`.
