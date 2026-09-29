@@ -64,9 +64,9 @@ export default function SEOHead({
         url: 'https://coopsathi.vercel.app',
       },
       publisher: {
-        '@type': 'GovernmentOrganization',
-        name: 'Ministry of Cooperation, Government of India',
-        url: 'https://cooperation.gov.in',
+        '@type': 'Organization',
+        name: 'CoopSathi AI',
+        url: 'https://coopsathi.vercel.app',
       },
     };
   };

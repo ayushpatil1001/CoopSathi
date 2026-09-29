@@ -7,7 +7,7 @@ export default function NotFound() {
     <main className="max-w-4xl mx-auto px-4 sm:px-8 py-16 text-center min-h-[60vh] flex flex-col items-center justify-center" id="main-content">
       <SEOHead
         title="404 — Page Not Found | CoopSathi AI"
-        description="The requested page could not be located on the Ministry of Cooperation CoopSathi AI platform."
+        description="SIH 2026 Prototype - Team HexYZ. The requested page could not be located on the CoopSathi AI platform."
         canonical="https://coopsathi.vercel.app/404"
       />
 

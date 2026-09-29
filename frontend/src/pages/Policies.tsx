@@ -42,7 +42,7 @@ export default function Policies() {
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-8 py-12 min-h-[65vh]" id="main-content">
       <SEOHead
-        title={`${current.title} — Ministry of Cooperation, Government of India`}
+        title={`${current.title} — CoopSathi AI`}
         description={current.desc}
         canonical={`https://coopsathi.vercel.app/${path}`}
         schemaType="WebPage"

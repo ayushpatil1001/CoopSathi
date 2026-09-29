@@ -61,7 +61,7 @@ export const PlatformIntegration: React.FC<PlatformIntegrationProps> = ({
                   <span className="w-2 h-2 rounded-full bg-red-400"></span>
                   <span className="w-2 h-2 rounded-full bg-amber-400"></span>
                   <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                  <span className="text-[9px] ml-1">coopsathi.gov.in/chat</span>
+                  <span className="text-[9px] ml-1">coopsathi.vercel.app/chat</span>
                 </div>
                 <p className="text-gov-blue-900 font-sans font-medium">
                   "How to calculate PMFBY insurance premium for 3 acres?"

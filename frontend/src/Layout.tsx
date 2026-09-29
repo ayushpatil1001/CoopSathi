@@ -36,7 +36,11 @@ export default function Layout() {
                   <circle cx="12" cy="12" r="9"></circle>
                   <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4L18.4 5.6"></path>
                 </svg>
-                <span>{t('govtIndia', 'भारत सरकार • Government of India')}</span>
+                <span>{t('govtIndia', 'CoopSathi AI - Team HexYZ')}</span>
+                <span className="text-ink-300">•</span>
+                <a href="https://coopsathi.vercel.app" target="_blank" rel="noopener noreferrer" className="text-emerald-700 hover:underline font-semibold">
+                  coopsathi.vercel.app
+                </a>
               </div>
             </div>
 
@@ -62,11 +66,11 @@ export default function Layout() {
         {/* 2. REFINED MASTHEAD / IDENTITY BAR */}
         <section className="border-b border-ink-200/80 bg-white py-4 px-4 sm:px-8">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
-            {/* Ministry Brand & State Emblem */}
+            {/* Brand & Identity */}
             <div className="flex items-center gap-4">
               {/* Ashoka Emblem Minimal */}
               <div className="flex-shrink-0 pr-4 border-r border-ink-200 flex items-center justify-center">
-                <svg className="w-10 h-14 text-ink-800" fill="none" viewBox="0 0 100 120" role="img" aria-label="National Emblem of India">
+                <svg className="w-10 h-14 text-ink-800" fill="none" viewBox="0 0 100 120" role="img" aria-label="CoopSathi AI Emblem">
                   <path d="M50 14C42 14 36 19 36 27C36 33 40 37 44 41C42 47 38 53 38 61C38 73 45 79 50 79C55 79 62 73 62 61C62 53 58 47 56 41C60 37 64 33 64 27C64 19 58 14 50 14Z" fill="#f8fafc" stroke="#1e293b" strokeWidth="2.5"></path>
                   <path d="M26 27C26 35 32 43 36 47C34 55 32 63 34 71" stroke="#1e293b" strokeLinecap="round" strokeWidth="2"></path>
                   <path d="M74 27C74 35 68 43 64 47C66 55 68 63 66 71" stroke="#1e293b" strokeLinecap="round" strokeWidth="2"></path>
@@ -78,18 +82,18 @@ export default function Layout() {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-500 font-devanagari">भारत सरकार</span>
-                  <span className="text-[10px] text-ink-300">•</span>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-500">Government of India</span>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-500">
+                    {t('govtIndia', 'CoopSathi AI - Team HexYZ')}
+                  </span>
                 </div>
                 <p className="text-lg sm:text-xl font-bold text-ink-900 tracking-tight leading-none">
-                  {t('ministryDevanagari', 'सहकारिता मंत्रालय')}
+                  {t('ministryName', 'CoopSathi AI')}
                 </p>
-                <p className="text-sm sm:text-base font-semibold text-ink-700 tracking-tight mt-0.5">
-                  {t('ministryName', 'Ministry of Cooperation')}
+                <p className="text-xs sm:text-sm font-semibold text-ink-700 tracking-tight mt-1">
+                  {t('ncctHeader', 'SIH 2026 Prototype - Team HexYZ')}
                 </p>
-                <p className="text-[11px] text-ink-500 mt-0.5">
-                  {t('ncctHeader', 'National Council for Cooperative Training (NCCT) • राष्ट्रीय सहकारी प्रशिक्षण परिषद')}
+                <p className="text-[11px] text-emerald-700 font-medium mt-0.5">
+                  coopsathi.vercel.app
                 </p>
               </div>
             </div>
@@ -201,8 +205,8 @@ export default function Layout() {
                       <span className="material-symbols-outlined text-lg">account_balance</span>
                     </div>
                     <div>
-                      <div className="font-bold text-xs leading-none text-white">{t('ministryName', 'Ministry of Cooperation')}</div>
-                      <div className="text-[10px] text-emerald-300 mt-0.5">Government of India</div>
+                      <div className="font-bold text-xs leading-none text-white">{t('ministryName', 'CoopSathi AI')}</div>
+                      <div className="text-[10px] text-emerald-300 mt-0.5">{t('govtIndia', 'CoopSathi AI - Team HexYZ')}</div>
                     </div>
                   </div>
 
@@ -384,13 +388,13 @@ export default function Layout() {
             </div>
           </div>
 
-          {/* Official Hosting & NIC Management Attribution */}
+          {/* Official Hosting & Attribution */}
           <div className="py-5 px-4 sm:px-8 text-center text-[11px] text-ink-400">
             <div className="max-w-4xl mx-auto space-y-1">
-              <p>Website Content Managed by <strong>Ministry of Cooperation, Government of India</strong> (सहकारिता मंत्रालय, भारत सरकार).</p>
-              <p className="text-ink-400">Designed, Developed and Hosted by <strong>National Informatics Centre (NIC)</strong>, MeitY, Government of India.</p>
+              <p>Portal Powered by <strong>CoopSathi AI</strong> • <strong>CoopSathi AI - Team HexYZ</strong>.</p>
+              <p className="text-ink-400"><strong>SIH 2026 Prototype - Team HexYZ</strong> • <a href="https://coopsathi.vercel.app" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">coopsathi.vercel.app</a></p>
               <div className="pt-2 flex flex-wrap items-center justify-center gap-3 text-ink-400 text-[10px]">
-                <span>Last Updated: <strong>24 October 2024</strong></span>
+                <span>Last Updated: <strong>2026</strong></span>
                 <span>•</span>
                 <span>GIGW Compliance: <strong>Level AA</strong></span>
                 <span>•</span>

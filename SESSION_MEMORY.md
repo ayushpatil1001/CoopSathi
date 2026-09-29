@@ -23,9 +23,5 @@
 - Verified production build: `npm run build` in `frontend` completed with exit code 0.
 - Verified backend build: `npm run build` in `backend` completed with exit code 0.
 - Removed the floating chatbot button from the bottom-right corner in `frontend/src/Layout.tsx` (`<ChatWidget />`) per user request. Verified build and tests pass.
-- Updated SEO & Meta tags in `frontend/index.html`, `frontend/src/utils/seo.ts`, `frontend/src/components/SEOHead.tsx`, `Chat.tsx`, `NotFound.tsx`, `Policies.tsx`, `robots.txt`, and `sitemap.xml`:
-  - Canonical domain changed from `https://coopsathi.gov.in` to `https://coopsathi.vercel.app`.
-  - Removed Twitter handle (`<meta name="twitter:site" ... />`).
-  - Replaced meta description with `SIH 2026 Prototype - Team HexYZ`.
-  - Replaced `og:site_name` with `CoopSathi AI - Team HexYZ`.
-  - Replaced `meta name="author"` with `CoopSathi AI`.
+- Updated SEO, canonical domain (`coopsathi.gov.in` -> `coopsathi.vercel.app`), removed Twitter handle (`@MinistryCoopGOI`), updated meta description to `SIH 2026 Prototype - Team HexYZ`, `og:site_name` to `CoopSathi AI - Team HexYZ`, and `author` to `CoopSathi AI` across `index.html`, `seo.ts`, `SEOHead.tsx`, page routes, `sitemap.xml`, `robots.txt`, and `og-image.svg`.
+- Updated the visible institutional header & masthead section above the Navbar in `frontend/src/Layout.tsx`, `frontend/src/components/common/GovHeader.tsx`, and `frontend/src/data/translations.ts` across all 7 languages so that the frontend UI visibly displays `CoopSathi AI - Team HexYZ`, `CoopSathi AI`, `SIH 2026 Prototype - Team HexYZ`, and `coopsathi.vercel.app` directly above the sticky navigation bar.

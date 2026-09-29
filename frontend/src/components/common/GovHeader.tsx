@@ -49,7 +49,7 @@ export const GovHeader: React.FC<GovHeaderProps> = ({
                 <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" stroke="currentColor" strokeWidth="1" />
               </svg>
               <span className="font-semibold tracking-wide text-amber-300">
-                भारत सरकार | Government of India
+                CoopSathi AI - Team HexYZ | coopsathi.vercel.app
               </span>
             </div>
 
@@ -157,26 +157,21 @@ export const GovHeader: React.FC<GovHeaderProps> = ({
               </svg>
             </div>
 
-            {/* Official Ministry & NCCT Typography */}
+            {/* Official CoopSathi AI Typography */}
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF9933] bg-orange-50 px-2 py-0.5 rounded border border-orange-200">
-                  भारत सरकार
+                  CoopSathi AI - Team HexYZ
                 </span>
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-                  Government of India
+                  coopsathi.vercel.app
                 </span>
               </div>
               <h1 className="text-xl sm:text-2xl font-black text-[#0A2540] tracking-tight leading-snug">
-                सहकारिता मंत्रालय
+                CoopSathi AI
               </h1>
-              <h2 className="text-sm sm:text-base font-bold text-slate-800 tracking-tight">
-                Ministry of Cooperation
-              </h2>
               <p className="text-xs text-slate-600 flex items-center gap-1.5 mt-0.5">
-                <span className="font-semibold text-[#138808]">राष्ट्रीय सहकारी प्रशिक्षण परिषद</span>
-                <span className="text-slate-400">|</span>
-                <span>National Council for Cooperative Training (NCCT)</span>
+                <span className="font-semibold text-[#138808]">SIH 2026 Prototype - Team HexYZ</span>
               </p>
             </div>
           </div>

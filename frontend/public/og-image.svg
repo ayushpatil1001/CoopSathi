@@ -15,8 +15,8 @@
   <circle cx="100" cy="100" r="55" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.3"/>
   <!-- Ministry Title -->
   <text x="600" y="220" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="#FFFFFF" text-anchor="middle">CoopSathi AI</text>
-  <text x="600" y="290" font-family="Arial, sans-serif" font-size="26" fill="#9BB3A2" text-anchor="middle">Official Portal — Ministry of Cooperation</text>
-  <text x="600" y="340" font-family="Arial, sans-serif" font-size="22" fill="#7A9E86" text-anchor="middle">Government of India</text>
+  <text x="600" y="290" font-family="Arial, sans-serif" font-size="26" fill="#9BB3A2" text-anchor="middle">SIH 2026 Prototype — Team HexYZ</text>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="22" fill="#7A9E86" text-anchor="middle">CoopSathi AI - Team HexYZ</text>
   <!-- Divider -->
   <rect x="300" y="380" width="600" height="2" fill="#2D5038" opacity="0.8"/>
   <!-- Tagline -->
@@ -29,5 +29,5 @@
   <text x="950" y="510" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle">79,630</text>
   <text x="950" y="540" font-family="Arial, sans-serif" font-size="14" fill="#7A9E86" text-anchor="middle">PACS Computerized</text>
   <!-- URL -->
-  <text x="600" y="608" font-family="Arial, sans-serif" font-size="16" fill="#4A7A5A" text-anchor="middle">coopsathi.gov.in</text>
+  <text x="600" y="608" font-family="Arial, sans-serif" font-size="16" fill="#4A7A5A" text-anchor="middle">coopsathi.vercel.app</text>
 </svg>

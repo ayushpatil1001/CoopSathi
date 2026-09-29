@@ -270,8 +270,8 @@ export default function Chat() {
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-8 py-8 min-h-[85vh] flex flex-col" id="main-content">
       <SEOHead
-        title="CoopSathi AI Voice & Chat Terminal — Ministry of Cooperation, GoI"
-        description="Interact with the official Government LLM chatbot for Ministry of Cooperation. Voice chat and text assistance in Hindi, Marathi, Gujarati, English, and other regional languages."
+        title="CoopSathi AI Voice & Chat Terminal — SIH 2026 Prototype - Team HexYZ"
+        description="SIH 2026 Prototype - Team HexYZ. Interact with the CoopSathi AI chatbot in Hindi, Marathi, Gujarati, English, and regional languages."
         canonical="https://coopsathi.vercel.app/chat"
         schemaType="WebPage"
       />

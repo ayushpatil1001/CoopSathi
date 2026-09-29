@@ -17,7 +17,7 @@ const SITE_NAME = 'CoopSathi AI - Team HexYZ';
 
 export const SEO_PAGES: Record<string, SEOConfig> = {
   home: {
-    title: 'CoopSathi AI — Ministry of Cooperation, Government of India',
+    title: 'CoopSathi AI — SIH 2026 Prototype - Team HexYZ',
     description: 'SIH 2026 Prototype - Team HexYZ',
     canonical: `${BASE_DOMAIN}/`,
     schemaType: 'WebPage',

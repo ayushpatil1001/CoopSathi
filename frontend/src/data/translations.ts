@@ -13,13 +13,13 @@ export const SUPPORTED_LANGUAGES: LanguageOption[] = [
 export const UI_TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   en: {
     // Header & Masthead
-    govtIndia: 'भारत सरकार • Government of India',
+    govtIndia: 'CoopSathi AI - Team HexYZ',
     skipToContent: 'Skip to main content',
     contrast: 'Contrast',
     selectLanguage: 'Select Language',
-    ministryDevanagari: 'सहकारिता मंत्रालय',
-    ministryName: 'Ministry of Cooperation',
-    ncctHeader: 'National Council for Cooperative Training (NCCT) • राष्ट्रीय सहकारी प्रशिक्षण परिषद',
+    ministryDevanagari: 'CoopSathi AI',
+    ministryName: 'CoopSathi AI',
+    ncctHeader: 'SIH 2026 Prototype - Team HexYZ',
     searchPlaceholder: 'Search Acts, Rules, PACS, Circulars...',
     mottoTitle: 'Motto',
     mottoVal: 'सहकार से समृद्धि',
@@ -290,13 +290,13 @@ export const UI_TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
   hi: {
     // Header & Masthead
-    govtIndia: 'भारत सरकार • Government of India',
+    govtIndia: 'CoopSathi AI - Team HexYZ',
     skipToContent: 'मुख्य सामग्री पर जाएं',
     contrast: 'कंट्रास्ट',
     selectLanguage: 'भाषा चुनें',
-    ministryDevanagari: 'सहकारिता मंत्रालय',
-    ministryName: 'सहकारिता मंत्रालय (Ministry of Cooperation)',
-    ncctHeader: 'राष्ट्रीय सहकारी प्रशिक्षण परिषद (NCCT) • National Council for Cooperative Training',
+    ministryDevanagari: 'CoopSathi AI',
+    ministryName: 'CoopSathi AI',
+    ncctHeader: 'SIH 2026 Prototype - Team HexYZ',
     searchPlaceholder: 'अधिनियम, नियम, पैक्स, परिपत्र खोजें...',
     mottoTitle: 'ध्येय',
     mottoVal: 'सहकार से समृद्धि',
@@ -567,13 +567,13 @@ export const UI_TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
   mr: {
     // Header & Masthead
-    govtIndia: 'भारत सरकार • Government of India',
+    govtIndia: 'CoopSathi AI - Team HexYZ',
     skipToContent: 'मुख्य मजकुरावर जा',
     contrast: 'काँट्रास्ट',
     selectLanguage: 'भाषा निवडा',
-    ministryDevanagari: 'सहकारिता मंत्रालय',
-    ministryName: 'सहकार मंत्रालय (Ministry of Cooperation)',
-    ncctHeader: 'राष्ट्रीय सहकारी प्रशिक्षण परिषद (NCCT) • National Council for Cooperative Training',
+    ministryDevanagari: 'CoopSathi AI',
+    ministryName: 'CoopSathi AI',
+    ncctHeader: 'SIH 2026 Prototype - Team HexYZ',
     searchPlaceholder: 'कायदे, नियम, पॅक्स, परिपत्रके शोधा...',
     mottoTitle: 'ध्येयवाक्य',
     mottoVal: 'सहकार से समृद्धि',
@@ -844,13 +844,13 @@ export const UI_TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
   gu: {
     // Header & Masthead
-    govtIndia: 'ભારત સરકાર • Government of India',
+    govtIndia: 'CoopSathi AI - Team HexYZ',
     skipToContent: 'મુખ્ય વિષયવસ્તુ પર જાઓ',
     contrast: 'કોન્ટ્રાસ્ટ',
     selectLanguage: 'ભાષા પસંદ કરો',
-    ministryDevanagari: 'सहकारिता मंत्रालय',
-    ministryName: 'સહકાર મંત્રાલય (Ministry of Cooperation)',
-    ncctHeader: 'રાષ્ટ્રીય સહકારી તાલીમ પરિષદ (NCCT)',
+    ministryDevanagari: 'CoopSathi AI',
+    ministryName: 'CoopSathi AI',
+    ncctHeader: 'SIH 2026 Prototype - Team HexYZ',
     searchPlaceholder: 'કાયદા, નિયમો, PACS, પરિપત્રો શોધો...',
     mottoTitle: 'ધ્યેય',
     mottoVal: 'सहकार से समृद्धि',
@@ -1121,13 +1121,13 @@ export const UI_TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
   ta: {
     // Header & Masthead
-    govtIndia: 'இந்திய அரசு • Government of India',
+    govtIndia: 'CoopSathi AI - Team HexYZ',
     skipToContent: 'முக்கிய உள்ளடக்கத்திற்கு செல்க',
     contrast: 'கான்ட்ராஸ்ட்',
     selectLanguage: 'மொழியைத் தேர்ந்தெடுக்கவும்',
-    ministryDevanagari: 'सहकारिता मंत्रालय',
-    ministryName: 'கூட்டுறவு அமைச்சகம் (Ministry of Cooperation)',
-    ncctHeader: 'தேசிய கூட்டுறவு பயிற்சி குழு (NCCT)',
+    ministryDevanagari: 'CoopSathi AI',
+    ministryName: 'CoopSathi AI',
+    ncctHeader: 'SIH 2026 Prototype - Team HexYZ',
     searchPlaceholder: 'சட்டங்கள், விதிகள், PACS, சுற்றறிக்கைகள் தேடுக...',
     mottoTitle: 'குறிக்கோள்',
     mottoVal: 'सहकार से समृद्धि',
@@ -1398,13 +1398,13 @@ export const UI_TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
   te: {
     // Header & Masthead
-    govtIndia: 'భారత ప్రభుత్వం • Government of India',
+    govtIndia: 'CoopSathi AI - Team HexYZ',
     skipToContent: 'ప్రధాన విషయానికి వెళ్ళండి',
     contrast: 'కాంట్రాస్ట్',
     selectLanguage: 'భాషను ఎంచుకోండి',
-    ministryDevanagari: 'सहकारिता मंत्रालय',
-    ministryName: 'సహకార మంత్రిత్వ శాఖ (Ministry of Cooperation)',
-    ncctHeader: 'నేషనల్ కౌన్సిల్ ఫర్ కోఆపరేటివ్ ట్రైనింగ్ (NCCT)',
+    ministryDevanagari: 'CoopSathi AI',
+    ministryName: 'CoopSathi AI',
+    ncctHeader: 'SIH 2026 Prototype - Team HexYZ',
     searchPlaceholder: 'చట్టాలు, నిబంధనలు, PACS, సర్క్యులర్‌లను శోధించండి...',
     mottoTitle: 'ధ్యేయం',
     mottoVal: 'सहकार से समृद्धि',
@@ -1675,13 +1675,13 @@ export const UI_TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
   bn: {
     // Header & Masthead
-    govtIndia: 'ভারত সরকার • Government of India',
+    govtIndia: 'CoopSathi AI - Team HexYZ',
     skipToContent: 'মূল সামগ্রীতে যান',
     contrast: 'কনট্রাস্ট',
     selectLanguage: 'ভাষা নির্বাচন করুন',
-    ministryDevanagari: 'सहकारिता मंत्रालय',
-    ministryName: 'সমবায় মন্ত্রক (Ministry of Cooperation)',
-    ncctHeader: 'ন্যাশনাল কাউন্সিল ফর কোঅপারেটিভ ট্রেনিং (NCCT)',
+    ministryDevanagari: 'CoopSathi AI',
+    ministryName: 'CoopSathi AI',
+    ncctHeader: 'SIH 2026 Prototype - Team HexYZ',
     searchPlaceholder: 'আইন, বিধি, প্যাক্স, সার্কুলার অনুসন্ধান করুন...',
     mottoTitle: 'মূলমন্ত্র',
     mottoVal: 'सहकार से समृद्धि',
