@@ -26,18 +26,30 @@ export default function Home() {
                 className="inline-flex items-center gap-2 px-2.5 py-1 rounded border border-ink-200 text-ink-600 text-[11px] font-medium bg-ink-50 mb-4"
                 style={{ backgroundColor: 'rgb(234, 241, 236)', borderColor: 'rgb(196, 215, 202)', color: 'rgb(45, 80, 56)' }}
               >
-                <span className="text-ink-900 font-semibold font-devanagari">{t('mottoVal', 'सहकार से समृद्धि')}</span>
+                <span className="text-ink-900 font-semibold font-devanagari">CoopSathi AI</span>
                 <span className="text-ink-300">|</span>
-                <span>{t('prosperityTag', 'Prosperity Through Cooperation')}</span>
+                <span className="text-amber-600 font-bold">SIH 2026 PROTOTYPE</span>
               </div>
 
               {/* PRIMARY H1 FOR HOME PAGE */}
               <h1 className="text-2xl sm:text-4xl font-extrabold text-ink-900 tracking-tight leading-tight">
-                {t('heroTitle', "Empowering India's Rural Economy through Transparent, Modern Cooperatives")}
+                Multilingual Cooperative Governance & Legal Assistance
               </h1>
               <p className="mt-3 text-sm sm:text-base text-ink-500 leading-relaxed max-w-2xl font-normal">
-                {t('heroDesc', 'Strengthening Primary Agricultural Credit Societies (PACS), integrating multi-state cooperatives under the MSCS Act 2023, and delivering statutory security to 30+ crore members.')}
+                Ask cooperative-law and scheme questions in your language, receive source-grounded answers, and turn verified information into actionable services.
               </p>
+              
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link to="/chat" className="px-4 py-2 bg-emerald-700 text-white text-sm font-semibold rounded hover:bg-emerald-800 transition">
+                  Try CoopSathi <span className="ml-1 text-[10px] bg-white text-emerald-800 px-1 py-0.5 rounded uppercase font-bold tracking-wide">Live AI</span>
+                </Link>
+                <Link to="/schemes" className="px-4 py-2 bg-ink-100 text-ink-800 text-sm font-semibold rounded hover:bg-ink-200 transition border border-ink-200">
+                  Explore Schemes <span className="ml-1 text-[10px] bg-ink-200 text-ink-900 px-1 py-0.5 rounded uppercase font-bold tracking-wide">Demo Data</span>
+                </Link>
+                <Link to="/grievance" className="px-4 py-2 bg-white border border-ink-300 text-ink-800 text-sm font-semibold rounded hover:bg-ink-50 transition">
+                  File Grievance <span className="ml-1 text-[10px] bg-gray-200 text-gray-800 px-1 py-0.5 rounded uppercase font-bold tracking-wide">Prototype</span>
+                </Link>
+              </div>
             </div>
 
             {/* Two Column Architecture: Executive Profiles + AI Assistant Terminal */}
@@ -45,8 +57,11 @@ export default function Home() {
               {/* Column 1: Executive Leadership (5 cols) */}
               <div className="lg:col-span-5 border border-ink-200 rounded-lg p-5 bg-white shadow-sm space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-ink-100">
-                  <span className="text-xs font-bold uppercase tracking-wider text-ink-900">{t('leadershipTitle', 'Institutional Leadership')}</span>
-                  <span className="text-[10px] font-mono text-ink-500">{t('leadershipBadge', 'GOI Executive')}</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-ink-900">Prototype Disclaimer</span>
+                  <span className="text-[10px] font-mono text-ink-500">SIH 2026</span>
+                </div>
+                <div className="text-sm text-ink-600 font-medium pb-2">
+                  This platform is a demonstration prototype built for the Smart India Hackathon. It is completely independent and does not represent an official service of the Government of India.
                 </div>
 
                 {/* Profile Cards */}

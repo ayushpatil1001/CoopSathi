@@ -1,6 +1,6 @@
-# 🤝 CoopSathi AI
+# 🏛️ CoopSathi AI
 
-> **Multilingual Cooperative Governance & Legal Assistance Platform**
+> **AI-powered Cooperative Governance & Citizen Services Assistant**
 
 [![Live Demo](https://img.shields.io/badge/Live-coopsathi.vercel.app-0A2540?style=for-the-badge&logo=vercel&logoColor=white)](https://coopsathi.vercel.app)
 [![SIH 2026](https://img.shields.io/badge/SIH_2026-Prototype-FF9933?style=for-the-badge)](https://www.sih.gov.in)
@@ -8,163 +8,128 @@
 
 **⚠️ DISCLAIMER: This is a Smart India Hackathon (SIH) 2026 prototype built by Team HexYZ. It is NOT an official service of the Ministry of Cooperation, NCCT, or the Government of India. The legal citations, schemes, and statutory data presented are for demonstration purposes only.**
 
-**CoopSathi AI** is an AI-powered platform prototype that envisions making India's cooperative sector accessible to every citizen — across languages, literacy levels, and devices. It provides instant access to **93 government welfare schemes**, statutory acts, crop insurance tools, and cooperative services through an intelligent multilingual interface.
-
 ---
 
-## 👥 The "Three Roles" Architecture (Differentiator)
+## 1. Problem Statement
+**Problem Statement ID: 26088**
+*“Multilingual Cooperative Governance & Legal Assistance Chatbot”*
 
-CoopSathi AI provides distinct, purpose-built interfaces for the three primary stakeholders in the cooperative ecosystem:
+India's cooperative sector spans over 8 lakh cooperative societies with 29 crore members, yet access to reliable, multilingual information regarding the MSCS Act 2023, PACS by-laws, PMFBY (Crop Insurance), and KCC loans remains fragmented. Citizens struggle with complex legal jargon and unverified scheme eligibility, while administrators lack unified grievance routing tools.
 
-1. **Citizen / Member Portal (`/`)**: Multilingual chat assistant, scheme discovery, and PMFBY crop insurance calculator.
-2. **PACS Admin Console (`/pacs-admin`)**: Dashboard for local PACS Secretaries to manage KCC loans, fertilizer inventory, member compliance tasks, and trigger AI-assisted notices.
-3. **Authority Console (`/authority`)**: Central Ministry / NCCT dashboard for real-time telemetry, grievance escalation tracking, and RAG knowledge-base document ingestion.
+## 2. Solution
+**CoopSathi AI** provides a unified AI-powered platform that acts as a bridge between citizens, PACS administrators, and government authorities. It offers an intelligent RAG (Retrieval-Augmented Generation) assistant that answers queries in 22 regional languages, a PMFBY premium estimator, and an end-to-end grievance tracking system.
 
----
-
-## ✨ Key Features & Roadmap
-
+## 3. Key Features
 | Feature | Status | Description |
-|:---|:---|:---|
-| 🤖 **AI Chat Assistant** | Implemented | Conversational AI grounded in statutory databases with verified citations (Demo uses simulated client-side fallback) |
-| 📋 **93 Government Schemes** | Implemented | Catalog with eligibility, benefits, application steps, and guided flows |
-| 🌐 **7 Indian Languages** | Implemented | Full UI & scheme translations (English, Hindi, Marathi, Gujarati, Tamil, Telugu, Bengali) |
-| 🌾 **PMFBY Crop Insurance** | Implemented | Premium calculator, claim intimation workflows, and district-wise crop data |
-| ⚖️ **Cooperative Laws** | Implemented | Searchable MSCS Act 2023 sections, Model By-Laws |
-| 🏘️ **PACS Services** | Implemented | Dedicated PACS Admin console for digitized operations |
-| 📊 **Live Telemetry** | Simulated | Dashboards for scheme utilization and financial metrics (Mock data for prototype) |
-| 🛡️ **Ombudsman Portal** | Roadmap | Cooperative grievance redressal with Forms VI & VII and CPGRAMS routing |
-| 🔄 **Portal Sync** | Roadmap | Simulated `POST /api/realtime/sync`. Live integration with central government portals is a roadmap feature. |
+|---------|--------|-------------|
+| **Multilingual AI Assistant** | **LIVE** | RAG-based query resolution in English, Hindi, and Marathi. |
+| **Grounded Legal Citations** | **LIVE** | Answers based purely on retrieved MSCS Act/By-Laws data. |
+| **Grievance Workflow** | **PROTOTYPE** | End-to-end grievance tracking saved to a local JSON database. |
+| **PACS Admin Console** | **PROTOTYPE** | Dashboard for local secretaries to view queries and grievances. |
+| **Authority Console** | **PROTOTYPE** | Aggregated view for district registrars to monitor escalations. |
+| **PMFBY Estimator** | **PROTOTYPE** | Premium calculator using static 2026 Kharif/Rabi/Horticulture rates. |
+| **Live Bhashini Integration** | **ROADMAP** | Expanding to all 22 scheduled Indian languages via Bhashini API. |
+| **Real-time API Sync** | **ROADMAP** | Direct integration with Central Government scheme databases. |
 
----
-
-## 📸 Platform Screenshots
-*(To be added for Slide 5 of SIH Presentation)*
-- **Chat Interface**: Multilingual RAG in action
-- **Schemes Dashboard**: 93 schemes with vernacular filtering
-- **PMFBY Calculator**: Real-time crop insurance premium math
-
----
-
-## 🧪 Accuracy Benchmark (SIH Evaluation)
-
-We conducted a rigorous 50-question benchmark evaluating the hybrid RAG engine across MSCS Act 2023 statutory queries, scheme eligibility, and multilingual intent detection. 
-
-* **Total Questions:** 50
-* **Pass Rate:** **84% (42/50)**
-* **Evaluation Categories:** Statutory Accuracy, Scheme Grounding, Out-of-Domain Filtering, Multilingual (Hindi/Marathi)
-* *See 🔗 **[BENCHMARK_50_QUESTIONS.md](BENCHMARK_50_QUESTIONS.md)** and `run_benchmark.js` for the full dataset and runner.*
-*(Note: Please include these metrics on **Slide 5** of the SIH Presentation Deck).*
-
----
-
-## 🏗️ Architecture vs Deployment
-
-**IMPORTANT DEPLOYMENT NOTE:** The live Vercel demo (`coopsathi.vercel.app`) serves the **Frontend UI only** with simulated client-side chat fallbacks and mock data. To experience the true hybrid RAG architecture (Supabase + Vector Store, Gemini, Bhashini), you must run the backend services locally as outlined in the setup steps.
+## 4. Architecture
+The project utilizes a Single Source of Truth architecture with a React frontend and a Node.js/Express backend. 
 
 ```mermaid
 flowchart TD
-    Client[Frontend UI (React/Vite)] --> |HTTP Requests| Gateway[Node.js / Express Backend]
-    Client --> |Client-side Mock| MockData[Simulated Data Fallback]
-    
-    Gateway --> RAG[LangChain RAG Engine (Python FastAPI)]
-    Gateway --> LLM[Google Gemini 2.5 Flash]
-    Gateway --> NMT[Bhashini Translation API]
-    
-    RAG --> DB[(Supabase PostgreSQL + pgvector)]
-    RAG --> Llama[Groq LLaMA 3]
+    User([Citizen/Admin]) --> React[React 19 + Vite]
+    React --> API[Express Backend - Node.js]
+    API --> RAG[RAG Retrieval Engine]
+    RAG --> Doc[Local JSON Corpus]
+    RAG --> LLM[Gemini 2.5 LLM via Provider]
+    LLM --> Verify[Safety & Citation Verification]
+    Verify --> API
+    API --> React
 ```
 
-### Full Tech Stack
+## 5. Live Demo
+**[Launch CoopSathi Prototype](https://coopsathi.vercel.app)**
 
-| Layer | Technologies |
-|:---|:---|
-| **Frontend (`frontend/`)** | React 18, Vite, TypeScript, Tailwind CSS |
-| **Backend API (`backend/`)** | Node.js 20+, Express, TypeScript |
-| **Python RAG (`python-backend/`)** | Python, FastAPI, LangChain, Supabase pgvector |
-| **AI / LLM** | Google Gemini 2.5 Flash, Groq LLaMA 3 |
-| **Translation** | Digital India Bhashini Dhruva NMT (22 Indian languages) |
-| **Database** | Supabase (PostgreSQL + pgvector) |
-| **Deployment** | Vercel (frontend static demo) |
+*Note: The Vercel deployment currently serves the frontend. To experience the full RAG backend, local setup is required.*
 
----
+## 6. Screenshots
+*(Placeholder for SIH Presentation Slides - Add screenshots of the Chat UI, PACS Admin, and Authority Console here)*
 
-## 🚀 One-Command Local Setup
+## 7. Technology Stack
+- **Frontend:** React 19, Vite, Tailwind CSS, Lucide Icons
+- **Backend:** Node.js, Express, TypeScript
+- **Database (Prototype):** File-based JSON persistence (`grievancesDB.json`, `statutoryDatabase.json`)
+- **LLM/RAG:** Google Gemini via `@google/generative-ai`, custom TF-IDF keyword retrieval engine
 
-### Prerequisites
+## 8. RAG Pipeline
+Our Retrieval-Augmented Generation pipeline ensures absolute safety and legal accuracy:
+1. **Query Normalization:** Filters out non-governmental/gibberish queries.
+2. **Hybrid Retrieval:** Scores queries against the cooperative corpus.
+3. **Safety Fallback:** If `maxScore < 20`, the system explicitly refuses to answer and escalates the query.
+4. **Citation Validation:** Every generated answer is appended with its source ID.
 
-- Node.js 20+ and npm
-- Python 3.10+ (for the ML backend)
+## 9. Knowledge Sources
+- **MSCS Act 2023**
+- **PACS Model By-Laws**
+- **PMFBY Guidelines (Prototype Rates)**
+- **93+ Central Government Schemes**
 
-### 1. Clone & Configure
+## 10. Benchmark Methodology
+We developed a strict 50-question dataset (`benchmarks/questions.json`) mapping queries to expected keywords and refusal triggers (e.g., out-of-domain queries, insufficient evidence).
+- **Run Command:** `npm run benchmark`
+- **Measures:** Accurate keyword retrieval, correct out-of-domain refusals, and low-confidence escapes.
 
+## 11. Security
+- **Strict CORS:** Frontend securely sandboxed.
+- **Secret Management:** `GEMINI_API_KEY` is isolated entirely in the Node.js backend.
+- **Rate Limiting & Helmet:** Implemented on all Express API routes.
+
+## 12. Deployment
 ```bash
+# 1. Clone the repository
 git clone https://github.com/ayushpatil1001/CoopSathi.git
 cd CoopSathi
 
-# Set up environment variables
-cp frontend/.env.example frontend/.env
-cp backend/.env.example backend/.env
-cp python-backend/.env.example python-backend/.env
+# 2. Install dependencies & build
+npm install
+npm run build
+
+# 3. Start the application (Frontend port 5173, Backend port 5000)
+npm run dev
 ```
 
-### 2. Install & Run (One Command)
-
-```bash
-# This installs all dependencies and starts both frontend (5173) and backend (5000) concurrently
-npm install && npm run dev
+## 13. Environment Variables
+Copy `backend/.env.example` to `backend/.env` and configure:
+```env
+PORT=5000
+NODE_ENV=development
+GEMINI_API_KEY=your_google_ai_studio_key
+ALLOWED_ORIGINS=http://localhost:5173
 ```
 
-### 4. Open in Browser
+## 14. API Documentation
+- `POST /api/chat` - RAG Query Resolution
+- `POST /api/pmfby/calculate` - Prototype Premium Estimator
+- `POST /api/grievances` - Create Grievance
+- `GET /api/grievances/:id` - Track Grievance Status
+- `GET /api/health` - System Status
 
-```
-http://localhost:5173
-```
+## 15. Demo Flow
+For SIH Evaluators:
+1. Select **Marathi** from the language dropdown.
+2. Ask a legal question: *"What is Section 29?"* -> See retrieved source.
+3. Ask a PMFBY question -> Calculate premium using the Prototype tool.
+4. File a grievance -> Receive a tracking ID (`COOP-2026-MH-...`).
+5. Open **PACS Admin** (`/pacs-admin`) -> View the submitted grievance.
+6. Open **Authority Console** (`/authority`) -> View aggregated regional data.
 
----
+## 16. Limitations
+- **API Rate Limits:** The benchmark script may hit HTTP 429 Too Many Requests errors if executed against free-tier LLM API keys.
+- **Persistence:** Grievances are saved to a local `.json` file rather than a production PostgreSQL cluster.
 
-## 📡 Backend API Reference
+## 17. Roadmap
+- Live Bhashini integration for 22 scheduled languages.
+- Integration with Central Government API endpoints for live scheme data.
+- Supabase Vector Store migration for semantic search.
 
-*Note: These endpoints require the local Node.js backend to be running.*
-
-| Method | Endpoint | Description |
-|:---|:---|:---|
-| `POST` | `/api/chat` | AI chat with RAG retrieval & verified citations |
-| `GET` | `/api/schemes` | 93 welfare schemes with filters & search |
-| `POST` | `/api/pmfby/calculate` | Crop insurance premium calculator |
-| `GET` | `/api/pmfby/states` | States, districts, and crop catalogs |
-| `GET/POST` | `/api/grievances` | Cooperative grievance submission & listing |
-| `GET` | `/api/track-status/:ref` | Grievance status tracking |
-| `GET` | `/api/languages` | Supported Indian languages |
-| `GET` | `/api/documents` | Statutory acts & model by-laws |
-| `GET` | `/api/health` | Backend health check |
-
----
-
-## 🌍 Supported Languages
-
-| Language | Script | Code |
-|:---|:---|:---|
-| English | Latin | `en` |
-| हिन्दी (Hindi) | Devanagari | `hi` |
-| मराठी (Marathi) | Devanagari | `mr` |
-| ગુજરાતી (Gujarati) | Gujarati | `gu` |
-| தமிழ் (Tamil) | Tamil | `ta` |
-| తెలుగు (Telugu) | Telugu | `te` |
-| বাংলা (Bengali) | Bengali | `bn` |
-
----
-
-## ⚖️ Legal Disclaimer
-
-The statutory content (e.g., MSCS Act 2023 Sections 29, 45, 85, 106, Model By-Laws) provided by this prototype is based on public demonstration datasets. It is **not** legally verified and should not be used as official legal counsel. 
-
----
-
-## 👥 Team HexYZ
-
-Built with ❤️ for **Smart India Hackathon 2026**.
-
-## 📄 License
-
-This project is a prototype built for SIH 2026. All rights reserved by Team HexYZ.
+## 18. Disclaimer
+CoopSathi is an independent prototype. We do not claim any official affiliation with the Government of India. The tool should not be interpreted as professional legal advice.

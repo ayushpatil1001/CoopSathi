@@ -1,0 +1,13 @@
+
+========================================
+ SIH 2026 RAG BENCHMARK REPORT
+========================================
+Total Questions: 10
+Passed: 7
+Failed: 3
+Accuracy: 70.0%
+Average Latency: 1767ms
+Out of Domain Refusals: 1
+Low Confidence Escapes: 0
+========================================
+Timestamp: 2026-09-30T07:39:23.822Z

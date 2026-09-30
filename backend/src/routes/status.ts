@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { storedGrievances } from './grievances.js';
+import { getGrievances } from './grievances.js';
 
 export const statusRouter = Router();
 
@@ -7,6 +7,7 @@ export const statusRouter = Router();
 statusRouter.get('/:ref', (req: Request, res: Response) => {
   const { ref } = req.params;
 
+  const storedGrievances = getGrievances();
   const found = storedGrievances.find(
     g => g.referenceNumber.toLowerCase() === ref.trim().toLowerCase()
   );

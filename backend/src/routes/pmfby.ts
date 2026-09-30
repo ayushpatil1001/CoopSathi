@@ -33,8 +33,10 @@ pmfbyRouter.post('/calculate', (req: Request, res: Response) => {
     govtSubsidyRate,
     govtSubsidyAmount,
     cutoffDate: season === 'Rabi' ? '31 December 2026' : '31 July 2026',
-    eligible: true,
-    claimTollFree: '14447'
+    eligible: 'unverified_prototype',
+    claimTollFree: '14447',
+    disclaimer: 'Prototype estimate — verify applicable notified rates before enrollment.',
+    dataVersion: 'Prototype Mock Data 2026'
   });
 });
 

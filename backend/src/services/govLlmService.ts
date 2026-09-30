@@ -2,7 +2,7 @@ import { ragEngineService, RAGChunk } from './ragEngineService.js';
 
 export interface GovChatResponse {
   text: string;
-  isOfficialGovLLM: boolean;
+  isVerifiedLLM: boolean;
   provider: 'official_gov_rag' | 'bhashini' | 'gemini_gov_rag';
   modelUsed: string;
   confidence: number;
@@ -87,7 +87,7 @@ export class GovLlmService {
         `💡 *આપને કઈ યોજના કે સહકારી નિયમ વિશે માહિતી જોઈએ છે? કૃપા કરીને જણાવો.*`;
     }
 
-    return `**Hello! I am CoopSathi AI – Official Virtual Assistant for the Ministry of Cooperation & NCCT, Government of India.**\n\n` +
+    return `**Hello! I am CoopSathi AI – AI-powered Cooperative Governance Assistant.**\n\n` +
       `I provide verified, statutory guidance grounded in official Acts, Gazettes, and the 93+ Central Government Schemes.\n\n` +
       `**Here is how I can assist you:**\n` +
       `• 🌾 **Government Schemes & Subsidies:** PM-KISAN, PMFBY Crop Insurance, 4% KCC Loans, AIF, NaMo Drone Didi, etc.\n` +
@@ -140,7 +140,7 @@ export class GovLlmService {
     if (language === 'hi') {
       return `मैं **CoopSathi AI**, **सहकारिता मंत्रालय, भारत सरकार** का आधिकारिक डिजिटल सहायक हूँ। मेरा ज्ञानक्षेत्र भारत सरकार की कल्याणकारी योजनाओं, कृषि ऋण (KCC ४%), फसल बीमा (PMFBY), पैक्स आधुनिकीकरण और सहकारी नियमों (MSCS Act) तक समर्पित है।\n\nमेरे पास गैर-सरकारी अथवा बाहरी सामान्य विषयों की जानकारी उपलब्ध नहीं है, परंतु मैं भारत की **९३+ सरकारी योजनाओं**, सब्सिडी एवं सहकारी प्रक्रियाओं पर आपकी पूरी सहायता कर सकता हूँ!`;
     }
-    return `I am **CoopSathi AI**, the official virtual assistant dedicated to the **Ministry of Cooperation, Government of India**, agricultural credit (4% KCC), crop insurance (PMFBY), PACS modernization, and central government welfare schemes.\n\nI do not provide information on non-governmental topics, foreign politics, or entertainment, but I would be glad to help you with any of India's **93+ verified government schemes**, cooperative laws, subsidies, and application steps!`;
+    return `I am **CoopSathi AI**, an independent AI assistant grounded in publicly available government acts and schemes, agricultural credit (4% KCC), crop insurance (PMFBY), PACS modernization, and central government welfare schemes.\n\nI do not provide information on non-governmental topics, foreign politics, or entertainment, but I would be glad to help you with any of India's **93+ verified government schemes**, cooperative laws, subsidies, and application steps!`;
   }
 
   private isHowToApply(query: string): boolean {
@@ -162,7 +162,7 @@ export class GovLlmService {
     if (this.isGreeting(query)) {
       return {
         text: this.getGreetingResponse(language),
-        isOfficialGovLLM: true,
+        isVerifiedLLM: true,
         provider: 'official_gov_rag',
         modelUsed: 'CoopSathi Conversational Engine',
         confidence: 1.0,
@@ -181,7 +181,7 @@ export class GovLlmService {
     if (this.isGibberish(query)) {
       return {
         text: this.getGibberishResponse(language),
-        isOfficialGovLLM: true,
+        isVerifiedLLM: true,
         provider: 'official_gov_rag',
         modelUsed: 'CoopSathi Clarification Engine',
         confidence: 0.95,
@@ -200,7 +200,7 @@ export class GovLlmService {
     if (this.isOutOfDomain(query, maxScore)) {
       return {
         text: this.getOutOfDomainResponse(language),
-        isOfficialGovLLM: true,
+        isVerifiedLLM: true,
         provider: 'official_gov_rag',
         modelUsed: 'CoopSathi Scope Engine',
         confidence: 0.95,
@@ -239,7 +239,7 @@ export class GovLlmService {
         if (bhashiniResult) {
           return {
             text: bhashiniResult,
-            isOfficialGovLLM: true,
+            isVerifiedLLM: true,
             provider: 'bhashini',
             modelUsed: `Digital India Bhashini (National Language Translation Mission - Dhruva)`,
             confidence: 0.99,
@@ -257,7 +257,7 @@ export class GovLlmService {
       if (geminiResult) {
         return {
           text: geminiResult,
-          isOfficialGovLLM: true,
+          isVerifiedLLM: true,
           provider: 'gemini_gov_rag',
           modelUsed: `Gemini 2.5 Flash + Official Gov RAG Grounding`,
           confidence: 0.99,
@@ -274,7 +274,7 @@ export class GovLlmService {
       if (bhashiniResult) {
         return {
           text: bhashiniResult,
-          isOfficialGovLLM: true,
+          isVerifiedLLM: true,
           provider: 'bhashini',
           modelUsed: `Digital India Bhashini (National Language Translation Mission - Dhruva)`,
           confidence: 0.98,
@@ -290,9 +290,9 @@ export class GovLlmService {
 
     return {
       text: sovereignText,
-      isOfficialGovLLM: true,
+      isVerifiedLLM: true,
       provider: 'official_gov_rag',
-      modelUsed: 'Official Government RAG Engine (Bhashini-Aligned)',
+      modelUsed: 'CoopSathi Knowledge Engine',
       confidence: 0.98,
       sources,
       suggestedActions,
@@ -988,7 +988,7 @@ RULES:
     }
 
     // Default statutory summary
-    return `Namaste! I am CoopSathi AI, powered by the **Official Government RAG Engine** of the Ministry of Cooperation & NCCT.\n\n` +
+    return `Namaste! I am CoopSathi AI, an independent AI prototype grounded in publicly available government Acts, schemes and cooperative documents.\n\n` +
       `Grounded in statutory gazettes:\n` +
       `• **${primary.actOrScheme}** (${primary.sectionOrClause})\n` +
       `• **${secondary ? secondary.actOrScheme + ' (' + secondary.sectionOrClause + ')' : ''}**\n\n` +

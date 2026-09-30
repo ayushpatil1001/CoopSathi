@@ -1,7 +1,7 @@
 {
   "name": "coopsathi-platform",
   "version": "1.0.0",
-  "description": "CoopSathi AI – Multilingual Cooperative Governance & Legal Assistance Platform for Ministry of Cooperation & NCCT",
+  "description": "CoopSathi AI - AI-powered Cooperative Governance Assistant",
   "private": true,
   "workspaces": [
     "frontend",
@@ -14,7 +14,8 @@
     "postinstall": "npm --prefix frontend install",
     "build:frontend": "npm --prefix frontend install && npm --prefix frontend run build",
     "build:backend": "npm --prefix backend install && npm --prefix backend run build",
-    "build": "npm --prefix frontend install && npm --prefix frontend run build && node -e \"const fs=require('fs'); fs.cpSync('frontend/dist', 'dist', {recursive:true});\""
+    "build": "npm --prefix frontend install && npm --prefix frontend run build && node -e \"const fs=require('fs'); fs.cpSync('frontend/dist', 'dist', {recursive:true});\"",
+    "benchmark": "node benchmarks/run_benchmark.js"
   },
   "keywords": [
     "cooperative",

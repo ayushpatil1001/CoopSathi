@@ -4,7 +4,7 @@ import { ragEngineService } from '../services/ragEngineService.js';
 
 export const chatRouter = Router();
 
-// GET /api/chat/status - Status of Official Government LLM & RAG Engine
+// GET /api/chat/status - Status of CoopSathi Knowledge Engine
 chatRouter.get('/status', (_req: Request, res: Response) => {
   const provider = (process.env.GOV_LLM_PROVIDER || 'official_gov_rag').toLowerCase();
   const hasBhashini = Boolean(
@@ -18,7 +18,7 @@ chatRouter.get('/status', (_req: Request, res: Response) => {
   );
 
   let activeProvider = 'official_gov_rag';
-  let modelName = 'Official Government RAG Engine (Bhashini-Aligned)';
+  let modelName = 'CoopSathi Knowledge Engine';
 
   if (provider === 'bhashini' && hasBhashini) {
     activeProvider = 'bhashini';
@@ -36,7 +36,7 @@ chatRouter.get('/status', (_req: Request, res: Response) => {
 
   res.json({
     status: 'online',
-    isOfficialGovLLM: true,
+    isVerifiedLLM: true,
     activeProvider,
     modelName,
     ragCorpusChunksCount: ragEngineService.getCorpusSize(),
@@ -53,7 +53,7 @@ chatRouter.get('/status', (_req: Request, res: Response) => {
   });
 });
 
-// POST /api/chat - RAG Retrieval + Official Government LLM Generation
+// POST /api/chat - RAG Retrieval + AI Generation
 chatRouter.post('/', async (req: Request, res: Response) => {
   const { query, language = 'en' } = req.body;
 
@@ -72,7 +72,7 @@ chatRouter.post('/', async (req: Request, res: Response) => {
       language,
       confidence: govResult.confidence,
       isVerified: true,
-      isOfficialGovLLM: true,
+      isVerifiedLLM: true,
       isRealTimeLLM: true,
       modelUsed: govResult.modelUsed,
       provider: govResult.provider,

@@ -1,0 +1,403 @@
+﻿[
+    {
+        "expected_keywords":  [
+                                  "Section 29"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q1",
+        "question":  "Which section governs disqualification of voting rights?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Section 29"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q2",
+        "question":  "What is an active member?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Section 45"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q3",
+        "question":  "Election Authority powers?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Section 85"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q4",
+        "question":  "File grievance with Ombudsman?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Form VI"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q5",
+        "question":  "Ombudsman forms?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Section 106"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q6",
+        "question":  "Inspect audited balance sheets?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Section 45"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q7",
+        "question":  "Nepotism during recruitment?"
+    },
+    {
+        "expected_keywords":  [
+                                  "30 days"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q8",
+        "question":  "Ombudsman resolution window?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Model By-Laws"
+                              ],
+        "expected_topic":  "pacs",
+        "id":  "q9",
+        "question":  "PACS as CSC?"
+    },
+    {
+        "expected_keywords":  [
+                                  "MSCS Act"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q10",
+        "question":  "Deposits from non-members?"
+    },
+    {
+        "expected_keywords":  [
+                                  "14447"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q11",
+        "question":  "PMFBY toll-free number?"
+    },
+    {
+        "expected_keywords":  [
+                                  "72 hours"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q12",
+        "question":  "PMFBY localized crop loss hours?"
+    },
+    {
+        "expected_keywords":  [
+                                  "2%"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q13",
+        "question":  "PMFBY Kharif premium?"
+    },
+    {
+        "expected_keywords":  [
+                                  "4%"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q14",
+        "question":  "KCC prompt repayment rate?"
+    },
+    {
+        "expected_keywords":  [
+                                  "3 lakh"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q15",
+        "question":  "KCC subvention limit?"
+    },
+    {
+        "expected_keywords":  [
+                                  "AIF"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q16",
+        "question":  "Agriculture Infrastructure Fund for PACS?"
+    },
+    {
+        "expected_keywords":  [
+                                  "3%"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q17",
+        "question":  "AIF interest subvention?"
+    },
+    {
+        "expected_keywords":  [
+                                  "PM KISAN"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q18",
+        "question":  "PM KISAN cooperative DBTs?"
+    },
+    {
+        "expected_keywords":  [
+                                  "PMFBY"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q19",
+        "question":  "PMFBY destroyed before harvest?"
+    },
+    {
+        "expected_keywords":  [
+                                  "DIDF"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q20",
+        "question":  "Dairy Processing Fund DIDF?"
+    },
+    {
+        "expected_keywords":  [
+                                  "CRCS"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q21",
+        "question":  "Register multi-state cooperative?"
+    },
+    {
+        "expected_keywords":  [
+                                  "KCC"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q22",
+        "question":  "Kisan Credit Card documents?"
+    },
+    {
+        "expected_keywords":  [
+                                  "PACS"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q23",
+        "question":  "Member of two PACS?"
+    },
+    {
+        "expected_keywords":  [
+                                  "CPGRAMS"
+                              ],
+        "expected_topic":  "grievance",
+        "id":  "q24",
+        "question":  "CPGRAMS grievance status?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Sahakar Se Samriddhi"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q25",
+        "question":  "Sahakar Se Samriddhi?"
+    },
+    {
+        "expected_keywords":  [
+                                  "CRCS"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q26",
+        "question":  "Verify cooperative registered CRCS?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Model By-Laws"
+                              ],
+        "expected_topic":  "pacs",
+        "id":  "q27",
+        "question":  "Download Model By-Laws PACS?"
+    },
+    {
+        "expected_keywords":  [
+                                  "NCCT"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q28",
+        "question":  "Role of NCCT?"
+    },
+    {
+        "expected_keywords":  [
+                                  "PACS"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q29",
+        "question":  "Computerization of PACS apply?"
+    },
+    {
+        "expected_keywords":  [
+                                  "MSCS Act"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q30",
+        "question":  "State cooperative to multi-state?"
+    },
+    {
+        "expected_keywords":  [
+                                  "PMFBY"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q31",
+        "question":  "PMFBY Kharif premium Hindi"
+    },
+    {
+        "expected_keywords":  [
+                                  "Ombudsman"
+                              ],
+        "expected_topic":  "grievance",
+        "id":  "q32",
+        "question":  "Ombudsman grievance Hindi"
+    },
+    {
+        "expected_keywords":  [
+                                  "KCC"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q33",
+        "question":  "KCC interest subvention Hindi"
+    },
+    {
+        "expected_keywords":  [
+                                  "PACS"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q34",
+        "question":  "PACS audit report Hindi"
+    },
+    {
+        "expected_keywords":  [
+                                  "MSCS"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q35",
+        "question":  "New MSCS society members Hindi"
+    },
+    {
+        "expected_keywords":  [
+                                  "PMFBY"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q36",
+        "question":  "PMFBY crop loss hours Marathi"
+    },
+    {
+        "expected_keywords":  [
+                                  "KCC"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q37",
+        "question":  "KCC prompt repayment Marathi"
+    },
+    {
+        "expected_keywords":  [
+                                  "Ombudsman"
+                              ],
+        "expected_topic":  "grievance",
+        "id":  "q38",
+        "question":  "Ombudsman grievance Marathi"
+    },
+    {
+        "expected_keywords":  [
+                                  "PACS"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q39",
+        "question":  "PACS member documents Marathi"
+    },
+    {
+        "expected_keywords":  [
+                                  "election"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q40",
+        "question":  "Multi-state election Marathi"
+    },
+    {
+        "expected_keywords":  [
+
+                              ],
+        "expected_topic":  "out_of_scope",
+        "id":  "q41",
+        "question":  "HDFC savings account"
+    },
+    {
+        "expected_keywords":  [
+
+                              ],
+        "expected_topic":  "out_of_scope",
+        "id":  "q42",
+        "question":  "Price of Bitcoin"
+    },
+    {
+        "expected_keywords":  [
+
+                              ],
+        "expected_topic":  "out_of_scope",
+        "id":  "q43",
+        "question":  "Who won cricket match"
+    },
+    {
+        "expected_keywords":  [
+                                  "72 hours"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q44",
+        "question":  "My crop is destroyed"
+    },
+    {
+        "expected_keywords":  [
+                                  "Ombudsman"
+                              ],
+        "expected_topic":  "grievance",
+        "id":  "q45",
+        "question":  "I didn\u0027t get deposit back"
+    },
+    {
+        "expected_keywords":  [
+                                  "Section 29"
+                              ],
+        "expected_topic":  "law",
+        "id":  "q46",
+        "question":  "What is section 29?"
+    },
+    {
+        "expected_keywords":  [
+                                  "Computerization"
+                              ],
+        "expected_topic":  "pacs",
+        "id":  "q47",
+        "question":  "PACS computerization"
+    },
+    {
+        "expected_keywords":  [
+                                  "apply"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q48",
+        "question":  "How to apply for scheme?"
+    },
+    {
+        "expected_keywords":  [
+                                  "4%"
+                              ],
+        "expected_topic":  "scheme",
+        "id":  "q49",
+        "question":  "KCC loan interest"
+    },
+    {
+        "expected_keywords":  [
+
+                              ],
+        "expected_topic":  "out_of_scope",
+        "id":  "q50",
+        "question":  "asdfghjkl"
+    }
+]
+

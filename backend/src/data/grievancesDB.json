@@ -1,0 +1,76 @@
+[
+  {
+    "referenceNumber": "COOP-2026-MH-84920",
+    "category": "Cooperative Society Issue",
+    "subject": "Denial of Voting Rights in Society Annual General Meeting",
+    "applicantName": "Rameshwar Patil",
+    "district": "Kolhapur",
+    "state": "Maharashtra",
+    "assignedAuthority": "District Registrar of Cooperative Societies, Kolhapur",
+    "status": "Assigned to Authority",
+    "submittedAt": "24 Aug 2026, 10:30 AM",
+    "timeline": [
+      {
+        "stage": "Submitted",
+        "date": "24 Aug 2026",
+        "completed": true,
+        "remarks": "Registered via CoopSathi AI."
+      },
+      {
+        "stage": "Under Review",
+        "date": "26 Aug 2026",
+        "completed": true,
+        "remarks": "Checked against MSCS Act Sec 29."
+      },
+      {
+        "stage": "Assigned to Authority",
+        "date": "28 Aug 2026",
+        "completed": true,
+        "remarks": "Forwarded to Assistant Registrar Kolhapur."
+      },
+      {
+        "stage": "Resolved",
+        "date": "Pending",
+        "completed": false,
+        "remarks": "Hearing scheduled."
+      }
+    ]
+  },
+  {
+    "referenceNumber": "PMFBY-2026-UP-41029",
+    "category": "Insurance Claim",
+    "subject": "Delayed Kharif Crop Loss Payout for Inundated Paddy Fields",
+    "applicantName": "Satish Kumar Yadav",
+    "district": "Gorakhpur",
+    "state": "Uttar Pradesh",
+    "assignedAuthority": "State PMFBY Grievance Redressal Committee",
+    "status": "Resolved",
+    "submittedAt": "12 Jul 2026",
+    "timeline": [
+      {
+        "stage": "Submitted",
+        "date": "12 Jul 2026",
+        "completed": true,
+        "remarks": "Loss intimation under Clause 21.6."
+      },
+      {
+        "stage": "Under Review",
+        "date": "15 Jul 2026",
+        "completed": true,
+        "remarks": "Survey report verified."
+      },
+      {
+        "stage": "Assigned to Authority",
+        "date": "19 Jul 2026",
+        "completed": true,
+        "remarks": "Escalated with 12% penal interest notice."
+      },
+      {
+        "stage": "Resolved",
+        "date": "28 Aug 2026",
+        "completed": true,
+        "remarks": "Full compensation credited to farmer account."
+      }
+    ]
+  }
+]
