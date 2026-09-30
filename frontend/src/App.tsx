@@ -13,6 +13,8 @@ import Telemetry from './pages/Telemetry';
 import Chat from './pages/Chat';
 import Policies from './pages/Policies';
 import NotFound from './pages/NotFound';
+import PacsAdmin from './pages/PacsAdmin';
+import AuthorityConsole from './pages/AuthorityConsole';
 
 export default function App() {
   return (
@@ -31,6 +33,10 @@ export default function App() {
           <Route path="telemetry" element={<Telemetry />} />
           <Route path="chat" element={<Chat />} />
 
+          {/* Role Dashboards (SIH Differentiators) */}
+          <Route path="pacs-admin" element={<PacsAdmin />} />
+          <Route path="authority" element={<AuthorityConsole />} />
+
           {/* Statutory Policies & GIGW Compliance Routes */}
           <Route path="privacy" element={<Policies />} />
           <Route path="terms" element={<Policies />} />
@@ -46,6 +52,7 @@ export default function App() {
           <Route path="circulars" element={<Navigate to="/laws" replace />} />
           <Route path="bylaws" element={<Navigate to="/laws" replace />} />
           <Route path="kcc" element={<Navigate to="/schemes" replace />} />
+          <Route path="admin" element={<Navigate to="/authority" replace />} />
 
           {/* 404 Catch-all */}
           <Route path="*" element={<NotFound />} />

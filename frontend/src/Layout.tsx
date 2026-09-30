@@ -13,13 +13,12 @@ export default function Layout() {
 
   const navLinks = [
     { to: '/', label: t('navHome', 'Home') },
-    { to: '/about', label: t('navAbout', 'About Ministry') },
-    { to: '/schemes', label: t('navSchemes', 'All Schemes'), badge: t('schemesLiveBadge', '93 LIVE'), highlight: true },
-    { to: '/laws', label: t('navLaws', 'MSCS Act 2023') },
-    { to: '/pacs', label: t('navPacs', 'PACS Services') },
+    { to: '/schemes', label: t('navSchemes', 'Schemes'), badge: t('schemesLiveBadge', '93 LIVE'), highlight: true },
+    { to: '/pacs', label: t('navPacs', 'PACS') },
+    { to: '/pacs-admin', label: 'PACS Admin', highlight: true },
+    { to: '/authority', label: 'Authority', highlight: true },
     { to: '/pmfby', label: t('navPmfby', 'PMFBY') },
     { to: '/ombudsman', label: t('navOmbudsman', 'Ombudsman') },
-    { to: '/ncct', label: t('navNcct', 'NCCT') },
     { to: '/telemetry', label: t('navTelemetry', 'Telemetry') },
   ];
 
