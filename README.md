@@ -12,6 +12,16 @@
 
 ---
 
+## 👥 The "Three Roles" Architecture (Differentiator)
+
+CoopSathi AI provides distinct, purpose-built interfaces for the three primary stakeholders in the cooperative ecosystem:
+
+1. **Citizen / Member Portal (`/`)**: Multilingual chat assistant, scheme discovery, and PMFBY crop insurance calculator.
+2. **PACS Admin Console (`/pacs-admin`)**: Dashboard for local PACS Secretaries to manage KCC loans, fertilizer inventory, member compliance tasks, and trigger AI-assisted notices.
+3. **Authority Console (`/authority`)**: Central Ministry / NCCT dashboard for real-time telemetry, grievance escalation tracking, and RAG knowledge-base document ingestion.
+
+---
+
 ## ✨ Key Features & Roadmap
 
 | Feature | Status | Description |
@@ -21,10 +31,10 @@
 | 🌐 **7 Indian Languages** | Implemented | Full UI & scheme translations (English, Hindi, Marathi, Gujarati, Tamil, Telugu, Bengali) |
 | 🌾 **PMFBY Crop Insurance** | Implemented | Premium calculator, claim intimation workflows, and district-wise crop data |
 | ⚖️ **Cooperative Laws** | Implemented | Searchable MSCS Act 2023 sections, Model By-Laws |
-| 🏘️ **PACS Services** | Roadmap | Digitized operations for Primary Agricultural Credit Societies |
+| 🏘️ **PACS Services** | Implemented | Dedicated PACS Admin console for digitized operations |
 | 📊 **Live Telemetry** | Simulated | Dashboards for scheme utilization and financial metrics (Mock data for prototype) |
 | 🛡️ **Ombudsman Portal** | Roadmap | Cooperative grievance redressal with Forms VI & VII and CPGRAMS routing |
-| 🔄 **Portal Sync** | Roadmap | Real-time sync with central government portals |
+| 🔄 **Portal Sync** | Roadmap | Simulated `POST /api/realtime/sync`. Live integration with central government portals is a roadmap feature. |
 
 ---
 
@@ -43,7 +53,7 @@ We conducted a rigorous 50-question benchmark evaluating the hybrid RAG engine a
 * **Total Questions:** 50
 * **Pass Rate:** **84% (42/50)**
 * **Evaluation Categories:** Statutory Accuracy, Scheme Grounding, Out-of-Domain Filtering, Multilingual (Hindi/Marathi)
-* *See `BENCHMARK_50_QUESTIONS.md` and `run_benchmark.js` for the full dataset and runner.*
+* *See 🔗 **[BENCHMARK_50_QUESTIONS.md](BENCHMARK_50_QUESTIONS.md)** and `run_benchmark.js` for the full dataset and runner.*
 *(Note: Please include these metrics on **Slide 5** of the SIH Presentation Deck).*
 
 ---
@@ -57,7 +67,7 @@ flowchart TD
     Client[Frontend UI (React/Vite)] --> |HTTP Requests| Gateway[Node.js / Express Backend]
     Client --> |Client-side Mock| MockData[Simulated Data Fallback]
     
-    Gateway --> RAG[LangChain RAG Engine (Python)]
+    Gateway --> RAG[LangChain RAG Engine (Python FastAPI)]
     Gateway --> LLM[Google Gemini 2.5 Flash]
     Gateway --> NMT[Bhashini Translation API]
     
@@ -69,9 +79,9 @@ flowchart TD
 
 | Layer | Technologies |
 |:---|:---|
-| **Frontend** | React 18, Vite, TypeScript, Tailwind CSS |
-| **Backend (Primary)** | Node.js 20+, Express, TypeScript |
-| **Backend (ML Pipeline)** | Python, FastAPI, LangChain, Supabase pgvector |
+| **Frontend (`frontend/`)** | React 18, Vite, TypeScript, Tailwind CSS |
+| **Backend API (`backend/`)** | Node.js 20+, Express, TypeScript |
+| **Python RAG (`python-backend/`)** | Python, FastAPI, LangChain, Supabase pgvector |
 | **AI / LLM** | Google Gemini 2.5 Flash, Groq LLaMA 3 |
 | **Translation** | Digital India Bhashini Dhruva NMT (22 Indian languages) |
 | **Database** | Supabase (PostgreSQL + pgvector) |
@@ -79,38 +89,30 @@ flowchart TD
 
 ---
 
-## 🚀 Local Development Setup
+## 🚀 One-Command Local Setup
 
 ### Prerequisites
 
 - Node.js 20+ and npm
 - Python 3.10+ (for the ML backend)
 
-### 1. Clone the Repository
+### 1. Clone & Configure
 
 ```bash
 git clone https://github.com/ayushpatil1001/CoopSathi.git
 cd CoopSathi
-```
 
-### 2. Configure Environment Variables
-
-```bash
-# Backend (Required for LLM and Translation)
+# Set up environment variables
+cp frontend/.env.example frontend/.env
 cp backend/.env.example backend/.env
-# Add your GEMINI_API_KEY, BHASHINI keys, etc.
-
-# Python backend (Required for Vector DB)
 cp python-backend/.env.example python-backend/.env
-# Add your SUPABASE_URL, GROQ_API_KEY, etc.
 ```
 
-### 3. Install Dependencies & Run
+### 2. Install & Run (One Command)
 
 ```bash
-# Start both frontend (port 5173) and backend (port 5000) together:
-npm install
-npm run dev
+# This installs all dependencies and starts both frontend (5173) and backend (5000) concurrently
+npm install && npm run dev
 ```
 
 ### 4. Open in Browser
