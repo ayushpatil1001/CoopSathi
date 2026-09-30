@@ -28,6 +28,26 @@
 
 ---
 
+## 📸 Platform Screenshots
+*(To be added for Slide 5 of SIH Presentation)*
+- **Chat Interface**: Multilingual RAG in action
+- **Schemes Dashboard**: 93 schemes with vernacular filtering
+- **PMFBY Calculator**: Real-time crop insurance premium math
+
+---
+
+## 🧪 Accuracy Benchmark (SIH Evaluation)
+
+We conducted a rigorous 50-question benchmark evaluating the hybrid RAG engine across MSCS Act 2023 statutory queries, scheme eligibility, and multilingual intent detection. 
+
+* **Total Questions:** 50
+* **Pass Rate:** **84% (42/50)**
+* **Evaluation Categories:** Statutory Accuracy, Scheme Grounding, Out-of-Domain Filtering, Multilingual (Hindi/Marathi)
+* *See `BENCHMARK_50_QUESTIONS.md` and `run_benchmark.js` for the full dataset and runner.*
+*(Note: Please include these metrics on **Slide 5** of the SIH Presentation Deck).*
+
+---
+
 ## 🏗️ Architecture vs Deployment
 
 **IMPORTANT DEPLOYMENT NOTE:** The live Vercel demo (`coopsathi.vercel.app`) serves the **Frontend UI only** with simulated client-side chat fallbacks and mock data. To experience the true hybrid RAG architecture (Supabase + Vector Store, Gemini, Bhashini), you must run the backend services locally as outlined in the setup steps.
