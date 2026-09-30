@@ -107,7 +107,8 @@ class SchemesSyncService {
   }
 
   /**
-   * Execute synchronization: verifies active schemes against official portals
+   * Execute simulated synchronization: refreshes timestamps on local scheme data
+   * (planned: connect to official portals for live verification)
    */
   public syncSchemesNow(triggerType: 'SCHEDULED_DAILY_SYNC' | 'MANUAL_SYNC' = 'MANUAL_SYNC'): SyncStatus {
     this.lastSyncTime = new Date();
@@ -130,7 +131,7 @@ class SchemesSyncService {
       id: 'SYNC-' + Date.now(),
       timestamp: this.lastSyncTime.toISOString(),
       type: triggerType,
-      description: `Synchronized with myScheme.gov.in, indiacode.nic.in & PIB. Verified ${this.schemes.length} schemes.`,
+      description: `Simulated sync: refreshed local dataset timestamps for ${this.schemes.length} schemes. Live portal integration is a planned roadmap feature.`,
       schemesTotal: this.schemes.length,
       changesCount,
     };
@@ -153,11 +154,11 @@ class SchemesSyncService {
       nextScheduledSync: nextSync.toISOString(),
       syncFrequency: 'Every 24 hours (Daily at 00:00 UTC)',
       officialDataSources: [
-        'myScheme.gov.in (National Scheme Portal - MeitY)',
-        'indiabudget.gov.in (Union Budget Scheme Allocations)',
-        'pib.gov.in (Press Information Bureau - Official Gazette Releases)',
-        'dbtbharat.gov.in (Aadhaar DBT Schemes Registry)',
-        'cooperation.gov.in (Ministry of Cooperation & CRCS)',
+        'myScheme.gov.in (reference source — not a live API connection)',
+        'indiabudget.gov.in (reference source — not a live API connection)',
+        'pib.gov.in (reference source — not a live API connection)',
+        'dbtbharat.gov.in (reference source — not a live API connection)',
+        'cooperation.gov.in (reference source — not a live API connection)',
       ],
       totalActiveSchemes: this.schemes.length,
       sectorsCovered: sectors.size,

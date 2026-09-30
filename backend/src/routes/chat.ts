@@ -42,8 +42,8 @@ chatRouter.get('/status', (_req: Request, res: Response) => {
     ragCorpusChunksCount: ragEngineService.getCorpusSize(),
     statutoryActsIndexed: [
       'Multi-State Co-operative Societies (Amendment) Act 2023 (Act No. 11 of 2023)',
-      'Model By-Laws for PACS 2024-2026 (25+ Multipurpose Activities)',
-      'PMFBY Revised Operational Guidelines 2024-2026 (72-Hour Calamity SLA)',
+      'Model By-Laws for PACS (25+ Multipurpose Activities)',
+      'PMFBY Revised Operational Guidelines (72-Hour Calamity SLA)',
       'Kisan Credit Card (KCC) Modified Interest Subvention Scheme (MISS 4%)',
       'Co-operative Ombudsman Regulations (CRCS Forms VI & VII)'
     ],

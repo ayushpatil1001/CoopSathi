@@ -109,7 +109,7 @@ export interface RealTimeGrievanceRecord {
 class RealTimeGovDataService {
   private lastSyncTimestamp: string = new Date().toISOString();
 
-  // 1. Live Summary & Metrics (Authentic 2026 GoI Data)
+  // 1. Curated Reference Data (sourced from official government reports and press releases)
   public getSummary(): RealTimeGovSummary {
     return {
       lastSynced: this.lastSyncTimestamp,
@@ -174,10 +174,10 @@ class RealTimeGovDataService {
         ]
       },
       {
-        id: 'LAW-MODEL-BYLAWS-2026',
-        actTitle: 'Model Bye-Laws for Primary Agricultural Credit Societies (PACS) 2024–2026',
+        id: 'LAW-MODEL-BYLAWS',
+        actTitle: 'Model Bye-Laws for Primary Agricultural Credit Societies (PACS)',
         gazetteNumber: 'Ministry Policy Notification No. 1-11011/1/2022-Coop',
-        notifiedDate: 'Final Operational 2024-2026',
+        notifiedDate: 'January 5, 2023',
         keySections: [
           {
             section: 'Clause 4',
@@ -360,13 +360,13 @@ class RealTimeGovDataService {
     ];
   }
 
-  // Trigger manual or automatic re-sync with official government portals
+  // Simulated sync — demonstrates the planned portal integration (no live API connection)
   public syncWithGovPortals(): { status: string; syncedAt: string; message: string } {
     this.lastSyncTimestamp = new Date().toISOString();
     return {
       status: 'success',
       syncedAt: this.lastSyncTimestamp,
-      message: 'Successfully synchronized real-time data from Ministry of Cooperation, CRCS, PMFBY, and NCCT portals.'
+      message: 'Simulated sync completed. Reference data refreshed from curated local dataset. Live government API integration is a planned roadmap feature.'
     };
   }
 }
