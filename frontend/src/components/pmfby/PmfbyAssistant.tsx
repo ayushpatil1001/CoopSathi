@@ -1,10 +1,10 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   ShieldCheck, Calculator, ArrowRight, ArrowLeft, Calendar, 
   FileText, CheckCircle2, AlertCircle, Phone, Info, Sparkles, Download, Check, Satellite, CloudSun, Camera
 } from 'lucide-react';
 import { LanguageCode, PmfbyCalculationResult } from '../../types';
-import { PMFBY_STATE_DATA, calculatePmfbyPremium } from '../../data/mockPmfby';
+import { PMFBY_STATE_DATA } from '../../data/mockPmfby';
 import { ClaimGuideModal } from './ClaimGuideModal';
 import { apiService, RealTimePmfbyData } from '../../services/apiService';
 
@@ -42,15 +42,25 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
     return stateObj.crops;
   }, [stateObj]);
 
-  // Dynamic calculation result
-  const result: PmfbyCalculationResult = useMemo(() => {
-    return calculatePmfbyPremium({
-      state: selectedState,
-      district: selectedDistrict,
-      crop: selectedCrop,
-      landArea: Number(landArea) || 1,
-      season: selectedSeason,
-    });
+  // Dynamic calculation result via Backend
+  const [result, setResult] = useState<PmfbyCalculationResult | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    const fetchResult = async () => {
+      const res = await apiService.calculatePmfby({
+        state: selectedState,
+        district: selectedDistrict,
+        crop: selectedCrop,
+        landArea: Number(landArea) || 1,
+        season: selectedSeason,
+      });
+      if (active && res) {
+        setResult(res);
+      }
+    };
+    fetchResult();
+    return () => { active = false; };
   }, [selectedState, selectedDistrict, selectedCrop, landArea, selectedSeason]);
 
   // When state changes, reset district and crop
@@ -66,7 +76,7 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
 
   const handleCropChange = (cropName: string) => {
     setSelectedCrop(cropName);
-    const crop = stateObj.crops.find((c) => c.name === cropName);
+    const crop = stateObj.crops.find((c: any) => c.name === cropName);
     if (crop) {
       setSelectedSeason(crop.season);
     }
@@ -174,7 +184,7 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
                   Step 2: Choose Your District in {selectedState} (जिल्हा निवडा)
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {stateObj.districts.map((dist) => (
+                  {stateObj.districts.map((dist: string) => (
                     <button
                       key={dist}
                       type="button"
@@ -200,7 +210,7 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
                   Step 3: Choose Sown Crop in {selectedDistrict} (पीक निवडा)
                 </label>
                 <div className="space-y-2">
-                  {availableCrops.map((c) => (
+                  {availableCrops.map((c: any) => (
                     <button
                       key={c.name}
                       type="button"
@@ -353,7 +363,7 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
                 <div className="text-right">
                   <span className="text-xs text-slate-400 block font-medium">Sum Insured</span>
                   <span className="text-xl font-black text-gov-blue-900">
-                    ₹{result.totalSumInsured.toLocaleString()}
+                    ₹{(result?.totalSumInsured || 0).toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -363,10 +373,10 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
                 {/* Farmer Premium */}
                 <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-4 space-y-1">
                   <span className="text-xs font-bold text-amber-900 flex items-center gap-1">
-                    <span>Farmer Contribution ({result.farmerPremiumRate}%)</span>
+                    <span>Farmer Contribution ({(result?.farmerPremiumRate || 0)}%)</span>
                   </span>
                   <div className="text-2xl font-black text-amber-700">
-                    ₹{result.farmerPremiumAmount.toLocaleString()}
+                    ₹{(result?.farmerPremiumAmount || 0).toLocaleString()}
                   </div>
                   <p className="text-[10px] text-amber-900 leading-tight font-medium">
                     Maximum capped rate by Government of India. You only pay this amount!
@@ -376,10 +386,10 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
                 {/* Government Subsidy */}
                 <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-2xl p-4 space-y-1">
                   <span className="text-xs font-bold text-emerald-900">
-                    Govt Subsidy ({result.govtSubsidyRate}%)
+                    Govt Subsidy ({(result?.govtSubsidyRate || 0)}%)
                   </span>
                   <div className="text-2xl font-black text-emerald-700">
-                    ₹{result.govtSubsidyAmount.toLocaleString()}
+                    ₹{(result?.govtSubsidyAmount || 0).toLocaleString()}
                   </div>
                   <p className="text-[10px] text-emerald-900 leading-tight font-medium">
                     Subsidized 50:50 by Central and State Governments directly to insurer.
@@ -395,7 +405,7 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
                     Enrolment Cut-Off Deadline:
                   </span>
                   <span className="font-extrabold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">
-                    {result.cutoffDate}
+                    {(result?.cutoffDate || '')}
                   </span>
                 </div>
 
@@ -405,7 +415,7 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
                     Nearest Claim Processing Office:
                   </span>
                   <span className="font-bold text-slate-800">
-                    {result.nearestClaimCentre}
+                    {(result?.claimTollFree || '14447')}
                   </span>
                 </div>
               </div>
@@ -447,7 +457,7 @@ export const PmfbyAssistant: React.FC<PmfbyAssistantProps> = ({ onSelectTab }) =
                 <span>Required Documents Checklist for Farmer Enrollment</span>
               </h4>
               <ul className="space-y-2 text-xs text-slate-700">
-                {result.mandatoryDocs.map((doc, i) => (
+                {(['Aadhaar Card', 'Land Record (7/12)', 'Bank Passbook']).map((doc, i) => (
                   <li key={i} className="flex items-start space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <span>{doc}</span>

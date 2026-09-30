@@ -455,7 +455,7 @@ RULES:
   }
 
   /**
-   * Synthesizes rich overview for any of the 93+ official government schemes
+   * Synthesizes rich overview for any of the 93+ Verified Government Schemes
    */
   private synthesizeSchemeProfile(scheme: any, language: string): string {
     const title = scheme.title;
@@ -504,7 +504,7 @@ RULES:
         `💡 *અરજી કરવાની પ્રક્રિયા જાણવા માટે "અરજી કેવી રીતે કરવી?" પૂછો.*`;
     }
 
-    return `**${title} – Official Scheme Overview**\n\n` +
+    return `**${title} – Verified Scheme Overview**\n\n` +
       `🏛️ **Nodal Ministry:** ${ministry}\n\n` +
       `🎯 **Objective:**\n${objective}\n\n` +
       `💰 **Key Financial & Welfare Benefits:**\n${summary}\n${benefits}\n\n` +
@@ -533,7 +533,7 @@ RULES:
       return 'CoopSathi AI: Information not found. Please visit https://india.gov.in or https://cooperation.gov.in.';
     }
 
-    // 1. Matched Official Government Scheme with rich metadata
+    // 1. Matched Verified Government Scheme with rich metadata
     if (primary.schemeData) {
       return this.synthesizeSchemeProfile(primary.schemeData, language);
     }
@@ -1113,7 +1113,7 @@ RULES:
   }
 
   /**
-   * Synthesizes 5-step application guide for any of the 93+ official government schemes
+   * Synthesizes 5-step application guide for any of the 93+ Verified Government Schemes
    */
   private synthesizeSchemeApplication(s: any, language: string): string {
     const title = s.title;
@@ -1183,7 +1183,7 @@ RULES:
       `• **Eligibility:** ${(s.eligibilityCriteria || []).slice(0, 2).join('; ')}\n` +
       `• **Required Documents:** ${docs}\n\n` +
       `**Step 2: Choose Application Channel (Online or Offline)**\n` +
-      `• **Online Channel:** Access the official Government Portal at **${portal}**.\n` +
+      `• **Online Channel:** Access the Government Portal at **${portal}**.\n` +
       `• **Offline Channel:** Visit your village **Primary Agricultural Credit Society (PACS)**, Common Service Centre (CSC), or nearest authorized Bank Branch.\n\n` +
       `**Step 3: Registration & Data Entry**\n` +
       `• ${step2} ${step3}\n\n` +
@@ -1437,8 +1437,8 @@ RULES:
     // 0.295 MSME Udyam Registration
     if (primaryId === 'GOV-MSME-UDYAM' || /msme|udyam|udyog\s*aadhaar|udyog\s*aadhar|उद्यम/i.test(query)) {
       return `**Step-by-Step Guide: How to Apply for MSME Udyam Registration (100% Free & Online)**\n\n` +
-        `**Step 1: Access Official Government Udyam Portal**\n` +
-        `• Visit **udyamregistration.gov.in** (The official government portal is **100% Free**; beware of unauthorized fake fee-charging portals).\n` +
+        `**Step 1: Access Government Udyam Portal**\n` +
+        `• Visit **udyamregistration.gov.in** (The Government Portal is **100% Free**; beware of unauthorized fake fee-charging portals).\n` +
         `• Click on **"For New Entrepreneurs who are not Registered yet as MSME"**.\n\n` +
         `**Step 2: Enter Aadhaar Number & Validate OTP**\n` +
         `• Enter the 12-digit Aadhaar number of the Proprietor (or Managing Partner / Karta / Authorized Director).\n` +
@@ -1459,7 +1459,7 @@ RULES:
     if (primaryId === 'GOV-PASSPORT-SEVA' || /passport|पासपोर्ट|पारपत्र/i.test(query)) {
       return `**Step-by-Step Guide: How to Apply for a Fresh / Renewal Passport (Passport Seva)**\n\n` +
         `**Step 1: Register on Passport Seva Online Portal**\n` +
-        `• Visit the official government portal **passportindia.gov.in** (or download official mPassport Seva app).\n` +
+        `• Visit the Government Portal **passportindia.gov.in** (or download official mPassport Seva app).\n` +
         `• Register using your active email address and select your jurisdictional Regional Passport Office (RPO).\n\n` +
         `**Step 2: Fill Out Application Form 1 (Fresh or Reissue)**\n` +
         `• Click on "Apply for Fresh Passport/Re-issue of Passport".\n` +
@@ -1874,7 +1874,7 @@ RULES:
         `**Step 1: Check Eligibility & Prepare Required Documents**\n` +
         `• Confirm that you satisfy scheme criteria and prepare identity proof (Aadhaar), Land Records (7/12 or Khatauni), and an active DBT-linked Bank Passbook.\n\n` +
         `**Step 2: Select the Designated Application Channel**\n` +
-        `• Visit your nearest **Primary Agricultural Credit Society (PACS)**, Common Service Centre (CSC), or access the respective official Government Portal.\n\n` +
+        `• Visit your nearest **Primary Agricultural Credit Society (PACS)**, Common Service Centre (CSC), or access the respective Government Portal.\n\n` +
         `**Step 3: Fill Out the Prescribed Application Form**\n` +
         `• Enter your personal, land, and crop/activity details accurately and upload verified documentary attachments.\n\n` +
         `**Step 4: Obtain Acknowledgment & Application Tracking ID**\n` +

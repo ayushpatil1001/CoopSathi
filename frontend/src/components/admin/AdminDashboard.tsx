@@ -4,7 +4,7 @@ import {
   TrendingUp, BarChart3, Database, Upload, CheckCircle2, 
   FileText, Clock, ChevronRight, Filter, Settings, ShieldAlert, Sparkles, RefreshCw
 } from 'lucide-react';
-import { MOCK_KNOWLEDGE_DOCUMENTS } from '../../data/mockKnowledgeBase';
+const MOCK_KNOWLEDGE_DOCUMENTS: KnowledgeDocument[] = [];
 import { KnowledgeDocument } from '../../types';
 import { storageService } from '../../services/storageService';
 

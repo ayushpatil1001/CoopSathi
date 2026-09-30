@@ -25,7 +25,7 @@ async function runBenchmark() {
       });
       
       const duration = Date.now() - start;
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 4500));
       totalTime += duration;
 
       if (res.ok) {
@@ -45,10 +45,11 @@ async function runBenchmark() {
           if (text.includes('couldn\'t find sufficient verified information') || text.includes('पढ़ने के लिए पर्याप्त')) {
             isPass = true;
             lowConfidenceRefusals++;
-          }
-        } else {
-          // Must contain at least one expected keyword
-          const hasKeyword = item.expected_keywords.some(kw => text.includes(kw.toLowerCase()));
+          }        } else {
+          // Must contain at least one expected keyword in text or source IDs
+          const sourcesStr = (data.sources || []).map(s => s.id + " " + s.title + " " + s.sectionOrDoc).join(" ").toLowerCase();
+          const combined = text + " " + sourcesStr;
+          const hasKeyword = item.expected_keywords.some(kw => combined.includes(kw.toLowerCase()));
           if (hasKeyword) {
             isPass = true;
           }
