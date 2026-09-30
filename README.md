@@ -6,109 +6,65 @@
 [![SIH 2026](https://img.shields.io/badge/SIH_2026-Prototype-FF9933?style=for-the-badge)](https://www.sih.gov.in)
 [![Team](https://img.shields.io/badge/Team-HexYZ-138808?style=for-the-badge)]()
 
-> [!CAUTION]
-> **This is a prototype built by Team HexYZ for Smart India Hackathon (SIH) 2026.**
-> It is **not** an official service of the Ministry of Cooperation, NCCT, or the Government of India.
-> All government data, scheme details, and statutory references are sourced from publicly available official documents and are included for demonstration purposes only.
+**⚠️ DISCLAIMER: This is a Smart India Hackathon (SIH) 2026 prototype built by Team HexYZ. It is NOT an official service of the Ministry of Cooperation, NCCT, or the Government of India. The legal citations, schemes, and statutory data presented are for demonstration purposes only.**
+
+**CoopSathi AI** is an AI-powered platform prototype that envisions making India's cooperative sector accessible to every citizen — across languages, literacy levels, and devices. It provides instant access to **93 government welfare schemes**, statutory acts, crop insurance tools, and cooperative services through an intelligent multilingual interface.
 
 ---
 
-## 💡 What is CoopSathi AI?
+## ✨ Key Features & Roadmap
 
-CoopSathi AI is an AI-powered platform that makes India's cooperative sector accessible to every citizen — across languages, literacy levels, and devices. It provides access to **93 government welfare schemes**, statutory acts, crop insurance tools, and cooperative services through an intelligent multilingual interface.
-
----
-
-## ✨ Key Features
-
-| Feature | Description |
-|:---|:---|
-| 🤖 **AI Chat Assistant** | Conversational AI with a client-side knowledge engine and optional backend RAG pipeline (Gemini 2.5 Flash + statutory context). Falls back gracefully when the backend is unavailable. |
-| 📋 **93 Government Schemes** | Catalog with eligibility, benefits, and 5-step guided application flows sourced from public government data |
-| 🌐 **7 Indian Languages** | Full UI & scheme translations in English, Hindi, Marathi, Gujarati, Tamil, Telugu, and Bengali |
-| 🌾 **PMFBY Crop Insurance** | Premium calculator, claim intimation workflows, and district-wise crop data |
-| ⚖️ **Cooperative Laws** | Searchable MSCS Act 2023 sections and Model By-Laws |
-| 🏘️ **PACS Services** | Digitized operations dashboard for Primary Agricultural Credit Societies |
-| 📊 **Reference Data Dashboards** | Curated dashboards showing cooperative sector metrics (sourced from official reports; not a live API feed) |
-| 🛡️ **Ombudsman Portal** | Cooperative grievance redressal with prescribed forms and CPGRAMS routing |
-
----
-
-## 🏗️ Architecture
-
-```
-CoopSathi/
-├── frontend/              # React 18 + Vite + TypeScript + Tailwind CSS
-│   ├── src/
-│   │   ├── components/    # UI (Chat, Schemes, PMFBY, PACS, Ombudsman, etc.)
-│   │   ├── pages/         # Route pages (Home, Schemes, Laws, Chat, etc.)
-│   │   ├── data/          # Translations, scheme catalog, statutory data
-│   │   ├── services/      # API client, client-side AI fallback, speech
-│   │   └── utils/         # Localization, SEO, helpers
-│   └── public/            # Static assets
-│
-├── backend/               # Node.js + Express + TypeScript (runs separately)
-│   ├── src/
-│   │   ├── routes/        # /api/chat, /api/schemes, /api/pmfby, etc.
-│   │   ├── services/      # Gemini LLM orchestrator, RAG engine, Bhashini NMT
-│   │   ├── data/          # Statutory & scheme databases (curated JSON)
-│   │   └── middleware/     # CORS, CSP, security headers
-│   └── .env.example       # Required environment variables template
-│
-└── python-backend/        # (Optional) FastAPI + LangChain + Supabase pgvector
-    ├── main.py            # Alternate RAG pipeline with Groq LLaMA 3
-    ├── requirements.txt
-    └── .env.example       # Required environment variables template
-```
-
-### Deployment Model
-
-| Component | Deployment | Notes |
+| Feature | Status | Description |
 |:---|:---|:---|
-| **Frontend** | Vercel (static SPA) | Deployed at [coopsathi.vercel.app](https://coopsathi.vercel.app). Includes a client-side AI knowledge engine as fallback. |
-| **Backend (Express)** | Separate host / local | Not deployed on Vercel. The frontend degrades gracefully — the chat assistant uses a built-in client-side knowledge engine when the backend is unavailable. |
-| **Python Backend** | Optional / local | Alternate ML pipeline for experimentation. Not required for the core demo. |
-
-### AI Pipeline
-
-```
-User Query
-    │
-    ├──► Frontend tries POST /api/chat (Express backend)
-    │       │
-    │       ├── Gemini 2.5 Flash (grounded with statutory RAG context)
-    │       ├── Bhashini Dhruva NMT (multilingual translation)
-    │       └── Failover → Sovereign RAG synthesizer
-    │
-    └──► If backend unavailable → Client-side knowledge engine
-            (pattern-matched responses from curated statutory data)
-```
+| 🤖 **AI Chat Assistant** | Implemented | Conversational AI grounded in statutory databases with verified citations (Demo uses simulated client-side fallback) |
+| 📋 **93 Government Schemes** | Implemented | Catalog with eligibility, benefits, application steps, and guided flows |
+| 🌐 **7 Indian Languages** | Implemented | Full UI & scheme translations (English, Hindi, Marathi, Gujarati, Tamil, Telugu, Bengali) |
+| 🌾 **PMFBY Crop Insurance** | Implemented | Premium calculator, claim intimation workflows, and district-wise crop data |
+| ⚖️ **Cooperative Laws** | Implemented | Searchable MSCS Act 2023 sections, Model By-Laws |
+| 🏘️ **PACS Services** | Roadmap | Digitized operations for Primary Agricultural Credit Societies |
+| 📊 **Live Telemetry** | Simulated | Dashboards for scheme utilization and financial metrics (Mock data for prototype) |
+| 🛡️ **Ombudsman Portal** | Roadmap | Cooperative grievance redressal with Forms VI & VII and CPGRAMS routing |
+| 🔄 **Portal Sync** | Roadmap | Real-time sync with central government portals |
 
 ---
 
-## 🛠️ Tech Stack
+## 🏗️ Architecture vs Deployment
+
+**IMPORTANT DEPLOYMENT NOTE:** The live Vercel demo (`coopsathi.vercel.app`) serves the **Frontend UI only** with simulated client-side chat fallbacks and mock data. To experience the true hybrid RAG architecture (Supabase + Vector Store, Gemini, Bhashini), you must run the backend services locally as outlined in the setup steps.
+
+```mermaid
+flowchart TD
+    Client[Frontend UI (React/Vite)] --> |HTTP Requests| Gateway[Node.js / Express Backend]
+    Client --> |Client-side Mock| MockData[Simulated Data Fallback]
+    
+    Gateway --> RAG[LangChain RAG Engine (Python)]
+    Gateway --> LLM[Google Gemini 2.5 Flash]
+    Gateway --> NMT[Bhashini Translation API]
+    
+    RAG --> DB[(Supabase PostgreSQL + pgvector)]
+    RAG --> Llama[Groq LLaMA 3]
+```
+
+### Full Tech Stack
 
 | Layer | Technologies |
 |:---|:---|
-| **Frontend** | React 18, Vite, TypeScript, Tailwind CSS, React Router v6 |
+| **Frontend** | React 18, Vite, TypeScript, Tailwind CSS |
 | **Backend (Primary)** | Node.js 20+, Express, TypeScript |
-| **Backend (ML Pipeline)** | Python 3.10+, FastAPI, LangChain, Supabase pgvector |
-| **AI / LLM** | Google Gemini 2.5 Flash (backend-only, key never exposed to client) |
-| **Translation** | Digital India Bhashini Dhruva NMT |
-| **Database** | Supabase (PostgreSQL + pgvector) — used by the Python backend |
-| **Deployment** | Vercel (frontend), with HSTS, CSP, and security headers |
-
-> [!NOTE]
-> The Gemini API key is stored exclusively in `backend/.env` and is **never bundled** into the client-side JavaScript. The frontend's Content Security Policy (CSP) is configured defensively but the browser never makes direct calls to `generativelanguage.googleapis.com`.
+| **Backend (ML Pipeline)** | Python, FastAPI, LangChain, Supabase pgvector |
+| **AI / LLM** | Google Gemini 2.5 Flash, Groq LLaMA 3 |
+| **Translation** | Digital India Bhashini Dhruva NMT (22 Indian languages) |
+| **Database** | Supabase (PostgreSQL + pgvector) |
+| **Deployment** | Vercel (frontend static demo) |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local Development Setup
 
 ### Prerequisites
 
 - Node.js 20+ and npm
-- Python 3.10+ *(only if running the optional ML backend)*
+- Python 3.10+ (for the ML backend)
 
 ### 1. Clone the Repository
 
@@ -120,17 +76,14 @@ cd CoopSathi
 ### 2. Configure Environment Variables
 
 ```bash
-# Backend (required for full AI features)
+# Backend (Required for LLM and Translation)
 cp backend/.env.example backend/.env
-# Fill in: GEMINI_API_KEY, BHASHINI_UDYAT_KEY, BHASHINI_INFERENCE_KEY, etc.
+# Add your GEMINI_API_KEY, BHASHINI keys, etc.
 
-# Python backend (optional)
+# Python backend (Required for Vector DB)
 cp python-backend/.env.example python-backend/.env
-# Fill in: SUPABASE_URL, SUPABASE_KEY, GROQ_API_KEY, etc.
+# Add your SUPABASE_URL, GROQ_API_KEY, etc.
 ```
-
-> [!TIP]
-> The frontend works without any `.env` configuration. It uses the client-side AI fallback when no backend is available.
 
 ### 3. Install Dependencies & Run
 
@@ -138,16 +91,6 @@ cp python-backend/.env.example python-backend/.env
 # Start both frontend (port 5173) and backend (port 5000) together:
 npm install
 npm run dev
-```
-
-Or start them individually:
-
-```bash
-# Backend only
-cd backend && npm install && npm run dev
-
-# Frontend only (in another terminal)
-cd frontend && npm install && npm run dev
 ```
 
 ### 4. Open in Browser
@@ -158,23 +101,21 @@ http://localhost:5173
 
 ---
 
-## 📡 API Reference
+## 📡 Backend API Reference
 
-> [!IMPORTANT]
-> These endpoints are served by the Express backend (`localhost:5000`). They are **not available** on the Vercel deployment, which serves only the frontend SPA. The frontend falls back to its client-side knowledge engine when these endpoints are unreachable.
+*Note: These endpoints require the local Node.js backend to be running.*
 
 | Method | Endpoint | Description |
 |:---|:---|:---|
-| `POST` | `/api/chat` | AI chat with Gemini + RAG retrieval & verified citations |
-| `GET` | `/api/chat/status` | Backend health check and LLM provider status |
-| `GET` | `/api/schemes` | 93 welfare schemes with category filters & search |
+| `POST` | `/api/chat` | AI chat with RAG retrieval & verified citations |
+| `GET` | `/api/schemes` | 93 welfare schemes with filters & search |
 | `POST` | `/api/pmfby/calculate` | Crop insurance premium calculator |
 | `GET` | `/api/pmfby/states` | States, districts, and crop catalogs |
 | `GET/POST` | `/api/grievances` | Cooperative grievance submission & listing |
-| `GET` | `/api/track-status/:ref` | Grievance lifecycle tracking |
+| `GET` | `/api/track-status/:ref` | Grievance status tracking |
 | `GET` | `/api/languages` | Supported Indian languages |
 | `GET` | `/api/documents` | Statutory acts & model by-laws |
-| `GET` | `/api/realtime/*` | **Curated reference data** (sourced from official reports; not a live government API feed) |
+| `GET` | `/api/health` | Backend health check |
 
 ---
 
@@ -192,12 +133,9 @@ http://localhost:5173
 
 ---
 
-## ⚠️ Disclaimers
+## ⚖️ Legal Disclaimer
 
-- **Not an official government service.** This is a student prototype for SIH 2026.
-- **Reference data dashboards** (`/api/realtime/*`) display curated data sourced from publicly available government reports and press releases. They do not connect to live government APIs.
-- **Legal references** (MSCS Act 2023, PMFBY guidelines, Model By-Laws) are included for demonstration and should be independently verified against official gazette publications for any legal purpose.
-- **Portal sync** functionality shown in the UI is a simulated demonstration of the planned roadmap feature.
+The statutory content (e.g., MSCS Act 2023 Sections 29, 45, 85, 106, Model By-Laws) provided by this prototype is based on public demonstration datasets. It is **not** legally verified and should not be used as official legal counsel. 
 
 ---
 
@@ -205,8 +143,6 @@ http://localhost:5173
 
 Built with ❤️ for **Smart India Hackathon 2026**.
 
----
-
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+This project is a prototype built for SIH 2026. All rights reserved by Team HexYZ.
